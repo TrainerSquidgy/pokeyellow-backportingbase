@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_BellossomDexEntry::
+	text "BELLOSSOM gather"
+	next "at times and"
+	next "appear to dance."
+	
+	page "They say that the"
+	next "dance is a ritual"
+	next "to summon the sun."
+	dex

@@ -40,7 +40,7 @@ EvosMovesPointerTable:
 	dw BlastoiseEvosMoves
 	dw PinsirEvosMoves
 	dw TangelaEvosMoves
-	dw MissingNo1FEvosMoves
+	dw BellossomEvosMoves
 	dw MissingNo20EvosMoves
 	dw GrowlitheEvosMoves
 	dw OnixEvosMoves
@@ -554,10 +554,11 @@ TangelaEvosMoves:
 	db 48, GROWTH
 	db 0
 
-MissingNo1FEvosMoves:
+BellossomEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 55, SOLARBEAM
 	db 0
 
 MissingNo20EvosMoves:
@@ -2113,6 +2114,7 @@ OddishEvosMoves:
 GloomEvosMoves:
 ; Evolutions
 	db EVOLVE_ITEM, LEAF_STONE, 1, VILEPLUME
+	db EVOLVE_ITEM,  SUN_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
 	db 15, POISONPOWDER
