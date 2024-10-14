@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_ShuckleDexEntry::
+	text "The fluid secreted"
+	next "by its toes carves"
+	next "holes in rocks for"
+
+	page "nesting and can be"
+	next "mixed with BERRIES"
+	next "to make a drink.@"
+	dex

@@ -1254,6 +1254,13 @@ MewDexEntry:
 	text_far _MewDexEntry
 	text_end
 
+ShuckleDexEntry:
+	db "MOLD@"
+	db 2,0
+	dw 452
+	text_far _ShuckleDexEntry
+	text_end
+
 MissingNoDexEntry:
 	db "???@"
 	db 10 ; 1.0 m
