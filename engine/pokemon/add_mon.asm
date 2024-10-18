@@ -121,6 +121,13 @@ _AddPartyMon::
 	jr .next4
 	
 .starter
+	ld a, [wStarterSpdSpc]
+	and a
+	jr z, .perfectDVs
+	ld b, a
+	ld a, [wStarterAtkDef]
+	jr .next4
+.perfectDVs
 	ld a, 255
 	ld b, a
 .next4

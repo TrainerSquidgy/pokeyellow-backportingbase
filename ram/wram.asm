@@ -2062,7 +2062,9 @@ wPrinterOpcode:: db
 wd49b:: db
 wIsAStarter:: db
 wStarterPokemon:: db
-	ds 17
+wStarterAtkDef:: db
+wStarterSpdSpc:: db
+	ds 15
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
