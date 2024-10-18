@@ -1030,10 +1030,14 @@ OaksLabPlayerReceivedMonText:
 	ld [wMonDataLocation], a
 	ld a, 5
 	ld [wCurEnemyLevel], a
+	ld a, 1
+	ld [wIsAStarter], a
 	ld a, STARTER_PIKACHU
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
 	call AddPartyMon
+	xor a
+	ld [wIsAStarter], a
 	ld a, LIGHT_BALL_GSC
 	ld [wPartyMon1CatchRate], a
 	call DisablePikachuOverworldSpriteDrawing

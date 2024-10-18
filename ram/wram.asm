@@ -2060,8 +2060,9 @@ wUnknownSerialFlag_d499:: db
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wd49b:: db
-
-	ds 19
+wIsAStarter:: db
+wStarterPokemon:: db
+	ds 17
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
