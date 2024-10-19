@@ -1259,3 +1259,24 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+TotodileDexEntry:
+	db "BIG JAW@"
+	db 2,0
+	dw 209
+	text_far _TotodileDexEntry
+	text_end
+
+CroconawDexEntry:
+	db "BIG JAW@"
+	db 3,7
+	dw 551
+	text_far _CroconawDexEntry
+	text_end
+	
+FeraligatrDexEntry:
+	db "BIG JAW@"
+	db 7,7
+	dw 1958
+	text_far _FeraligatrDexEntry
+	text_end

@@ -158,45 +158,45 @@
 	const DRAGONITE  ; 95
 	const MEWTWO     ; 96
 	const MEW        ; 97
-	const_skip               ; $1F
-	const_skip               ; $20
-	const_skip               ; $32
-	const_skip               ; $34
-	const_skip               ; $38
-	const_skip               ; $3D
-	const_skip               ; $3E
-	const_skip               ; $3F
-	const_skip               ; $43
-	const_skip               ; $44
-	const_skip               ; $45
-	const_skip               ; $4F
-	const_skip               ; $50
-	const_skip               ; $51
-	const_skip               ; $56
-	const_skip               ; $57
-	const_skip               ; $5E
-	const_skip               ; $5F
-	const_skip               ; $73
-	const_skip               ; $79
-	const_skip               ; $7A
-	const_skip               ; $7F
-	const_skip               ; $86
-	const_skip               ; $87
-	const_skip               ; $89
-	const_skip               ; $8C
-	const_skip               ; $92
-	const_skip               ; $9C
-	const_skip               ; $9F
-	const_skip               ; $A0
-	const_skip               ; $A1
-	const_skip               ; $A2
-	const_skip               ; $AC
-	const_skip               ; $AE
-	const_skip               ; $AF
-	const_skip               ; $B5
-	const FOSSIL_KABUTOPS    ; $B6
-	const FOSSIL_AERODACTYL  ; $B7
-	const MON_GHOST          ; $B8
+	const TOTODILE
+	const CROCONAW
+	const FERALIGATR
+	const_skip
+	const_skip
+	const_skip
+	const_skip
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const_skip               
+	const FOSSIL_KABUTOPS    
+	const FOSSIL_AERODACTYL  
+	const MON_GHOST          
 
 DEF NUM_POKEMON_INDEXES EQU const_value - 1
 

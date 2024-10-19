@@ -263,13 +263,13 @@ JynxPicFront::        INCBIN "gfx/pokemon/front/jynx.pic"
 JynxPicBack::         INCBIN "gfx/pokemon/back/jynxb.pic"
 ElectabuzzPicFront::  INCBIN "gfx/pokemon/front/electabuzz.pic"
 ElectabuzzPicBack::   INCBIN "gfx/pokemon/back/electabuzzb.pic"
+MagmarPicFront::      INCBIN "gfx/pokemon/front/magmar.pic"
+MagmarPicBack::       INCBIN "gfx/pokemon/back/magmarb.pic"
 
 
 
 SECTION "Pics 5", ROMX
 
-MagmarPicFront::      INCBIN "gfx/pokemon/front/magmar.pic"
-MagmarPicBack::       INCBIN "gfx/pokemon/back/magmarb.pic"
 PinsirPicFront::      INCBIN "gfx/pokemon/front/pinsir.pic"
 PinsirPicBack::       INCBIN "gfx/pokemon/back/pinsirb.pic"
 TaurosPicFront::      INCBIN "gfx/pokemon/front/tauros.pic"
@@ -320,14 +320,19 @@ MewtwoPicFront::       INCBIN "gfx/pokemon/front/mewtwo.pic"
 MewtwoPicBack::        INCBIN "gfx/pokemon/back/mewtwob.pic"
 MewPicFront::         INCBIN "gfx/pokemon/front/mew.pic"
 MewPicBack::          INCBIN "gfx/pokemon/back/mewb.pic"
-FossilKabutopsPic::   INCBIN "gfx/pokemon/front/fossilkabutops.pic"
-FossilAerodactylPic::  INCBIN "gfx/pokemon/front/fossilaerodactyl.pic"
-GhostPic::             INCBIN "gfx/battle/ghost.pic"
 
 
 
 SECTION "Pics 6", ROMX
-
+TotodilePicFront:: INCBIN "gfx/pokemon/front/totodile.pic"
+TotodilePicBack:: INCBIN "gfx/pokemon/back/totodileb.pic"
+CroconawPicFront:: INCBIN "gfx/pokemon/front/croconaw.pic"
+CroconawPicBack:: INCBIN "gfx/pokemon/back/croconawb.pic"
+FeraligatrPicFront:: INCBIN "gfx/pokemon/front/feraligatr.pic"
+FeraligatrPicBack:: INCBIN "gfx/pokemon/back/feraligatrb.pic"
+FossilKabutopsPic::   INCBIN "gfx/pokemon/front/fossilkabutops.pic"
+FossilAerodactylPic::  INCBIN "gfx/pokemon/front/fossilaerodactyl.pic"
+GhostPic::             INCBIN "gfx/battle/ghost.pic"
 YoungsterPic::     INCBIN "gfx/trainers/youngster.pic"
 BugCatcherPic::    INCBIN "gfx/trainers/bugcatcher.pic"
 LassPic::          INCBIN "gfx/trainers/lass.pic"
@@ -367,6 +372,10 @@ ErikaPic::         INCBIN "gfx/trainers/erika.pic"
 KogaPic::          INCBIN "gfx/trainers/koga.pic"
 BlainePic::        INCBIN "gfx/trainers/blaine.pic"
 SabrinaPic::       INCBIN "gfx/trainers/sabrina.pic"
+
+
+
+SECTION "Pics 7", ROMX
 GentlemanPic::     INCBIN "gfx/trainers/gentleman.pic"
 Rival2Pic::        INCBIN "gfx/trainers/rival2.pic"
 Rival3Pic::        INCBIN "gfx/trainers/rival3.pic"
@@ -375,10 +384,6 @@ ChannelerPic::     INCBIN "gfx/trainers/channeler.pic"
 AgathaPic::        INCBIN "gfx/trainers/agatha.pic"
 LancePic::         INCBIN "gfx/trainers/lance.pic"
 JessieJamesPic::   INCBIN "gfx/trainers/jessiejames.pic"
-
-
-SECTION "Pics 7", ROMX
-
 RedPicBack::       INCBIN "gfx/player/redb.pic"
 OldManPicBack::    INCBIN "gfx/battle/oldmanb.pic"
 ProfOakPicBack::   INCBIN "gfx/battle/prof.oakb.pic"

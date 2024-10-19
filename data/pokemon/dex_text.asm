@@ -1506,3 +1506,33 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_TotodileDexEntry::
+	text "This rough critter"
+	next "chomps at any"
+	next "moving object it"
+
+	page "sees. Turning your"
+	next "back on it is not"
+	next "recommended.@"
+	dex
+	
+_CroconawDexEntry::
+	text "The tips of its"
+	next "fangs are slanted"
+	next "backward. Once"
+
+	page "those fangs clamp"
+	next "down, the prey has"
+	next "no hope of escape.@"
+	dex
+
+_FeraligatrDexEntry::
+	text "Although it has a"
+	next "massive body, its"
+	next "powerful hind legs"
+
+	page "enable it to move"
+	next "quickly, even on"
+	next "the ground.@"
+	dex

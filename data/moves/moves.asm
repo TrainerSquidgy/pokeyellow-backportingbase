@@ -177,4 +177,5 @@ Moves:
 	move SUBSTITUTE,   SUBSTITUTE_EFFECT,            0, NORMAL,       100, 10
 	move FAINT_ATTACK, SWIFT_EFFECT,                60, DARK,         100, 20
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
+	move SCARY_FACE,   SPEED_DOWN2_EFFECT,           0, NORMAL,        90, 10
 	assert_table_length NUM_ATTACKS
