@@ -1019,7 +1019,7 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wStarterPokemon]
 	and a
 	jr nz, .NotPikachu
-	ld a, STARTER_PIKACHU
+	ld a, TOTODILE
 .NotPikachu
 	ld [wPlayerStarter], a
 	ld [wNamedObjectIndex], a
@@ -1039,7 +1039,7 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wStarterPokemon]
 	and a
 	jr nz, .NotPikachu2
-	ld a, STARTER_PIKACHU
+	ld a, TOTODILE
 .NotPikachu2
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
