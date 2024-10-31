@@ -165,6 +165,7 @@ AttackAnimationPointers:
 	dw SlashAnim
 	dw SubstituteAnim
 	dw FaintAttackAnim
+	dw SketchAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 	dw ShowPicAnim
@@ -1118,6 +1119,7 @@ ConversionAnim:
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	db -1 ; end
 
+SketchAnim:
 TriAttackAnim:
 	battle_anim TRI_ATTACK, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_1_TRIANGLE_TOSS, 1, 6

@@ -74,8 +74,10 @@ wFrequencyModifier:: db
 wTempoModifier:: db
 
 wc0f3:: dw
+wBattlePreviousEnemyAttack:: db
+wBattlePreviousPlayerAttack:: db
+	ds 9
 
-	ds 11
 
 
 SECTION "Sprite State Data", WRAM0

@@ -134,6 +134,8 @@ SetScrollXForSlidingPlayerBodyLeft:
 
 StartBattle:
 	xor a
+	ld [wBattlePreviousEnemyAttack], a
+	ld [wBattlePreviousPlayerAttack], a
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
 	ld [wActionResultOrTookBattleTurn], a
@@ -3242,6 +3244,7 @@ ExecutePlayerMove:
 	xor a
 	ldh [hWhoseTurn], a ; set player's turn
 	ld a, [wPlayerSelectedMove]
+	ld [wBattlePreviousPlayerAttack], a
 	inc a
 	jp z, ExecutePlayerMoveDone ; for selected move = FF, skip most of player's turn
 	xor a
@@ -5766,6 +5769,7 @@ RandomizeDamage:
 ; for more detailed commentary, see equivalent function for player side (ExecutePlayerMove)
 ExecuteEnemyMove:
 	ld a, [wEnemySelectedMove]
+	ld [wBattlePreviousEnemyAttack], a
 	inc a
 	jp z, ExecuteEnemyMoveDone
 	call PrintGhostText

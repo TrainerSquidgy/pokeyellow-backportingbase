@@ -275,3 +275,11 @@ _TradeCenterOpponentText::
 _ColosseumOpponentText::
 	text "!"
 	done
+
+_SketchedText::
+	text "<USER>"
+	line "SKETCHED "
+	cont "@"
+	text_ram wNameBuffer
+	text "!"
+	prompt
