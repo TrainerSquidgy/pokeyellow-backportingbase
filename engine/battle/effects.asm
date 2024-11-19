@@ -1555,13 +1555,19 @@ PlayBattleAnimationGotID:
 
 SnoreEffect:
 	ld de, wEnemyMonStatus
+	ld bc, wEnemyBattleStatus2
 	ldh a, [hWhoseTurn]
 	and a
 	jp nz, .sleepEffect
-	ld de, wBattleMonStatus	
+	ld de, wBattleMonStatus
+	ld bc, wPlayerBattleStatus2
+
 .sleepEffect
 	ld a, [de]
-	and SLP_MASK
-	ret nz
-	jp ConditionalPrintButItFailed
-	
+	ld b, a
+	and $7
+	ret z
+	ld a, 1
+	ld [wMoveMissed], a
+	ld hl, ButItFailedText
+	jp PrintText
