@@ -1,6 +1,6 @@
 MonsterNames::
 	table_width NAME_LENGTH - 1, MonsterNames
-db "BULBASAUR@"
+	db "BULBASAUR@"
 	db "IVYSAUR@@@"
 	db "VENUSAUR@@"
 	db "CHARMANDER"
@@ -151,8 +151,8 @@ db "BULBASAUR@"
 	db "DRAGONITE@"
 	db "MEWTWO@@@@"
 	db "MEW@@@@@@@"
-	db "MISSINGNO."
-	db "MISSINGNO."
+	db "TEDDIURSA@"
+	db "URSARING@@"
 	db "MISSINGNO."
 	db "MISSINGNO."
 	db "MISSINGNO."

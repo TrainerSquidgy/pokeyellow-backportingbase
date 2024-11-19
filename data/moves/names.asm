@@ -165,5 +165,6 @@ MoveNames::
 	li "SLASH"
 	li "SUBSTITUTE"
 	li "FAINT ATTACK"
+	li "SNORE"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

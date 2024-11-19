@@ -151,8 +151,8 @@ PokedexEntryPointers:
 	dw DragoniteDexEntry
 	dw MewtwoDexEntry
 	dw MewDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw TeddiursaDexEntry
+	dw UrsaringDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
@@ -1259,3 +1259,17 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+TeddiursaDexEntry:
+	db "LITTLE BEAR@"
+	db 2, 0
+	dw 190
+	text_far _TeddiursaDexEntry
+	text_end
+
+UrsaringDexEntry:
+	db "HIBERNANT@"
+	db 5, 11
+	dw 2770
+	text_far _UrsaringDexEntry
+	text_end

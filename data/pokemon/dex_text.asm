@@ -1506,3 +1506,23 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_TeddiursaDexEntry::
+	text "It always licks"
+	next "honey. Its palm"
+	next "tastes sweet"
+
+	page "because of all the"
+	next "honey it has"
+	next "absorbed."
+	dex
+
+_UrsaringDexEntry::
+	text "Although it has a"
+	next "large body, it is"
+	next "quite skilled at"
+
+	page "climbing trees. It"
+	next "eats and sleeps in"
+	next "the treetops."
+	dex

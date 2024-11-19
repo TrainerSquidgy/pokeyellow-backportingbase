@@ -2168,3 +2168,26 @@ VictreebelEvosMoves:
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
 	db 0
+
+TeddiursaEvosMoves:
+	db EVOLVE_LEVEL, 30, URSARING
+	db 0
+	db 8, LICK
+	db 15, FURY_SWIPES
+	db 22, FAINT_ATTACK
+	db 29, REST
+	db 36, SLASH
+	db 43, SNORE
+	db 50, THRASH
+	db 0
+	
+UrsaringEvosMoves:
+	db 0
+	db 8, LICK
+	db 15, FURY_SWIPES
+	db 22, FAINT_ATTACK
+	db 29, REST
+	db 39, SLASH
+	db 49, SNORE
+	db 59, THRASH
+	db 0
