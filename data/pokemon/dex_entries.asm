@@ -1259,3 +1259,17 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+SlugmaDexEntry:
+	db "LAVA@"
+	db 2,4
+	dw 772
+	text_far _SlugmaDexEntry
+	text_end
+	
+MagcargoDexEntry:
+	db "LAVA@"
+	db 2,7
+	dw 1213
+	text_far _MagcargoDexEntry
+	text_end
