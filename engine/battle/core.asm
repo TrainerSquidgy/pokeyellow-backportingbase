@@ -5537,6 +5537,26 @@ INCLUDE "data/types/type_matchups.asm"
 ; some tests that need to pass for a move to hit
 MoveHitTest:
 ; player's turn
+	ld hl, wPlayerBattleStatus1
+	ld de, wPlayerMoveEffect
+	ld bc, wEnemyMonStatus
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .snore_check
+; enemy's turn
+	ld hl, wEnemyBattleStatus1
+	ld de, wEnemyMoveEffect
+	ld bc, wBattleMonStatus
+.snore_check	
+	ld a, [de]
+	cp SNORE_EFFECT
+	jr nz, .not_snore
+	ld a, [bc]
+	and SLP_MASK
+	jp z, .moveMissed
+	
+	
+.not_snore
 	ld hl, wEnemyBattleStatus1
 	ld de, wPlayerMoveEffect
 	ld bc, wEnemyMonStatus
@@ -5984,6 +6004,18 @@ ExecuteEnemyMoveDone:
 ; checks for various status conditions affecting the enemy mon
 ; stores whether the mon cannot use a move this turn in Z flag
 CheckEnemyStatusConditions:
+
+
+	ld de, wPlayerMoveEffect
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .snore_check
+; enemy's turn
+	ld de, wEnemyMoveEffect
+.snore_check	
+	ld a, [de]
+	cp SNORE_EFFECT
+	ret z
 	ld hl, wEnemyMonStatus
 	ld a, [hl]
 	and SLP_MASK

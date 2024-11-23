@@ -161,8 +161,8 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
-	dw MissingNo20EvosMoves
+	dw TeddiursaEvosMoves
+	dw UrsaringEvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
 	dw MissingNo38EvosMoves

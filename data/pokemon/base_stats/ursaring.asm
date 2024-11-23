@@ -1,6 +1,6 @@
 	db DEX_URSARING ; pokedex id
 
-	db 60, 80,  50,  40,  50
+	db 90, 130,  75,  55,  75
 	;   hp  atk  def  spd  spc
 
 	db NORMAL, NORMAL ; type

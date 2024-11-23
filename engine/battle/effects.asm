@@ -1565,7 +1565,7 @@ SnoreEffect:
 .sleepEffect
 	ld a, [de]
 	ld b, a
-	and $7
+	and SLP_MASK
 	ret z
 	ld a, 1
 	ld [wMoveMissed], a
