@@ -1039,7 +1039,7 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wStarterPokemon]
 	and a
 	jr nz, .NotPikachu2
-	ld a, STARTER_PIKACHU
+	ld a, SENTRET
 .NotPikachu2
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
