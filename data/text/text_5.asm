@@ -275,3 +275,8 @@ _TradeCenterOpponentText::
 _ColosseumOpponentText::
 	text "!"
 	done
+
+_TargetRefusedGiftText::
+	text "But <TARGET>"
+	line "refused the gift!"
+	prompt

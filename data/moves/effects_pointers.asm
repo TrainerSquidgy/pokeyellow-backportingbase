@@ -49,6 +49,7 @@ MoveEffectPointerTable:
 	dw MistEffect                ; MIST_EFFECT
 	dw FocusEnergyEffect         ; FOCUS_ENERGY_EFFECT
 	dw RecoilEffect              ; RECOIL_EFFECT
+	
 	dw ConfusionEffect           ; CONFUSION_EFFECT
 	dw StatModifierUpEffect      ; ATTACK_UP2_EFFECT
 	dw StatModifierUpEffect      ; DEFENSE_UP2_EFFECT
@@ -78,7 +79,7 @@ MoveEffectPointerTable:
 	dw StatModifierDownEffect    ; unused effect
 	dw ConfusionSideEffect       ; CONFUSION_SIDE_EFFECT
 	dw TwoToFiveAttacksEffect    ; TWINEEDLE_EFFECT
-	dw NULL                      ; unused effect
+	dw NULL                      ; PRESENT_EFFECT ; Handled Elsewhere
 	dw SubstituteEffect          ; SUBSTITUTE_EFFECT
 	dw HyperBeamEffect           ; HYPER_BEAM_EFFECT
 	dw RageEffect                ; RAGE_EFFECT

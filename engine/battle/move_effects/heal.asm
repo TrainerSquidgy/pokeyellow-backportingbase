@@ -118,3 +118,90 @@ FellAsleepBecameHealthyText:
 RegainedHealthText:
 	text_far _RegainedHealthText
 	text_end
+
+
+
+HealPresentEffect_:
+	ldh a, [hWhoseTurn]
+	and a
+	ld de, wBattleMonHP
+	ld hl, wBattleMonMaxHP
+	jr nz, .healEffect
+	ld de, wEnemyMonHP
+	ld hl, wEnemyMonMaxHP
+.healEffect
+	ld a, [de]
+	cp [hl] ; most significant bytes comparison is ignored
+	        ; causes the move to miss if max HP is 255 or 511 points higher than the current HP
+	inc de
+	inc hl
+	ld a, [de]
+	sbc [hl]
+	jp z, .failed ; no effect if user's HP is already at its maximum
+	ld a, [hld]
+	ld [wHPBarMaxHP], a
+	ld c, a
+	ld a, [hl]
+	ld [wHPBarMaxHP+1], a
+	ld b, a
+	jr z, .gotHPAmountToHeal
+	srl b
+	srl b
+	rr c
+.gotHPAmountToHeal
+; update HP
+	ld a, [de]
+	ld [wHPBarOldHP], a
+	add c
+	ld [de], a
+	ld [wHPBarNewHP], a
+	dec de
+	ld a, [de]
+	ld [wHPBarOldHP+1], a
+	adc b
+	ld [de], a
+	ld [wHPBarNewHP+1], a
+	inc hl
+	inc de
+	ld a, [de]
+	dec de
+	sub [hl]
+	dec hl
+	ld a, [de]
+	sbc [hl]
+	jr c, .playAnim
+; copy max HP to current HP if an overflow occurred
+	ld a, [hli]
+	ld [de], a
+	ld [wHPBarNewHP+1], a
+	inc de
+	ld a, [hl]
+	ld [de], a
+	ld [wHPBarNewHP], a
+.playAnim
+	ld hl, PlayCurrentMoveAnimation
+	call EffectCallBattleCore
+	ldh a, [hWhoseTurn]
+	and a
+	hlcoord 10, 9
+	ld a, $1
+	jr z, .updateHPBar
+	hlcoord 2, 2
+	xor a
+.updateHPBar
+	ld [wHPBarType], a
+	predef UpdateHPBar2
+	ld hl, DrawHUDsAndHPBars
+	call EffectCallBattleCore
+	ld hl, RegainedHealthText
+	jp PrintText
+.failed
+	ld c, 50
+	call DelayFrames
+	call EffectCallBattleCore
+	ld hl, TargetRefusedGiftText
+	jp PrintText
+
+TargetRefusedGiftText:
+	text_far _TargetRefusedGiftText
+	text_end

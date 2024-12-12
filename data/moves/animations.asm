@@ -164,6 +164,7 @@ AttackAnimationPointers:
 	dw SuperFangAnim
 	dw SlashAnim
 	dw SubstituteAnim
+	dw EggBombAnim
 	dw FaintAttackAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
