@@ -91,7 +91,7 @@ HealEffect_:
 	and a
 	hlcoord 10, 9
 	ld a, $1
-	jr z, .updateHPBar
+	jr nz, .updateHPBar
 	hlcoord 2, 2
 	xor a
 .updateHPBar
@@ -119,6 +119,10 @@ RegainedHealthText:
 	text_far _RegainedHealthText
 	text_end
 
+TargetRegainedHealthText:
+	text_far _TargetRegainedHealthText
+	text_end
+
 
 
 HealPresentEffect_:
@@ -126,9 +130,11 @@ HealPresentEffect_:
 	and a
 	ld de, wBattleMonHP
 	ld hl, wBattleMonMaxHP
+	ld a, [wPlayerMoveNum]
 	jr nz, .healEffect
 	ld de, wEnemyMonHP
 	ld hl, wEnemyMonMaxHP
+	ld a, [wEnemyMoveNum]
 .healEffect
 	ld a, [de]
 	cp [hl] ; most significant bytes comparison is ignored
@@ -136,8 +142,10 @@ HealPresentEffect_:
 	inc de
 	inc hl
 	ld a, [de]
-	sbc [hl]
+	srl [hl]
+	srl [hl]
 	jp z, .failed ; no effect if user's HP is already at its maximum
+	
 	ld a, [hld]
 	ld [wHPBarMaxHP], a
 	ld c, a
@@ -145,6 +153,7 @@ HealPresentEffect_:
 	ld [wHPBarMaxHP+1], a
 	ld b, a
 	jr z, .gotHPAmountToHeal
+; Recover and Softboiled only heal for half the mon's max HP
 	srl b
 	srl b
 	rr c
@@ -185,22 +194,22 @@ HealPresentEffect_:
 	and a
 	hlcoord 10, 9
 	ld a, $1
-	jr z, .updateHPBar
+	jr nz, .updateHPBar
 	hlcoord 2, 2
 	xor a
 .updateHPBar
 	ld [wHPBarType], a
-	predef UpdateHPBar2
+	predef UpdateHPBar
 	ld hl, DrawHUDsAndHPBars
 	call EffectCallBattleCore
-	ld hl, RegainedHealthText
+	ld hl, TargetRegainedHealthText
 	jp PrintText
 .failed
 	ld c, 50
 	call DelayFrames
-	call EffectCallBattleCore
-	ld hl, TargetRefusedGiftText
-	jp PrintText
+	ld hl, PrintButItFailedText_
+	jp EffectCallBattleCore
+
 
 TargetRefusedGiftText:
 	text_far _TargetRefusedGiftText

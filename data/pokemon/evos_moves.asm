@@ -161,7 +161,7 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
+	dw DelibirdEvosMoves
 	dw MissingNo20EvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
@@ -554,7 +554,7 @@ TangelaEvosMoves:
 	db 48, GROWTH
 	db 0
 
-MissingNo1FEvosMoves:
+DelibirdEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset

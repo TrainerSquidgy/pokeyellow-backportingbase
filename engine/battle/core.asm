@@ -4330,6 +4330,7 @@ GetDamageVarsForPlayerAttack:
 	ld hl, wDamage ; damage to eventually inflict, initialise to zero
 	ldi [hl], a
 	ld [hl], a
+	call CheckForPresent
 	ld hl, wPlayerMovePower
 	ld a, [hli]
 	and a
@@ -4443,6 +4444,7 @@ GetDamageVarsForEnemyAttack:
 	xor a
 	ld [hli], a
 	ld [hl], a
+	call CheckForPresent
 	ld hl, wEnemyMovePower
 	ld a, [hli]
 	ld d, a ; d = move power
