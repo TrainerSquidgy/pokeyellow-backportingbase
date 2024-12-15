@@ -1585,7 +1585,7 @@ CheckForPresent:
 	ld hl, wPlayerMovePower
 	ld b, 120
 	cp 20 percent
-	jp c, .temporaryzeropower
+	jp c, HealForPresent
 	cp 30 percent
 	jr c, .done2
 	ld b, 80
@@ -1602,4 +1602,6 @@ CheckForPresent:
 	jr .done2
 	
 HealForPresent:
+	xor a
+	ld [hl], a
 	jpfar HealPresentEffect_

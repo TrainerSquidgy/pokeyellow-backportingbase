@@ -282,6 +282,6 @@ _ColosseumOpponentText::
 	done
 
 _TargetRefusedGiftText::
-	text "But <TARGET>"
+	text "<TARGET>"
 	line "refused the gift!"
 	prompt

@@ -128,24 +128,49 @@ TargetRegainedHealthText:
 HealPresentEffect_:
 	ldh a, [hWhoseTurn]
 	and a
-	ld de, wBattleMonHP
-	ld hl, wBattleMonMaxHP
-	ld a, [wPlayerMoveNum]
-	jr nz, .healEffect
 	ld de, wEnemyMonHP
 	ld hl, wEnemyMonMaxHP
 	ld a, [wEnemyMoveNum]
+	jr z, .healEffect
+	ld de, wBattleMonHP
+	ld hl, wBattleMonMaxHP
+	ld a, [wPlayerMoveNum]
 .healEffect
+	ld b, a
 	ld a, [de]
 	cp [hl] ; most significant bytes comparison is ignored
 	        ; causes the move to miss if max HP is 255 or 511 points higher than the current HP
 	inc de
 	inc hl
 	ld a, [de]
-	srl [hl]
-	srl [hl]
+	sbc [hl]
 	jp z, .failed ; no effect if user's HP is already at its maximum
-	
+	ld a, b
+	cp REST
+	jr nz, .healHP
+	push hl
+	push de
+	push af
+	ld c, 50
+	call DelayFrames
+	ld hl, wBattleMonStatus
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .restEffect
+	ld hl, wEnemyMonStatus
+.restEffect
+	ld a, [hl]
+	and a
+	ld [hl], 2 ; clear status and set number of turns asleep to 2
+	ld hl, StartedSleepingEffect ; if mon didn't have an status
+	jr z, .printRestText
+	ld hl, FellAsleepBecameHealthyText ; if mon had an status
+.printRestText
+	call PrintText
+	pop af
+	pop de
+	pop hl
+.healHP
 	ld a, [hld]
 	ld [wHPBarMaxHP], a
 	ld c, a
@@ -154,7 +179,6 @@ HealPresentEffect_:
 	ld b, a
 	jr z, .gotHPAmountToHeal
 ; Recover and Softboiled only heal for half the mon's max HP
-	srl b
 	srl b
 	rr c
 .gotHPAmountToHeal
@@ -207,6 +231,8 @@ HealPresentEffect_:
 .failed
 	ld c, 50
 	call DelayFrames
+	ld hl, TargetRefusedGiftText
+	call PrintText
 	ld hl, PrintButItFailedText_
 	jp EffectCallBattleCore
 
