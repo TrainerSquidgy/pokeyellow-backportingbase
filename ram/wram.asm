@@ -2064,7 +2064,9 @@ wIsAStarter:: db
 wStarterPokemon:: db
 wStarterAtkDef:: db
 wStarterSpdSpc:: db
-	ds 15
+wWeatherType:: db
+wWeatherTurnsRemaining:: db
+	ds 13
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

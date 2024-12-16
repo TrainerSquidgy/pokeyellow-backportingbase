@@ -4330,6 +4330,7 @@ GetDamageVarsForPlayerAttack:
 	ld hl, wDamage ; damage to eventually inflict, initialise to zero
 	ldi [hl], a
 	ld [hl], a
+	call CheckForWeather
 	ld hl, wPlayerMovePower
 	ld a, [hli]
 	and a
@@ -6949,3 +6950,33 @@ PlayMoveAnimation:
 	predef MoveAnimation
 	callfar Func_78e98
 	ret
+
+CheckForWeather:
+	ld a, [wWeatherTurnsRemaining]
+	and a
+	ret z
+	ld a, [wWeatherType]
+	and a
+	ret z
+	dec a
+	jr z, .Sun
+	dec a
+	jr z, .Rain
+	
+	
+.Sun
+	ld a, [wPlayerMoveType]
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .doSunTypeCheck
+	ld a, [wEnemyMoveType]
+	cp FIRE
+	jr z, .SunFire
+	cp WATER
+	jr z, .SunWater
+	ret
+	
+.SunFire
+	sla a
+
+.SunWater
