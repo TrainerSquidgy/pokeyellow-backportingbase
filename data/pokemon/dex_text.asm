@@ -1506,3 +1506,23 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_MarillDexEntry::
+	text "The fur on its"
+	next "body naturally"
+	next "repels water. It"
+
+	page "can stay dry, even"
+	next "when it plays in"
+	next "the water.@"
+	dex
+	
+_AzumarillDexEntry::
+	text "The bubble-like"
+	next "pattern on its"
+	next "stomach helps it"
+
+	page "camouflage itself"
+	next "when it's in the"
+	next "water.@"
+	dex
