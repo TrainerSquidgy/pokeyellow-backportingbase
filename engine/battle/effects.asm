@@ -1578,3 +1578,16 @@ RainDanceEffect:
 	ld hl, DownpourText
 	jp PrintText
 	ret
+	
+RolloutEffect:
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .player
+	ld hl, wEnemyBattleStatus3
+.player
+	bit IN_ROLLOUT, [hl]
+	ret nz
+	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
+	ret
+

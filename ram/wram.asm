@@ -2066,7 +2066,9 @@ wStarterAtkDef:: db
 wStarterSpdSpc:: db
 wWeatherType:: db
 wWeatherTurnsRemaining:: db
-	ds 13
+wPlayerRolloutCount:: db
+wEnemyRolloutCount:: db
+	ds 11
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

@@ -304,6 +304,9 @@ MainInBattleLoop:
 	ld a, [wPlayerBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; check if the player is using Rage or needs to recharge
 	jr nz, .selectEnemyMove
+	ld a, [wPlayerBattleStatus3]
+	bit IN_ROLLOUT, a
+	jr nz, .selectEnemyMove
 ; the player is not using Rage and doesn't need to recharge
 	ld hl, wEnemyBattleStatus1
 	res FLINCHED, [hl] ; reset flinch bit
@@ -776,6 +779,7 @@ FaintEnemyPokemon:
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
+	ld [wEnemyRolloutCount], a
 	ld [wEnemyDisabledMove], a
 	ld [wEnemyDisabledMoveNumber], a
 	ld [wEnemyMonMinimized], a
@@ -1795,6 +1799,7 @@ SendOutMon:
 	ld [hl], a
 	ld [wPlayerDisabledMove], a
 	ld [wPlayerDisabledMoveNumber], a
+	ld [wPlayerRolloutCount], a
 	ld [wPlayerMonMinimized], a
 	ld b, SET_PAL_BATTLE
 	call RunPaletteCommand
@@ -3113,6 +3118,9 @@ SelectEnemyMove:
 	ld a, [wEnemyBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; need to recharge or using rage
 	ret nz
+	ld a, [wEnemyBattleStatus3]
+	bit IN_ROLLOUT, a
+	ret nz
 	ld hl, wEnemyBattleStatus1
 	ld a, [hl]
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
@@ -3325,6 +3333,7 @@ PlayerCalcMoveDamage:
 	jp z, playerCheckIfFlyOrChargeEffect ; for moves with 0 BP, skip any further damage calculation and, for now, skip MoveHitTest
 	               ; for these moves, accuracy tests will only occur if they are called as part of the effect itself
 	call AdjustDamageForMoveType
+	call CalculatePlayerRolloutDamage
 	call RandomizeDamage
 .moveHitTest
 	call MoveHitTest
@@ -3747,7 +3756,7 @@ CheckPlayerStatusConditions:
 .RageCheck
 	ld a, [wPlayerBattleStatus2]
 	bit USING_RAGE, a ; is mon using rage?
-	jp z, .checkPlayerStatusConditionsDone ; if we made it this far, mon can move normally this turn
+	jp z, .RolloutCheck
 	ld a, RAGE
 	ld [wNamedObjectIndex], a
 	call GetMoveName
@@ -3756,7 +3765,17 @@ CheckPlayerStatusConditions:
 	ld [wPlayerMoveEffect], a
 	ld hl, PlayerCanExecuteMove
 	jp .returnToHL
-
+	
+.RolloutCheck
+	ld a, [wPlayerBattleStatus3]
+	bit IN_ROLLOUT, a ; is mon using rollout?
+	jp z, .checkPlayerStatusConditionsDone ; if we made it this far, mon can move normally this turn
+	ld a, ROLLOUT
+	ld [wPlayerMoveNum], a
+	ld [wNamedObjectIndex], a
+	ld hl, RolloutText
+	call PrintText
+	ld hl, PlayerCalcMoveDamage ; skip DecrementPP
 .returnToHL
 	xor a
 	ret
@@ -3814,6 +3833,11 @@ UnleashedEnergyText:
 	text_far _UnleashedEnergyText
 	text_end
 
+RolloutText:
+	text_far _RolloutText
+	text_end
+	
+	
 ThrashingAboutText:
 	text_far _ThrashingAboutText
 	text_end
@@ -5663,10 +5687,18 @@ MoveHitTest:
 	and a
 	jr z, .playerTurn2
 .enemyTurn2
+	xor a
+	ld [wEnemyRolloutCount], a
+	ld hl, wEnemyBattleStatus3
+	res IN_ROLLOUT, [hl]
 	ld hl, wEnemyBattleStatus1
 	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
 	ret
 .playerTurn2
+	xor a
+	ld [wPlayerRolloutCount], a
+	ld hl, wPlayerBattleStatus3
+	res IN_ROLLOUT, [hl]
 	ld hl, wPlayerBattleStatus1
 	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
 	ret
@@ -5870,6 +5902,7 @@ EnemyCalcMoveDamage:
 	call CalculateDamage
 	jp z, EnemyCheckIfFlyOrChargeEffect
 	call AdjustDamageForMoveType
+	call CalculateEnemyRolloutDamage
 	call RandomizeDamage
 
 EnemyMoveHitTest:
@@ -6238,7 +6271,7 @@ CheckEnemyStatusConditions:
 	jp .enemyReturnToHL
 .checkIfThrashingAbout
 	bit THRASHING_ABOUT, [hl] ; is mon using thrash or petal dance?
-	jr z, .checkIfUsingMultiturnMove
+	jr z, .RolloutCheck
 	ld a, THRASH
 	ld [wEnemyMoveNum], a
 	ld hl, ThrashingAboutText
@@ -6257,6 +6290,17 @@ CheckEnemyStatusConditions:
 	inc a ; confused for 2-5 turns
 	ld [wEnemyConfusedCounter], a
 	pop hl ; skip DecrementPP
+	jp .enemyReturnToHL
+.RolloutCheck
+	ld a, [wEnemyBattleStatus3]
+	bit IN_ROLLOUT, a ; is mon using rollout?
+	jp z, .checkIfUsingMultiturnMove ; if we made it this far, mon can move normally this turn
+	ld a, ROLLOUT
+	ld [wEnemyMoveNum], a
+	ld [wNamedObjectIndex], a
+	ld hl, RolloutText
+	call PrintText
+	ld hl, EnemyCalcMoveDamage ; skip DecrementPP
 	jp .enemyReturnToHL
 .checkIfUsingMultiturnMove
 	bit USING_TRAPPING_MOVE, [hl] ; is mon using multi-turn move?
@@ -7175,3 +7219,80 @@ HandleWeatherEffectsOnAccuracy:
 	ld a, 128
 	ld [wPlayerMoveAccuracy], a
 	ret
+	
+CalculatePlayerRolloutDamage:
+	ld a, [wPlayerUsedMove]
+	cp ROLLOUT
+	ret nz
+	ld a, [wPlayerRolloutCount]
+	inc a
+	ld b, a
+	cp 5
+	jr z, .RolloutMaxedOut
+	ld [wPlayerRolloutCount], a	
+	jr .DoneRolloutCounter
+.RolloutMaxedOut	
+	xor a
+	ld [wPlayerRolloutCount], a
+	ld hl, wPlayerBattleStatus3
+	res IN_ROLLOUT, [hl]
+.DoneRolloutCounter	
+	ld a, [wPlayerBattleStatus3]
+	bit CURLED, a
+	jr z, .not_curled
+	inc b
+.not_curled
+.loop
+	dec b
+	jr z, .done_damage
+
+	ld hl, wDamage + 1
+	sla [hl]
+	dec hl
+	rl [hl]
+	jr nc, .loop
+
+	ld a, $ff
+	ld [hli], a
+	ld [hl], a
+
+.done_damage
+	ret
+	
+CalculateEnemyRolloutDamage:
+	ld a, [wEnemyUsedMove]
+	cp ROLLOUT
+	ret nz
+	ld a, [wEnemyRolloutCount]
+	inc a
+	ld b, a
+	cp 5
+	jr z, .RolloutMaxedOut
+	ld [wEnemyRolloutCount], a	
+	jr .DoneRolloutCounter
+.RolloutMaxedOut	
+	xor a
+	ld [wEnemyRolloutCount], a
+	ld hl, wEnemyBattleStatus3
+	res IN_ROLLOUT, [hl]
+.DoneRolloutCounter	
+	ld a, [wEnemyBattleStatus3]
+	bit CURLED, a
+	jr z, .not_curled
+	inc b
+.not_curled
+.loop
+	dec b
+	jr z, .done_damage
+
+	ld hl, wDamage + 1
+	sla [hl]
+	dec hl
+	rl [hl]
+	jr nc, .loop
+
+	ld a, $ff
+	ld [hli], a
+	ld [hl], a
+
+.done_damage
