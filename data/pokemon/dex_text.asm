@@ -1506,3 +1506,23 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_SunkernDexEntry::
+	text "It is very weak."
+	next "Its only means of"
+	next "defense is to"
+
+	page "shake its leaves"
+	next "desperately at its"
+	next "attacker.@"
+	dex
+	
+_SunfloraDexEntry::
+	text "As the hot season"
+	next "approaches, the"
+	next "petals on this"
+
+	page "#MON's face"
+	next "become more vivid"
+	next "and lively.@"
+	dex

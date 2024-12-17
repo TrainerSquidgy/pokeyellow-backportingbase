@@ -169,6 +169,8 @@ MoveSoundTable:
 	db SFX_BATTLE_0C,          $f0, $04 ; SUNNY_DAY
 	db SFX_BATTLE_0C,          $f0, $04 ; RAIN_DANCE
 	db SFX_BATTLE_0C,          $f0, $04 ; ROLLOUT
+	db SFX_BATTLE_0C,          $f0, $04 ; SYNTHESIS
+	db SFX_BATTLE_24,          $40, $c0 ; MEGA_DRAIN
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

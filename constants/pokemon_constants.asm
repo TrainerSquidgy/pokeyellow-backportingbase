@@ -158,8 +158,8 @@
 	const DRAGONITE  ; 95
 	const MEWTWO     ; 96
 	const MEW        ; 97
-	const_skip               ; $1F
-	const_skip               ; $20
+	const SUNKERN            ; $1F
+	const SUNFLORA           ; $20
 	const_skip               ; $32
 	const_skip               ; $34
 	const_skip               ; $38
