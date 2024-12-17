@@ -3333,7 +3333,6 @@ PlayerCalcMoveDamage:
 	jp z, playerCheckIfFlyOrChargeEffect ; for moves with 0 BP, skip any further damage calculation and, for now, skip MoveHitTest
 	               ; for these moves, accuracy tests will only occur if they are called as part of the effect itself
 	call AdjustDamageForMoveType
-	call CalculatePlayerRolloutDamage
 	call RandomizeDamage
 .moveHitTest
 	call MoveHitTest
@@ -3413,6 +3412,7 @@ MirrorMoveCheck:
 	jr z, .notDone
 	jp ExecutePlayerMoveDone ; otherwise, we're done if the move missed
 .moveDidNotMiss
+	call CalculatePlayerRolloutDamage
 	call ApplyAttackToEnemyPokemon
 	call PrintCriticalOHKOText
 	callfar DisplayEffectiveness
@@ -7221,8 +7221,8 @@ HandleWeatherEffectsOnAccuracy:
 	ret
 	
 CalculatePlayerRolloutDamage:
-	ld a, [wPlayerUsedMove]
-	cp ROLLOUT
+	ld a, [wPlayerMoveEffect]
+	cp ROLLOUT_EFFECT
 	ret nz
 	ld a, [wPlayerRolloutCount]
 	inc a
@@ -7260,8 +7260,8 @@ CalculatePlayerRolloutDamage:
 	ret
 	
 CalculateEnemyRolloutDamage:
-	ld a, [wEnemyUsedMove]
-	cp ROLLOUT
+	ld a, [wEnemyMoveEffect]
+	cp ROLLOUT_EFFECT
 	ret nz
 	ld a, [wEnemyRolloutCount]
 	inc a
@@ -7296,3 +7296,4 @@ CalculateEnemyRolloutDamage:
 	ld [hl], a
 
 .done_damage
+	ret

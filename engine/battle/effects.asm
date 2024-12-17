@@ -524,6 +524,16 @@ UpdateStatDone:
 	call nz, Bankswitch
 	pop de
 .notMinimize
+	cp DEFENSE_CURL
+	jr nz, .notDefenseCurl
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .PlayerCurl
+	ld hl, wEnemyBattleStatus3
+.PlayerCurl
+	set CURLED, [hl]
+.notDefenseCurl
 	call PlayCurrentMoveAnimation
 	ld a, [de]
 	cp MINIMIZE
