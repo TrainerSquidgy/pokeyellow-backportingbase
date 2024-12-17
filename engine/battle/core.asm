@@ -3333,6 +3333,7 @@ PlayerCalcMoveDamage:
 	jp z, playerCheckIfFlyOrChargeEffect ; for moves with 0 BP, skip any further damage calculation and, for now, skip MoveHitTest
 	               ; for these moves, accuracy tests will only occur if they are called as part of the effect itself
 	call AdjustDamageForMoveType
+	call CalculatePlayerRolloutDamage
 	call RandomizeDamage
 .moveHitTest
 	call MoveHitTest
@@ -3412,7 +3413,6 @@ MirrorMoveCheck:
 	jr z, .notDone
 	jp ExecutePlayerMoveDone ; otherwise, we're done if the move missed
 .moveDidNotMiss
-	call CalculatePlayerRolloutDamage
 	call ApplyAttackToEnemyPokemon
 	call PrintCriticalOHKOText
 	callfar DisplayEffectiveness
@@ -3462,6 +3462,12 @@ MultiHitText:
 	text_end
 
 ExecutePlayerMoveDone:
+	ld a, [wPlayerSelectedMove]
+	cp ROLLOUT
+	jr z, .IsRollout
+	xor a
+	ld [wPlayerRolloutCount], a
+.IsRollout	
 	xor a
 	ld [wActionResultOrTookBattleTurn], a
 	ld b, 1
@@ -3638,10 +3644,10 @@ CheckPlayerStatusConditions:
 .ParalysisCheck
 	ld hl, wBattleMonStatus
 	bit PAR, [hl]
-	jr z, .BideCheck
+	jr z, .RolloutCheck
 	call BattleRandom
 	cp $3F ; 25% to be fully paralyzed
-	jr nc, .BideCheck
+	jr nc, .RolloutCheck
 	ld hl, FullyParalyzedText
 	call PrintText
 
@@ -3666,6 +3672,19 @@ CheckPlayerStatusConditions:
 .NotFlyOrChargeEffect
 	ld hl, ExecutePlayerMoveDone
 	jp .returnToHL ; if using a two-turn move, we need to recharge the first turn
+
+	
+.RolloutCheck
+	ld a, [wPlayerBattleStatus3]
+	bit IN_ROLLOUT, a ; is mon using rollout?
+	jp z, .BideCheck ; if we made it this far, mon can move normally this turn
+	ld a, ROLLOUT
+	ld [wPlayerMoveNum], a
+	ld [wNamedObjectIndex], a
+	ld hl, RolloutText
+	call PrintText
+	ld hl, PlayerCalcMoveDamage ; skip DecrementPP
+	jp .returnToHL
 
 .BideCheck
 	ld hl, wPlayerBattleStatus1
@@ -3756,7 +3775,7 @@ CheckPlayerStatusConditions:
 .RageCheck
 	ld a, [wPlayerBattleStatus2]
 	bit USING_RAGE, a ; is mon using rage?
-	jp z, .RolloutCheck
+	jp z, .checkPlayerStatusConditionsDone
 	ld a, RAGE
 	ld [wNamedObjectIndex], a
 	call GetMoveName
@@ -3765,17 +3784,7 @@ CheckPlayerStatusConditions:
 	ld [wPlayerMoveEffect], a
 	ld hl, PlayerCanExecuteMove
 	jp .returnToHL
-	
-.RolloutCheck
-	ld a, [wPlayerBattleStatus3]
-	bit IN_ROLLOUT, a ; is mon using rollout?
-	jp z, .checkPlayerStatusConditionsDone ; if we made it this far, mon can move normally this turn
-	ld a, ROLLOUT
-	ld [wPlayerMoveNum], a
-	ld [wNamedObjectIndex], a
-	ld hl, RolloutText
-	call PrintText
-	ld hl, PlayerCalcMoveDamage ; skip DecrementPP
+
 .returnToHL
 	xor a
 	ret
@@ -6035,12 +6044,24 @@ HitXTimesText:
 	text_end
 
 ExecuteEnemyMoveDone:
+	ld a, [wEnemySelectedMove]
+	cp ROLLOUT
+	jr z, .IsRollout
+	xor a
+	ld [wEnemyRolloutCount], a
+.IsRollout	
 	ld b, $1
 	ret
 
 ; checks for various status conditions affecting the enemy mon
 ; stores whether the mon cannot use a move this turn in Z flag
 CheckEnemyStatusConditions:
+	ld a, [wEnemySelectedMove]
+	cp ROLLOUT
+	jr nz, .IsRollout
+	xor a
+	ld [wEnemyRolloutCount], a
+.IsRollout
 	ld hl, wEnemyMonStatus
 	ld a, [hl]
 	and SLP_MASK
@@ -7221,9 +7242,6 @@ HandleWeatherEffectsOnAccuracy:
 	ret
 	
 CalculatePlayerRolloutDamage:
-	ld a, [wPlayerMoveEffect]
-	cp ROLLOUT_EFFECT
-	ret nz
 	ld a, [wPlayerRolloutCount]
 	inc a
 	ld b, a
@@ -7260,9 +7278,6 @@ CalculatePlayerRolloutDamage:
 	ret
 	
 CalculateEnemyRolloutDamage:
-	ld a, [wEnemyMoveEffect]
-	cp ROLLOUT_EFFECT
-	ret nz
 	ld a, [wEnemyRolloutCount]
 	inc a
 	ld b, a
