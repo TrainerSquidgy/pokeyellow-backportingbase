@@ -2068,7 +2068,8 @@ wWeatherType:: db
 wWeatherTurnsRemaining:: db
 wPlayerRolloutCount:: db
 wEnemyRolloutCount:: db
-	ds 11
+wTestRamSlot:: db
+	ds 10
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

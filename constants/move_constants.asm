@@ -174,6 +174,8 @@
 	const SUNNY_DAY
 	const RAIN_DANCE
 	const ROLLOUT
+	const HEAL_BELL
+	const MILK_DRINK
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

@@ -309,3 +309,8 @@ _RolloutText::
 	text "<USER>"
 	line "used ROLLOUT!"
 	prompt
+	
+_BellChimedText::
+	text "A bell chimed!"
+	line ""
+	prompt

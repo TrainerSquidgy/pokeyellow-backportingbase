@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_MiltankDexEntry::
+	text "In order to milk a"
+	next "MILTANK, one must"
+	next "have a knack for"
+
+	page "rhythmically pull-"
+	next "ing up and down"
+	next "on its udders.@"
+	dex

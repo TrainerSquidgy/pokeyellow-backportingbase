@@ -161,7 +161,7 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
+	dw MiltankEvosMoves
 	dw MissingNo20EvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
@@ -2167,4 +2167,15 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+MiltankEvosMoves:
+	db 0
+	db 8, DEFENSE_CURL
+	db 13, STOMP
+	db 19, MILK_DRINK
+	db 26, BIDE
+	db 34, ROLLOUT
+	db 43, BODY_SLAM
+	db 53, HEAL_BELL
 	db 0

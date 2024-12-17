@@ -1601,3 +1601,19 @@ RolloutEffect:
 	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
 	ret
 
+HealBellEffect:
+	ld hl, wBattleMonStatus
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .playerTurn
+	ld hl, wEnemyMonStatus
+.playerTurn
+	xor a
+	ld [hl], a
+	ld hl, BellChimedText
+	jp PrintText
+	
+	
+BellChimedText:
+	text_far _BellChimedText
+	text_end

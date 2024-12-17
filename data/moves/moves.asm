@@ -179,5 +179,7 @@ Moves:
 	move SUNNY_DAY,    SUN_EFFECT,                   0, FIRE,         100,  5
 	move RAIN_DANCE,   RAIN_EFFECT,                  0, WATER,        100,  5
 	move ROLLOUT,	   ROLLOUT_EFFECT,              30, ROCK,          90, 20
+	move HEAL_BELL,    HEAL_BELL_EFFECT,             0, NORMAL,       100,  5
+	move MILK_DRINK,   HEAL_EFFECT,                  0, NORMAL,       100, 10
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS
