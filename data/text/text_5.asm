@@ -275,3 +275,33 @@ _TradeCenterOpponentText::
 _ColosseumOpponentText::
 	text "!"
 	done
+
+
+_RainContinuesToFall::
+	text "Rain continues to"
+	line "fall."
+	prompt
+
+_TheSunlightIsStrong::
+	text "The sunlight is"
+	line "strong."
+	prompt
+
+_TheRainStopped::
+	text "The rain stopped."
+	prompt
+
+_TheSunlightFaded::
+	text "The sunlight"
+	line "faded."
+	prompt
+
+_DownpourText::
+	text "A downpour"
+	line "started!"
+	prompt
+
+_SunGotBrightText::
+	text "The sunlight got"
+	line "bright!"
+	prompt
