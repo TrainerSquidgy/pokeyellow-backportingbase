@@ -181,6 +181,8 @@ HealPresentEffect_:
 ; Recover and Softboiled only heal for half the mon's max HP
 	srl b
 	rr c
+	srl b
+	rr c
 .gotHPAmountToHeal
 ; update HP
 	ld a, [de]
