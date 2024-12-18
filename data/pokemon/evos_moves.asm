@@ -161,7 +161,7 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
+	dw CorsolaEvosMoves
 	dw MissingNo20EvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
@@ -2167,4 +2167,15 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+CorsolaEvosMoves:
+	db 0
+	db 7, HARDEN
+	db 13, BUBBLE
+	db 19, RECOVER
+	db 25, BUBBLEBEAM
+	db 31, SPIKE_CANNON
+	db 37, MIRROR_COAT
+	db 43, ANCIENTPOWER
 	db 0

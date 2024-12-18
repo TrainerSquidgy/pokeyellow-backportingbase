@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_CorsolaDexEntry::
+	text "The points on its"
+	next "head absorb"
+	next "nutrients from"
+
+	page "clean water. They"
+	next "cannot survive in"
+	next "polluted water.@"
+	dex

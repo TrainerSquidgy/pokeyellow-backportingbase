@@ -165,10 +165,11 @@ AttackAnimationPointers:
 	dw SlashAnim
 	dw SubstituteAnim
 	dw FaintAttackAnim
-	dw UnusedAnim
-	dw UnusedAnim
-	dw UnusedAnim
-	dw CounterAnim
+	dw UnusedAnim ; Sunny Day
+	dw UnusedAnim ; Rain Dance
+	dw UnusedAnim ; Rollout
+	dw CounterAnim ; Mirror Coat
+	dw RockThrowAnim ;AncientPower
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 	dw ShowPicAnim

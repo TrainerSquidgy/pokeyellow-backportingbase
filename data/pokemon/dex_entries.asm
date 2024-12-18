@@ -1259,3 +1259,10 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+CorsolaDexEntry:
+	db "CORAL@"
+	db 2,00
+	dw 110
+	text_far _CorsolaDexEntry
+	text_end
