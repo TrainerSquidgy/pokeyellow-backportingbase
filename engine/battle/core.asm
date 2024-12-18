@@ -402,7 +402,18 @@ MainInBattleLoop:
 .playerDidNotUseCounter
 	ld a, [wEnemySelectedMove]
 	cp COUNTER
-	jr z, .playerMovesFirst ; if enemy used Counter and player didn't
+	jp z, .playerMovesFirst ; if enemy used Counter and player didn't
+	ld a, [wPlayerSelectedMove]
+	cp MIRROR_COAT
+	jr nz, .playerDidNotUseMirrorCoat
+	ld a, [wEnemySelectedMove]
+	cp MIRROR_COAT
+	jr z, .compareSpeed ; if both used Mirror Coat
+	jr .enemyMovesFirst ; if player used Mirror Coat and enemy didn't
+.playerDidNotUseMirrorCoat
+	ld a, [wEnemySelectedMove]
+	cp MIRROR_COAT
+	jr z, .playerMovesFirst ; if enemy used Mirror Coat and player didn't
 .compareSpeed
 	ld de, wBattleMonSpeed ; player speed value
 	ld hl, wEnemyMonSpeed ; enemy speed value
@@ -4910,7 +4921,7 @@ HandleCounterMove:
 	ld a, [wEnemySelectedMove]
 .next
 	cp COUNTER
-	ret nz ; return if not using Counter
+	jr nz, .MirrorCoat ; return if not using Counter
 	ld a, $01
 	ld [wMoveMissed], a ; initialize the move missed variable to true (it is set to false below if the move hits)
 	ld a, [hl]
@@ -4929,6 +4940,26 @@ HandleCounterMove:
 ; if the move wasn't Normal or Fighting type, miss
 	xor a
 	ret
+
+.MirrorCoat
+	cp MIRROR_COAT
+	ret nz
+	ld [wMoveMissed], a ; initialize the move missed variable to true (it is set to false below if the move hits)
+	ld a, [hl]
+	cp COUNTER
+	ret z ; miss if the opponent's last selected move is Counter.
+	ld a, [de]
+	and a
+	ret z ; miss if the opponent's last selected move's Base Power is 0.
+	inc de
+	ld a, [de]
+	ld hl, MirrorCoatTypes
+	call IsInByteArray
+	jr c, .counterableType
+; if the move wasn't Normal or Fighting type, miss
+	xor a
+	ret
+	
 .counterableType
 	ld hl, wDamage
 	ld a, [hli]
@@ -7312,3 +7343,37 @@ CalculateEnemyRolloutDamage:
 
 .done_damage
 	ret
+	
+IsInByteArray:
+	ld de, 1
+	ld b, 0
+	ld c, a
+.loop
+	ld a, [hl]
+	cp -1
+	jr z, .NotInArray
+	cp c
+	jr z, .InArray
+	inc b
+	add hl, de
+	jr .loop
+
+.NotInArray:
+	and a
+	ret
+
+.InArray:
+	scf
+	ret
+
+MirrorCoatTypes:
+	db FIRE
+	db WATER
+	db GRASS
+	db ELECTRIC
+	db PSYCHIC_TYPE
+	db ICE
+	db DRAGON
+	db DARK
+	db -1
+	
