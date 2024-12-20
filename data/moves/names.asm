@@ -168,5 +168,7 @@ MoveNames::
 	li "SUNNY DAY"
 	li "RAIN DANCE"
 	li "ROLLOUT"
+	li "TWISTER"
+	li "SCARY FACE"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS
