@@ -1506,3 +1506,12 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_RayquazaDexEntry::
+	text "It flies in the"
+	next "ozone layer, way"
+	next "up in the sky."
+
+	page "Until recently,"
+	next "nobody had ever"
+	next "seen RAYQUAZA.@"

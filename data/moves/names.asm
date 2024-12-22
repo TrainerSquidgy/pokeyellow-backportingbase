@@ -170,5 +170,11 @@ MoveNames::
 	li "ROLLOUT"
 	li "TWISTER"
 	li "SCARY FACE"
+	li "ANCIENTPOWER"
+	li "DRAGON CLAW"
+	li "DRAGON DANCE"
+	li "CRUNCH"
+	li "EXTREMESPEED"
+	li "OUTRAGE"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

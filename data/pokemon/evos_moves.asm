@@ -2168,3 +2168,16 @@ VictreebelEvosMoves:
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
 	db 0
+
+RayquazaEvosMoves:
+	db 0
+	db 15, ANCIENTPOWER
+	db 20, DRAGON_CLAW
+	db 30, DRAGON_DANCE
+	db 35, CRUNCH
+	db 45, FLY
+	db 50, REST
+	db 60, EXTREMESPEED
+	db 65, OUTRAGE
+	db 75, HYPER_BEAM
+	db 0

@@ -382,9 +382,14 @@ MainInBattleLoop:
 	callfar SwitchEnemyMon
 .noLinkBattle
 	ld a, [wPlayerSelectedMove]
+	cp EXTREMESPEED
+	jr z, .playerExtremeSpeed
 	cp QUICK_ATTACK
 	jr nz, .playerDidNotUseQuickAttack
+.playerExtremeSpeed
 	ld a, [wEnemySelectedMove]
+	cp EXTREMESPEED
+	jr z, .compareSpeed
 	cp QUICK_ATTACK
 	jr z, .compareSpeed  ; if both used Quick Attack
 	jp .playerMovesFirst ; if player used Quick Attack and enemy didn't
@@ -392,6 +397,8 @@ MainInBattleLoop:
 	ld a, [wEnemySelectedMove]
 	cp QUICK_ATTACK
 	jr z, .enemyMovesFirst ; if enemy used Quick Attack and player didn't
+	cp EXTREMESPEED
+	jr z, .enemyMovesFirst
 	ld a, [wPlayerSelectedMove]
 	cp COUNTER
 	jr nz, .playerDidNotUseCounter
