@@ -158,9 +158,9 @@
 	const DRAGONITE  ; 95
 	const MEWTWO     ; 96
 	const MEW        ; 97
-	const_skip               ; $1F
-	const_skip               ; $20
-	const_skip               ; $32
+	const MAREEP     
+	const FLAAFFY    
+	const AMPHAROS   
 	const_skip               ; $34
 	const_skip               ; $38
 	const_skip               ; $3D

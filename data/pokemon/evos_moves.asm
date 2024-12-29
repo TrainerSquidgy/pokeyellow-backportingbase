@@ -161,9 +161,9 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
-	dw MissingNo20EvosMoves
-	dw MissingNo32EvosMoves
+	dw MareepEvosMoves
+	dw FlaaffyEvosMoves
+	dw AmpharosEvosMoves
 	dw MissingNo34EvosMoves
 	dw MissingNo38EvosMoves
 	dw MissingNo3DEvosMoves
@@ -2167,4 +2167,34 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+MareepEvosMoves:
+	db EVOLVE_LEVEL, 15, FLAAFFY
+	db 0
+	db 9, THUNDERSHOCK
+	db 16, THUNDER_WAVE
+	db 23, COTTON_SPORE
+	db 30, LIGHT_SCREEN
+	db 37, THUNDER
+	db 0
+	
+FlaaffyEvosMoves:
+	db EVOLVE_LEVEL, 30, AMPHAROS
+	db 0
+	db 9, THUNDERSHOCK
+	db 18, THUNDER_WAVE
+	db 27, COTTON_SPORE
+	db 36, LIGHT_SCREEN
+	db 45, THUNDER
+	db 0
+
+AmpharosEvosMoves:
+	db 0
+	db 9, THUNDERSHOCK
+	db 18, THUNDER_WAVE
+	db 27, COTTON_SPORE
+	db 30, THUNDERPUNCH
+	db 42, LIGHT_SCREEN
+	db 57, THUNDER
 	db 0

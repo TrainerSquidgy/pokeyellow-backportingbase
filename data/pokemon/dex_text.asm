@@ -1506,3 +1506,33 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_MareepDexEntry::
+	text "It stores lots of"
+	next "air in its soft"
+	next "fur, allowing it"
+
+	page "to stay cool in"
+	next "summer and warm"
+	next "in winter.@"
+	dex
+	
+_FlaaffyDexEntry::
+	text "Because of its"
+	next "rubbery, electric-"
+	next "ity-resistant"
+
+	page "skin, it can store"
+	next "lots of electric-"
+	next "ity in its fur.@"
+	dex
+	
+_AmpharosDexEntry::
+	text "When it gets dark,"
+	next "the light from its"
+	next "bright, shiny tail"
+
+	page "can be seen from"
+	next "far away on the"
+	next "ocean's surface.@"
+	dex

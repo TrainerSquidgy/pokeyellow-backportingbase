@@ -174,6 +174,7 @@
 	const SUNNY_DAY
 	const RAIN_DANCE
 	const ROLLOUT
+	const COTTON_SPORE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

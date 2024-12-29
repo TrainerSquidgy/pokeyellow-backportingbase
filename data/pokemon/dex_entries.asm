@@ -1259,3 +1259,25 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+MareepDexEntry:
+	db "WOOL@"
+	db 2,0
+	dw 172
+	text_far _MareepDexEntry
+	text_end
+
+FlaaffyDexEntry:
+	db "WOOL@"
+	db 2,7
+	dw 293
+	text_far _FlaaffyDexEntry
+	text_end
+
+AmpharosDexEntry:
+	db "LIGHT@"
+	db 4,7
+	dw 1356
+	text_far _FlaaffyDexEntry
+	text_end
+	
