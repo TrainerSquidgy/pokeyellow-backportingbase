@@ -2182,7 +2182,6 @@ SlugmaEvosMoves:
 	db 0
 	
 MagcargoEvosMoves:
-	db EVOLVE_LEVEL, 38, MAGCARGO
 	db 0
 	db 8, EMBER
 	db 15, ROCK_THROW
