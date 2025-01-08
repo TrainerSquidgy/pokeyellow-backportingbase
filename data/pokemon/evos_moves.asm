@@ -161,8 +161,8 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
-	dw MissingNo20EvosMoves
+	dw SwinubEvosMoves
+	dw PiloswineEvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
 	dw MissingNo38EvosMoves
@@ -2167,4 +2167,26 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+SwinubEvosMoves:
+	db EVOLVE_LEVEL, 33, PILOSWINE
+	db 0
+	db 10, POWDER_SNOW
+	db 19, ENDURE
+	db 28, TAKE_DOWN
+	db 37, MIST
+	db 46, BLIZZARD
+	db 55, AMNESIA
+	db 0
+	
+PiloswineEvosMoves:
+	db 0
+	db 10, POWDER_SNOW
+	db 19, ENDURE
+	db 28, TAKE_DOWN
+	db 33, FURY_ATTACK
+	db 42, MIST
+	db 56, BLIZZARD
+	db 70, AMNESIA
 	db 0

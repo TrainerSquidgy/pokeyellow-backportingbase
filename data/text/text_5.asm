@@ -309,3 +309,13 @@ _RolloutText::
 	text "<USER>"
 	line "used ROLLOUT!"
 	prompt
+	
+_BracingItselfText::
+	text "<USER>"
+	line "braced itself."
+	prompt
+	
+_EnduredTheHitText::
+	text "<TARGET>"
+	line "endured the hit."
+	prompt

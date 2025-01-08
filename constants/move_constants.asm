@@ -170,11 +170,13 @@
 	const SUPER_FANG   ; a2
 	const SLASH        ; a3
 	const SUBSTITUTE   ; a4
-	const FAINT_ATTACK
-	const SUNNY_DAY
-	const RAIN_DANCE
-	const ROLLOUT
-	const STRUGGLE     ; a5
+	const FAINT_ATTACK ; a5
+	const SUNNY_DAY    ; a6
+	const RAIN_DANCE   ; a7
+	const ROLLOUT      ; a8
+	const ENDURE       ; a9
+	const POWDER_SNOW  ; aa
+	const STRUGGLE     ; ab
 DEF NUM_ATTACKS EQU const_value - 1
 
 	; Moves do double duty as animation identifiers.

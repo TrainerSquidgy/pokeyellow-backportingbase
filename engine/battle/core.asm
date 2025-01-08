@@ -280,6 +280,10 @@ EnemyRan:
 	ldh [hWhoseTurn], a
 	jpfar AnimationSlideEnemyMonOff
 
+EnduredTheHitText:
+	text_far _EnduredTheHitText
+	text_end
+
 WildRanText:
 	text_far _WildRanText
 	text_end
@@ -305,6 +309,7 @@ MainInBattleLoop:
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; check if the player is using Rage or needs to recharge
 	jr nz, .selectEnemyMove
 	ld a, [wPlayerBattleStatus3]
+	res ENDURING_HIT, a
 	bit IN_ROLLOUT, a
 	jr nz, .selectEnemyMove
 ; the player is not using Rage and doesn't need to recharge
@@ -389,6 +394,13 @@ MainInBattleLoop:
 	jr z, .compareSpeed  ; if both used Quick Attack
 	jp .playerMovesFirst ; if player used Quick Attack and enemy didn't
 .playerDidNotUseQuickAttack
+	cp ENDURE
+	jr nz, .playerDidNotUseEndure
+	ld a, [wEnemySelectedMove]
+	cp ENDURE
+	jr z, .compareSpeed
+	jp .playerMovesFirst
+.playerDidNotUseEndure
 	ld a, [wEnemySelectedMove]
 	cp QUICK_ATTACK
 	jr z, .enemyMovesFirst ; if enemy used Quick Attack and player didn't
@@ -3119,6 +3131,7 @@ SelectEnemyMove:
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; need to recharge or using rage
 	ret nz
 	ld a, [wEnemyBattleStatus3]
+	res ENDURING_HIT, a
 	bit IN_ROLLOUT, a
 	ret nz
 	ld hl, wEnemyBattleStatus1
@@ -5172,6 +5185,12 @@ ApplyDamageToPlayerPokemon:
 	ld [hli], a
 	ld a, [wHPBarOldHP]
 	ld [hl], a
+	ld a, [wPlayerBattleStatus3]
+	bit ENDURING_HIT, a
+	jr z, .not_endure
+	
+	jr .animateHpBar
+.not_endure
 	xor a
 	ld hl, wBattleMonHP
 	ld [hli], a

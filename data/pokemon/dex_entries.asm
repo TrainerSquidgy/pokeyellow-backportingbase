@@ -151,8 +151,8 @@ PokedexEntryPointers:
 	dw DragoniteDexEntry
 	dw MewtwoDexEntry
 	dw MewDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw SwinubDexEntry
+	dw PiloswineDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
@@ -1259,3 +1259,17 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+SwinubDexEntry:
+	db "PIG@"
+	db 1,4
+	dw 143
+	text_far _SwinubDexEntry
+	text_end
+	
+PiloswineDexEntry:
+	db "SWINE@"
+	db 3,7
+	dw 1230
+	text_far _PiloswineDexEntry
+	text_end

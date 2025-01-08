@@ -85,6 +85,10 @@ SunGotBrightText:
 	text_far _SunGotBrightText
 	text_end
 
+BracingItselfText:
+	text_far _BracingItselfText
+	text_end
+
 FellAsleepText:
 	text_far _FellAsleepText
 	text_end
@@ -1599,5 +1603,19 @@ RolloutEffect:
 	bit IN_ROLLOUT, [hl]
 	ret nz
 	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
+	ret
+
+EndureEffect:
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .player
+	ld hl, wEnemyBattleStatus3
+.player
+	bit ENDURING_HIT, [hl]
+	ret nz
+	set ENDURING_HIT, [hl] ; mon is now in "rage" mode
+	ld hl, BracingItselfText
+	jp PrintText
 	ret
 

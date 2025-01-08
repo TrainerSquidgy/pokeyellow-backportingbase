@@ -1506,3 +1506,23 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_SwinubDexEntry::
+	text "It uses the tip of"
+	next "its nose to dig"
+	next "for food. Its nose"
+
+	page "is so tough that"
+	next "even frozen ground"
+	next "poses no problem.@"
+	dex
+	
+_PiloswineDexEntry::
+	text "Although its legs"
+	next "are short, its"
+	next "rugged hooves"
+
+	page "prevent it from"
+	next "slipping, even on"
+	next "icy ground.@"
+	dex

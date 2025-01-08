@@ -151,8 +151,8 @@ PokedexOrder:
 	db DEX_DRAGONITE
 	db DEX_MEWTWO
 	db DEX_MEW
-	db 0 ; MISSINGNO.
-	db 0 ; MISSINGNO.
+	db DEX_SWINUB
+	db DEX_PILOSWINE
 	db 0 ; MISSINGNO.
 	db 0 ; MISSINGNO.
 	db 0 ; MISSINGNO.
