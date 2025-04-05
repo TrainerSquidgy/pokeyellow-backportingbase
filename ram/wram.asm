@@ -2068,7 +2068,13 @@ wWeatherType:: db
 wWeatherTurnsRemaining:: db
 wPlayerRolloutCount:: db
 wEnemyRolloutCount:: db
-	ds 11
+wTempMoveEffect:: db
+wEffectChanceOverride:: db
+wCalledDefenseDown:: db
+wCalledSpecialDown:: db
+wStatDropCounter:: db
+wTempMove:: db
+	ds 5
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

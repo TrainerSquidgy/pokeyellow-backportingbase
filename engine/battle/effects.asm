@@ -607,12 +607,25 @@ StatModifierDownEffect:
 .statModifierDownEffect
 	call CheckTargetSubstitute ; can't hit through substitute
 	jp nz, MoveMissed
+	
+	ld a, [wEffectChanceOverride]
+    and a
+	jr nz, .alwaysTriggerSideEffect
+	
 	ld a, [de]
 	cp ATTACK_DOWN_SIDE_EFFECT
 	jr c, .nonSideEffect
+    
+	
 	call BattleRandom
 	cp 33 percent + 1 ; chance for side effects
 	jp nc, CantLowerAnymore
+.alwaysTriggerSideEffect
+	
+	ld a, [wStatDropCounter]
+	inc a
+	ld [wStatDropCounter], a
+	
 	ld a, [de]
 	sub ATTACK_DOWN_SIDE_EFFECT ; map each stat to 0-3
 	jr .decrementStatMod
@@ -1601,3 +1614,67 @@ RolloutEffect:
 	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
 	ret
 
+BattleCommand_SwitchTurn:
+	push af
+	ldh a, [hWhoseTurn]
+	xor 1
+	ldh [hWhoseTurn], a
+	pop af
+	ret
+
+CloseCombatEffect:
+	ld a, 1
+	ld [wEffectChanceOverride], a
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .EnemyTurn
+
+; Player is the user
+	call BattleCommand_SwitchTurn
+	ld a, [wPlayerMoveEffect]
+	ld a, [wEnemyMoveNum]
+	ld [wTempMove], a
+	xor a
+	ld a, [wEnemyMoveNum]
+	ld a, DEFENSE_DOWN_SIDE_EFFECT
+	ld [wPlayerMoveEffect], a
+	call StatModifierDownEffect
+	ld a, 1
+	ld [wCalledDefenseDown], a
+	ld a, SPECIAL_DOWN_SIDE_EFFECT
+	ld [wPlayerMoveEffect], a
+	call StatModifierDownEffect
+	ld a, 1
+	ld [wCalledSpecialDown], a
+	ld a, [wTempMoveEffect]
+	ld [wPlayerMoveEffect], a
+	ld a, [wTempMove]
+	ld [wEnemyMoveNum], a
+	call BattleCommand_SwitchTurn
+	jr .Cleanup
+
+.EnemyTurn
+	call BattleCommand_SwitchTurn
+	ld a, [wEnemyMoveEffect]
+	ld [wTempMoveEffect], a
+	ld a, DEFENSE_DOWN_SIDE_EFFECT
+	ld [wEnemyMoveEffect], a
+	call StatModifierDownEffect
+	ld a, 1
+	ld [wCalledDefenseDown], a
+	ld a, SPECIAL_DOWN_SIDE_EFFECT
+	ld [wEnemyMoveEffect], a
+	call StatModifierDownEffect
+	ld a, 1
+	ld [wCalledSpecialDown], a
+	ld a, [wTempMoveEffect]
+	ld [wEnemyMoveEffect], a
+	call BattleCommand_SwitchTurn
+
+.Cleanup
+	xor a
+	ld [wEffectChanceOverride], a
+	ret
+	
+
+	
