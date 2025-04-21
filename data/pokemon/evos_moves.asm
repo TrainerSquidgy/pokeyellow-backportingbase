@@ -161,8 +161,8 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
-	dw MissingNo20EvosMoves
+	dw ChinchouEvosMoves
+	dw LanturnEvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
 	dw MissingNo38EvosMoves
@@ -2167,4 +2167,25 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+ChinchouEvosMoves:
+	db EVOLVE_LEVEL, 27, LANTURN
+	db 0
+	db 13, FLAIL
+	db 17, WATER_GUN
+	db 25, SPARK
+	db 29, CONFUSE_RAY
+	db 37, TAKE_DOWN
+	db 41, HYDRO_PUMP
+	db 0
+	
+LanturnEvosMoves:
+	db 0
+	db 13, FLAIL
+	db 17, WATER_GUN
+	db 25, SPARK
+	db 33, CONFUSE_RAY
+	db 45, TAKE_DOWN
+	db 53, HYDRO_PUMP
 	db 0

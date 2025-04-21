@@ -168,6 +168,8 @@ AttackAnimationPointers:
 	dw UnusedAnim
 	dw UnusedAnim
 	dw UnusedAnim
+	dw TakeDownAnim
+	dw ThunderShockAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 	dw ShowPicAnim

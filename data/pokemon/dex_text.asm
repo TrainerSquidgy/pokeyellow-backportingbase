@@ -1506,3 +1506,23 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_ChinchouDexEntry::
+	text "Its antennae, whi-"
+	next "ch evolved from a"
+	next "fin, have both po-"
+
+	page "sitive and neg-"
+	next "ative charges flo-"
+	next "wing through them."
+	dex
+
+_LanturnDexEntry::
+	text "This #MON uses"
+	next "the bright part of"
+	next "its body, which"
+
+	page "changed from a"
+	next "dorsal fin, to"
+	next "lure prey.@"
+	dex

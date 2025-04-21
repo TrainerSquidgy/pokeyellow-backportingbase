@@ -4382,6 +4382,19 @@ GetDamageVarsForPlayerAttack:
 	and a
 	ld d, a ; d = move power
 	ret z ; return if move power is zero
+	
+	
+; New - Flail stuff
+	push hl
+	ld a, [wPlayerMoveNum]
+	cp FLAIL
+	jr nz, .notFlail
+	call CalculateFlailBasePower
+.notFlail
+	pop hl
+	
+	
+	
 	ld a, [hl] ; a = [wPlayerMoveType]
 	cp SPECIAL ; types >= SPECIAL are all special
 	jr nc, .specialAttack
@@ -7311,4 +7324,75 @@ CalculateEnemyRolloutDamage:
 	ld [hl], a
 
 .done_damage
+	ret
+	
+
+FlailHPFractionsAndPowers: ; Extreme Yellow custom round fractions
+	db 20, 200
+	db 10, 150
+	db  5, 100
+	db  3,  80
+	db  2,  40
+	db  1,  20
+	db -1
+
+CalculateFlailBasePower::
+	ld hl, FlailHPFractionsAndPowers
+.loop
+	ld a, [hli] ; a contains the fraction
+	cp -1       ; should be useless but you never know
+	jr z, .conclude
+	push hl     ; hl points to the BP
+	call CheckIfHPIsBelowFraction
+	pop hl
+	; c flag is set if we are below the threshold
+	jr nc, .iterate ; not the right fraction, too many HP left
+; we are below the currently checked threshold
+	ld a, [hl]
+	ld d, a
+	ret
+.iterate
+	inc hl
+	jr .loop
+.conclude
+	ld d, 20
+	ret
+
+CheckIfHPIsBelowFraction::
+; return carry if player or enemy trainer's current HP is below 1 / a of the maximum
+; used for FLAIL
+	ldh [hDivisor], a
+; turn-deciding code
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wBattleMonMaxHP
+	jr z, .player1
+	ld hl, wEnemyMonMaxHP
+.player1
+	ld a, [hli]
+	ldh [hDividend], a
+	ld a, [hl]
+	ldh [hDividend + 1], a
+	ld b, 2
+	call Divide
+	ldh a, [hQuotient + 3]
+	ld c, a
+	ldh a, [hQuotient + 2]
+	ld b, a
+; turn-deciding code
+	ldh a, [hWhoseTurn]
+	and a
+	ld hl, wBattleMonHP + 1
+	jr z, .player2
+	ld hl, wEnemyMonHP + 1
+.player2
+	ld a, [hld]
+	ld e, a
+	ld a, [hl]
+	ld d, a
+	ld a, d
+	sub b
+	ret nz
+	ld a, e
+	sub c
 	ret

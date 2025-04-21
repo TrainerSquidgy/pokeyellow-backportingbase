@@ -151,8 +151,8 @@ PokedexEntryPointers:
 	dw DragoniteDexEntry
 	dw MewtwoDexEntry
 	dw MewDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw ChinchouDexEntry
+	dw LanturnDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
@@ -1259,3 +1259,17 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+ChinchouDexEntry:
+	db "ANGLER@"
+	db 1,8
+	dw 265
+	text_far _ChinchouDexEntry
+	text_end
+	
+LanturnDexEntry:
+	db "LIGHT@"
+	db 3,11
+	dw 496
+	text_far _LanturnDexEntry
+	text_end
