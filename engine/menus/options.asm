@@ -35,8 +35,8 @@ OptionMenuJumpTable:
 	dw OptionsMenu_BattleAnimations
 	dw OptionsMenu_BattleStyle
 	dw OptionsMenu_SpeakerSettings
-	dw OptionsMenu_StarterChoice 
 	dw OptionsMenu_GBPrinterBrightness
+	dw OptionsMenu_StarterChoice 
 	dw OptionsMenu_Dummy
 	dw OptionsMenu_Cancel
 
@@ -365,7 +365,7 @@ OptionsControl:
 	scf
 	ret
 .doNotWrapAround
-	cp $4
+	cp $5
 	jr c, .regularIncrement
 	ld [hl], $6
 .regularIncrement
@@ -376,7 +376,7 @@ OptionsControl:
 	ld a, [hl]
 	cp $7
 	jr nz, .doNotMoveCursorToPrintOption
-	ld [hl], $4
+	ld [hl], $5
 	scf
 	ret
 .doNotMoveCursorToPrintOption
@@ -416,7 +416,7 @@ InitOptionsMenu:
 	call PlaceString
 	xor a
 	ld [wOptionsCursorLocation], a
-	ld c, 5 ; the number of options to loop through
+	ld c, 7 ; the number of options to loop through
 .loop
 	push bc
 	call GetOptionPointer ; updates the next option
@@ -437,8 +437,8 @@ AllOptionsText:
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
 	next "SOUND:"
-	next "STARTER:"
-	next "@"
+	next "PRINT:"
+	next "STARTER:@"
 
 OptionMenuCancelText:
 	db "CANCEL@"
@@ -796,7 +796,7 @@ OptionsMenu_StarterChoice:
 	ld e, [hl]
 	inc hl
 	ld d, [hl]
-	hlcoord 3, 11 ; column 14, row 6th option (y = 2 + index * 2)
+	hlcoord 3, 13 ; column 14, row 6th option (y = 2 + index * 2)
 	call PlaceString
 	and a
 	ret
