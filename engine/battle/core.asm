@@ -134,6 +134,8 @@ SetScrollXForSlidingPlayerBodyLeft:
 
 StartBattle:
 	xor a
+	ld [wWeatherType], a
+	ld [wWeatherTurnsRemaining], a
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
 	ld [wActionResultOrTookBattleTurn], a
@@ -301,6 +303,9 @@ MainInBattleLoop:
 	ld [wFirstMonsNotOutYet], a
 	ld a, [wPlayerBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; check if the player is using Rage or needs to recharge
+	jr nz, .selectEnemyMove
+	ld a, [wPlayerBattleStatus3]
+	bit IN_ROLLOUT, a
 	jr nz, .selectEnemyMove
 ; the player is not using Rage and doesn't need to recharge
 	ld hl, wEnemyBattleStatus1
@@ -474,6 +479,10 @@ MainInBattleLoop:
 	jp z, HandleEnemyMonFainted
 	call DrawHUDsAndHPBars
 	call CheckNumAttacksLeft
+; This is where after turn effects can go, maybe?
+	call HandleWeatherBetweenTurns
+	
+	
 	jp MainInBattleLoop
 
 HandlePoisonBurnLeechSeed:
@@ -770,6 +779,7 @@ FaintEnemyPokemon:
 	ld [hli], a
 	ld [hli], a
 	ld [hl], a
+	ld [wEnemyRolloutCount], a
 	ld [wEnemyDisabledMove], a
 	ld [wEnemyDisabledMoveNumber], a
 	ld [wEnemyMonMinimized], a
@@ -1789,6 +1799,7 @@ SendOutMon:
 	ld [hl], a
 	ld [wPlayerDisabledMove], a
 	ld [wPlayerDisabledMoveNumber], a
+	ld [wPlayerRolloutCount], a
 	ld [wPlayerMonMinimized], a
 	ld b, SET_PAL_BATTLE
 	call RunPaletteCommand
@@ -3107,6 +3118,9 @@ SelectEnemyMove:
 	ld a, [wEnemyBattleStatus2]
 	and (1 << NEEDS_TO_RECHARGE) | (1 << USING_RAGE) ; need to recharge or using rage
 	ret nz
+	ld a, [wEnemyBattleStatus3]
+	bit IN_ROLLOUT, a
+	ret nz
 	ld hl, wEnemyBattleStatus1
 	ld a, [hl]
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
@@ -3267,6 +3281,13 @@ ExecutePlayerMove:
 	jp z, ExecutePlayerMoveDone
 
 CheckIfPlayerNeedsToChargeUp:
+	ld a, [wPlayerSelectedMove]
+	cp SOLARBEAM
+	jr nz, .NotSolarBeam
+	ld a, [wWeatherType]
+	dec a
+	jr z, PlayerCanExecuteMove
+.NotSolarBeam
 	ld a, [wPlayerMoveEffect]
 	cp CHARGE_EFFECT
 	jp z, JumpMoveEffect
@@ -3312,6 +3333,7 @@ PlayerCalcMoveDamage:
 	jp z, playerCheckIfFlyOrChargeEffect ; for moves with 0 BP, skip any further damage calculation and, for now, skip MoveHitTest
 	               ; for these moves, accuracy tests will only occur if they are called as part of the effect itself
 	call AdjustDamageForMoveType
+	call CalculatePlayerRolloutDamage
 	call RandomizeDamage
 .moveHitTest
 	call MoveHitTest
@@ -3440,6 +3462,12 @@ MultiHitText:
 	text_end
 
 ExecutePlayerMoveDone:
+	ld a, [wPlayerSelectedMove]
+	cp ROLLOUT
+	jr z, .IsRollout
+	xor a
+	ld [wPlayerRolloutCount], a
+.IsRollout	
 	xor a
 	ld [wActionResultOrTookBattleTurn], a
 	ld b, 1
@@ -3616,10 +3644,10 @@ CheckPlayerStatusConditions:
 .ParalysisCheck
 	ld hl, wBattleMonStatus
 	bit PAR, [hl]
-	jr z, .BideCheck
+	jr z, .RolloutCheck
 	call BattleRandom
 	cp $3F ; 25% to be fully paralyzed
-	jr nc, .BideCheck
+	jr nc, .RolloutCheck
 	ld hl, FullyParalyzedText
 	call PrintText
 
@@ -3644,6 +3672,19 @@ CheckPlayerStatusConditions:
 .NotFlyOrChargeEffect
 	ld hl, ExecutePlayerMoveDone
 	jp .returnToHL ; if using a two-turn move, we need to recharge the first turn
+
+	
+.RolloutCheck
+	ld a, [wPlayerBattleStatus3]
+	bit IN_ROLLOUT, a ; is mon using rollout?
+	jp z, .BideCheck ; if we made it this far, mon can move normally this turn
+	ld a, ROLLOUT
+	ld [wPlayerMoveNum], a
+	ld [wNamedObjectIndex], a
+	ld hl, RolloutText
+	call PrintText
+	ld hl, PlayerCalcMoveDamage ; skip DecrementPP
+	jp .returnToHL
 
 .BideCheck
 	ld hl, wPlayerBattleStatus1
@@ -3734,7 +3775,7 @@ CheckPlayerStatusConditions:
 .RageCheck
 	ld a, [wPlayerBattleStatus2]
 	bit USING_RAGE, a ; is mon using rage?
-	jp z, .checkPlayerStatusConditionsDone ; if we made it this far, mon can move normally this turn
+	jp z, .checkPlayerStatusConditionsDone
 	ld a, RAGE
 	ld [wNamedObjectIndex], a
 	call GetMoveName
@@ -3801,6 +3842,11 @@ UnleashedEnergyText:
 	text_far _UnleashedEnergyText
 	text_end
 
+RolloutText:
+	text_far _RolloutText
+	text_end
+	
+	
 ThrashingAboutText:
 	text_far _ThrashingAboutText
 	text_end
@@ -4330,6 +4376,7 @@ GetDamageVarsForPlayerAttack:
 	ld hl, wDamage ; damage to eventually inflict, initialise to zero
 	ldi [hl], a
 	ld [hl], a
+	call HandleWeatherEffectsOnPlayerTypes
 	ld hl, wPlayerMovePower
 	ld a, [hli]
 	and a
@@ -4443,6 +4490,7 @@ GetDamageVarsForEnemyAttack:
 	xor a
 	ld [hli], a
 	ld [hl], a
+	call HandleWeatherEffectsOnEnemyTypes
 	ld hl, wEnemyMovePower
 	ld a, [hli]
 	ld d, a ; d = move power
@@ -5620,6 +5668,8 @@ MoveHitTest:
 	bit USING_X_ACCURACY, a ; is the enemy using X Accuracy?
 	ret nz ; if so, always hit regardless of accuracy/evasion
 .calcHitChance
+	call HandleWeatherEffectsOnAccuracy
+	ret c
 	call CalcHitChance ; scale the move accuracy according to attacker's accuracy and target's evasion
 	ld a, [wPlayerMoveAccuracy]
 	ld b, a
@@ -5646,10 +5696,18 @@ MoveHitTest:
 	and a
 	jr z, .playerTurn2
 .enemyTurn2
+	xor a
+	ld [wEnemyRolloutCount], a
+	ld hl, wEnemyBattleStatus3
+	res IN_ROLLOUT, [hl]
 	ld hl, wEnemyBattleStatus1
 	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
 	ret
 .playerTurn2
+	xor a
+	ld [wPlayerRolloutCount], a
+	ld hl, wPlayerBattleStatus3
+	res IN_ROLLOUT, [hl]
 	ld hl, wPlayerBattleStatus1
 	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
 	ret
@@ -5797,6 +5855,13 @@ ExecuteEnemyMove:
 	call GetCurrentMove
 
 CheckIfEnemyNeedsToChargeUp:
+	ld a, [wEnemySelectedMove]
+	cp SOLARBEAM
+	jr nz, .NotSolarBeam
+	ld a, [wWeatherType]
+	dec a
+	jr z, EnemyCanExecuteMove
+.NotSolarBeam
 	ld a, [wEnemyMoveEffect]
 	cp CHARGE_EFFECT
 	jp z, JumpMoveEffect
@@ -5846,6 +5911,7 @@ EnemyCalcMoveDamage:
 	call CalculateDamage
 	jp z, EnemyCheckIfFlyOrChargeEffect
 	call AdjustDamageForMoveType
+	call CalculateEnemyRolloutDamage
 	call RandomizeDamage
 
 EnemyMoveHitTest:
@@ -5978,12 +6044,24 @@ HitXTimesText:
 	text_end
 
 ExecuteEnemyMoveDone:
+	ld a, [wEnemySelectedMove]
+	cp ROLLOUT
+	jr z, .IsRollout
+	xor a
+	ld [wEnemyRolloutCount], a
+.IsRollout	
 	ld b, $1
 	ret
 
 ; checks for various status conditions affecting the enemy mon
 ; stores whether the mon cannot use a move this turn in Z flag
 CheckEnemyStatusConditions:
+	ld a, [wEnemySelectedMove]
+	cp ROLLOUT
+	jr nz, .IsRollout
+	xor a
+	ld [wEnemyRolloutCount], a
+.IsRollout
 	ld hl, wEnemyMonStatus
 	ld a, [hl]
 	and SLP_MASK
@@ -6214,7 +6292,7 @@ CheckEnemyStatusConditions:
 	jp .enemyReturnToHL
 .checkIfThrashingAbout
 	bit THRASHING_ABOUT, [hl] ; is mon using thrash or petal dance?
-	jr z, .checkIfUsingMultiturnMove
+	jr z, .RolloutCheck
 	ld a, THRASH
 	ld [wEnemyMoveNum], a
 	ld hl, ThrashingAboutText
@@ -6233,6 +6311,17 @@ CheckEnemyStatusConditions:
 	inc a ; confused for 2-5 turns
 	ld [wEnemyConfusedCounter], a
 	pop hl ; skip DecrementPP
+	jp .enemyReturnToHL
+.RolloutCheck
+	ld a, [wEnemyBattleStatus3]
+	bit IN_ROLLOUT, a ; is mon using rollout?
+	jp z, .checkIfUsingMultiturnMove ; if we made it this far, mon can move normally this turn
+	ld a, ROLLOUT
+	ld [wEnemyMoveNum], a
+	ld [wNamedObjectIndex], a
+	ld hl, RolloutText
+	call PrintText
+	ld hl, EnemyCalcMoveDamage ; skip DecrementPP
 	jp .enemyReturnToHL
 .checkIfUsingMultiturnMove
 	bit USING_TRAPPING_MOVE, [hl] ; is mon using multi-turn move?
@@ -6948,4 +7037,278 @@ PlayMoveAnimation:
 	call Delay3
 	predef MoveAnimation
 	callfar Func_78e98
+	ret
+
+HandleWeatherEffectsOnPlayerTypes:
+	ld a, [wWeatherTurnsRemaining]
+	and a
+	ret z
+	ld a, [wWeatherType]
+	and a
+	ret z
+	dec a
+	jr z, .Sun
+	dec a
+	jr z, .Rain
+	
+	
+.Sun
+	ld a, [wPlayerMoveType]
+	cp FIRE
+	jr z, .SunFire
+	cp WATER
+	jr z, .SunWater
+	ret
+
+.SunFire
+	ld a, [wPlayerMovePower]
+	add a
+	ld [wPlayerMovePower], a	
+	ret
+.SunWater
+	ld a, [wPlayerMovePower]
+	srl a
+	ld [wPlayerMovePower], a	
+	ret
+	
+.Rain
+	ld a, [wPlayerUsedMove]
+	cp SOLARBEAM
+	jr z, .RainFire
+	ld a, [wPlayerMoveType]
+	cp FIRE
+	jr z, .RainFire
+	cp WATER
+	jr z, .RainWater
+	ret
+
+.RainFire
+	ld a, [wPlayerMovePower]
+	srl a
+	ld [wPlayerMovePower], a	
+	ret
+.RainWater
+	ld a, [wPlayerMovePower]
+	add a
+	ld [wPlayerMovePower], a	
+	ret
+	
+HandleWeatherEffectsOnEnemyTypes:
+	ld a, [wWeatherTurnsRemaining]
+	and a
+	ret z
+	ld a, [wWeatherType]
+	and a
+	ret z
+	dec a
+	jr z, .Sun
+	dec a
+	jr z, .Rain
+	
+	
+.Sun
+	ld a, [wEnemyMoveType]
+	cp FIRE
+	jr z, .SunFire
+	cp WATER
+	jr z, .SunWater
+	ret
+
+.SunFire
+	ld a, [wEnemyMovePower]
+	add a
+	ld [wEnemyMovePower], a	
+	ld [hl], a
+	ret
+.SunWater
+	ld a, [wEnemyMovePower]
+	srl a
+	ld [wEnemyMovePower], a	
+	ret
+	
+.Rain
+	ld a, [wEnemyUsedMove]
+	cp SOLARBEAM
+	jr z, .RainFire
+	ld a, [wEnemyMoveType]
+	cp FIRE
+	jr z, .RainFire
+	cp WATER
+	jr z, .RainWater
+	ret
+
+.RainFire
+	ld a, [wEnemyMovePower]
+	srl a
+	ld [wEnemyMovePower], a	
+	ret
+.RainWater
+	ld a, [wEnemyMovePower]
+	add a
+	ld [wEnemyMovePower], a	
+	ret
+
+	
+HandleWeatherBetweenTurns:
+	ld a, [wWeatherTurnsRemaining]
+	and a
+	ret z
+	ld a, [wWeatherType]
+	dec a
+	jr z, .Sun
+	dec a
+	jr z, .Rain
+	ret
+	
+.Sun
+	ld a, [wWeatherTurnsRemaining]
+	dec a
+	ld [wWeatherTurnsRemaining], a
+	and a
+	jr z, .SunStopped
+	ld hl, TheSunlightIsStrong
+	jp PrintText
+	ret
+.SunStopped
+	ld [wWeatherType], a
+	ld hl, TheSunlightFaded
+	jp PrintText
+	ret
+.Rain
+	ld a, [wWeatherTurnsRemaining]
+	dec a
+	ld [wWeatherTurnsRemaining], a
+	and a
+	jr z, .RainStopped
+	ld hl, RainContinuesToFall
+	jp PrintText
+	ret
+.RainStopped
+	ld [wWeatherType], a
+	ld hl, TheRainStopped
+	jp PrintText
+	ret
+
+RainContinuesToFall:
+	text_far _RainContinuesToFall
+	text_end
+
+
+TheSunlightIsStrong:
+	text_far _TheSunlightIsStrong
+	text_end
+
+TheRainStopped:
+	text_far _TheRainStopped
+	text_end
+
+
+TheSunlightFaded:
+	text_far _TheSunlightFaded
+	text_end
+
+HandleWeatherEffectsOnAccuracy:
+	ld a, [wWeatherTurnsRemaining]
+	and a
+	ret z
+	ld a, [wPlayerSelectedMove]
+	ld b, a
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .doAccuracyCheck
+	ld a, [wEnemySelectedMove]
+	ld b, a
+.doAccuracyCheck
+	ld a, b
+	cp THUNDER
+	ret nz
+	ld a, [wWeatherType]
+	dec a
+	jr z, .Sun
+	dec a
+	ret nz
+	scf
+	ret	
+.Sun
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .PlayerAccuracy
+	ld a, 128
+	ld [wEnemyMoveAccuracy], a
+	ret
+.PlayerAccuracy
+	ld a, 128
+	ld [wPlayerMoveAccuracy], a
+	ret
+	
+CalculatePlayerRolloutDamage:
+	ld a, [wPlayerRolloutCount]
+	inc a
+	ld b, a
+	cp 5
+	jr z, .RolloutMaxedOut
+	ld [wPlayerRolloutCount], a	
+	jr .DoneRolloutCounter
+.RolloutMaxedOut	
+	xor a
+	ld [wPlayerRolloutCount], a
+	ld hl, wPlayerBattleStatus3
+	res IN_ROLLOUT, [hl]
+.DoneRolloutCounter	
+	ld a, [wPlayerBattleStatus3]
+	bit CURLED, a
+	jr z, .not_curled
+	inc b
+.not_curled
+.loop
+	dec b
+	jr z, .done_damage
+
+	ld hl, wDamage + 1
+	sla [hl]
+	dec hl
+	rl [hl]
+	jr nc, .loop
+
+	ld a, $ff
+	ld [hli], a
+	ld [hl], a
+
+.done_damage
+	ret
+	
+CalculateEnemyRolloutDamage:
+	ld a, [wEnemyRolloutCount]
+	inc a
+	ld b, a
+	cp 5
+	jr z, .RolloutMaxedOut
+	ld [wEnemyRolloutCount], a	
+	jr .DoneRolloutCounter
+.RolloutMaxedOut	
+	xor a
+	ld [wEnemyRolloutCount], a
+	ld hl, wEnemyBattleStatus3
+	res IN_ROLLOUT, [hl]
+.DoneRolloutCounter	
+	ld a, [wEnemyBattleStatus3]
+	bit CURLED, a
+	jr z, .not_curled
+	inc b
+.not_curled
+.loop
+	dec b
+	jr z, .done_damage
+
+	ld hl, wDamage + 1
+	sla [hl]
+	dec hl
+	rl [hl]
+	jr nc, .loop
+
+	ld a, $ff
+	ld [hli], a
+	ld [hl], a
+
+.done_damage
 	ret
