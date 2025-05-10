@@ -276,7 +276,6 @@ _ColosseumOpponentText::
 	text "!"
 	done
 
-
 _RainContinuesToFall::
 	text "Rain continues to"
 	line "fall."
@@ -304,4 +303,9 @@ _DownpourText::
 _SunGotBrightText::
 	text "The sunlight got"
 	line "bright!"
+	prompt
+
+_RolloutText::
+	text "<USER>"
+	line "used ROLLOUT!"
 	prompt

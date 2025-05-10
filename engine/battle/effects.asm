@@ -77,6 +77,14 @@ SleepEffect:
 .didntAffect
 	jp PrintDidntAffectText
 
+DownpourText:
+	text_far _DownpourText
+	text_end
+	
+SunGotBrightText:
+	text_far _SunGotBrightText
+	text_end
+
 FellAsleepText:
 	text_far _FellAsleepText
 	text_end
@@ -516,6 +524,16 @@ UpdateStatDone:
 	call nz, Bankswitch
 	pop de
 .notMinimize
+	cp DEFENSE_CURL
+	jr nz, .notDefenseCurl
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .PlayerCurl
+	ld hl, wEnemyBattleStatus3
+.PlayerCurl
+	set CURLED, [hl]
+.notDefenseCurl
 	call PlayCurrentMoveAnimation
 	ld a, [de]
 	cp MINIMIZE
@@ -1578,3 +1596,16 @@ DownpourText:
 SunGotBrightText:
 	text_far _SunGotBrightText
 	text_end
+
+RolloutEffect:
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .player
+	ld hl, wEnemyBattleStatus3
+.player
+	bit IN_ROLLOUT, [hl]
+	ret nz
+	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
+	ret
+
