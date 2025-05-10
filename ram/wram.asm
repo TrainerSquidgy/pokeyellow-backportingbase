@@ -75,8 +75,16 @@ wTempoModifier:: db
 
 wc0f3:: dw
 wStarterPokemon:: db
+wSpearowEncounters:: db
+wAbraEncounters:: db
+wParasEncounters:: db
+wHMFriendHelp:: db
+wStarterPerfectDVs:: db
+wEvolutionsDisabled:: db
+wDexCatchingHelp:: db
+wVermilionGymHelp:: db
+	ds 2
 
-	ds 10
 
 
 SECTION "Sprite State Data", WRAM0
