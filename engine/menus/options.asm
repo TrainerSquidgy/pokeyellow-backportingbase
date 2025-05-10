@@ -596,6 +596,8 @@ StarterOptionStringsPointerTable:
 	dw StarterDragoniteText
 	dw StarterMewtwoText
 	dw StarterMewText
+	dw StarterChinchouText
+	dw StarterLanturnText
 	
 StarterBulbasaurText: 	db "BULBASAUR @", 0
 StarterIvysaurText: 	db "IVYSAUR   @", 0
