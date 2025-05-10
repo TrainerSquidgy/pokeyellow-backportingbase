@@ -86,10 +86,8 @@ ROMX $E
 ROMX $F
 	"Battle Core"
 ROMX $10
-	"Slot Machines"
 	"bank10"
 ROMX $11
-	"Battle Engine 5"
 	"Maps 5"
 	"Pokédex Rating"
 	"Maps 6"
