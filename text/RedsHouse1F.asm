@@ -123,8 +123,6 @@ _RedsHouse1FMomProfOakVermilionGymTextYes::
 _RedsHouse1FMomProfOakVermilionGymTextNo::
 	text "The puzzle will"
 	line "remain active."
-	cont "regular wild"
-	cont "encounters."
 	prompt
 
 

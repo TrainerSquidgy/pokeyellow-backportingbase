@@ -112,7 +112,7 @@ TryDoWildEncounter:
 	ld [wEnemyMonSpecies2], a
 	jr .skip_force_encounter
 .skip_spearow
-		ld a, [wAbraEncounters] 
+	ld a, [wAbraEncounters] 
 	and a 
 	jr nz, .skip_force_encounter
 	ld a, [wCurMap] 
@@ -127,9 +127,9 @@ TryDoWildEncounter:
 .force_abra
 	ld a, 1
 	ld [wAbraEncounters], a 
-	ld a, 8
+	ld a, 10
 	ld [wCurEnemyLevel], a
-	ld a, SPEAROW
+	ld a, ABRA
 	ld [wCurPartySpecies], a
 	ld [wEnemyMonSpecies2], a
 	jr .skip_force_encounter
