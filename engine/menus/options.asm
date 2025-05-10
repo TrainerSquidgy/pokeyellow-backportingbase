@@ -596,158 +596,158 @@ StarterOptionStringsPointerTable:
 	dw StarterDragoniteText
 	dw StarterMewtwoText
 	dw StarterMewText
-
-StarterBulbasaurText: db "BULBASAUR @", 0
-StarterIvysaurText: db "IVYSAUR   @", 0
-StarterVenusaurText: db "VENUSAUR  @", 0
-StarterCharmanderText: db "CHARMANDER@", 0
-StarterCharmeleonText: db "CHARMELEON@", 0
-StarterCharizardText: db "CHARIZARD @", 0
-StarterSquirtleText: db "SQUIRTLE  @", 0
-StarterWartortleText: db "WARTORTLE @", 0
-StarterBlastoiseText: db "BLASTOISE @", 0
-StarterCaterpieText: db "CATERPIE  @", 0
-StarterMetapodText: db "METAPOD   @", 0
-StarterButterfreeText: db "BUTTERFREE@", 0
-StarterWeedleText: db "WEEDLE    @", 0
-StarterKakunaText: db "KAKUNA    @", 0
-StarterBeedrillText: db "BEEDRILL  @", 0
-StarterPidgeyText: db "PIDGEY    @", 0
-StarterPidgeottoText: db "PIDGEOTTO @", 0
-StarterPidgeotText: db "PIDGEOT   @", 0
-StarterRattataText: db "RATTATA   @", 0
-StarterRaticateText: db "RATICATE  @", 0
-StarterSpearowText: db "SPEAROW   @", 0
-StarterFearowText: db "FEAROW    @", 0
-StarterEkansText: db "EKANS     @", 0
-StarterArbokText: db "ARBOK     @", 0
-StarterPikachuText: db "PIKACHU   @", 0
-StarterRaichuText: db "RAICHU    @", 0
-StarterSandshrewText: db "SANDSHREW @", 0
-StarterSandslashText: db "SANDSLASH @", 0
-StarterNidoranFText: db "NIDORAN♀  @", 0
-StarterNidorinaText: db "NIDORINA  @", 0
-StarterNidoqueenText: db "NIDOQUEEN @", 0
-StarterNidoranMText: db "NIDORAN♂  @", 0
-StarterNidorinoText: db "NIDORINO  @", 0
-StarterNidokingText: db "NIDOKING  @", 0
-StarterClefairyText: db "CLEFAIRY  @", 0
-StarterClefableText: db "CLEFABLE  @", 0
-StarterVulpixText: db "VULPIX    @", 0
-StarterNinetalesText: db "NINETALES @", 0
-StarterJigglypuffText: db "JIGGLYPUFF@", 0
-StarterWigglytuffText: db "WIGGLYTUFF@", 0
-StarterZubatText: db "ZUBAT     @", 0
-StarterGolbatText: db "GOLBAT    @", 0
-StarterOddishText: db "ODDISH    @", 0
-StarterGloomText: db "GLOOM     @", 0
-StarterVileplumeText: db "VILEPLUME @", 0
-StarterParasText: db "PARAS     @", 0
-StarterParasectText: db "PARASECT  @", 0
-StarterVenonatText: db "VENONAT   @", 0
-StarterVenomothText: db "VENOMOTH  @", 0
-StarterDiglettText: db "DIGLETT   @", 0
-StarterDugtrioText: db "DUGTRIO   @", 0
-StarterMeowthText: db "MEOWTH    @", 0
-StarterPersianText: db "PERSIAN   @", 0
-StarterPsyduckText: db "PSYDUCK   @", 0
-StarterGolduckText: db "GOLDUCK   @", 0
-StarterMankeyText: db "MANKEY    @", 0
-StarterPrimeapeText: db "PRIMEAPE  @", 0
-StarterGrowlitheText: db "GROWLITHE @", 0
-StarterArcanineText: db "ARCANINE  @", 0
-StarterPoliwagText: db "POLIWAG   @", 0
-StarterPoliwhirlText: db "POLIWHIRL @", 0
-StarterPoliwrathText: db "POLIWRATH @", 0
-StarterAbraText: db "ABRA      @", 0
-StarterKadabraText: db "KADABRA   @", 0
-StarterAlakazamText: db "ALAKAZAM  @", 0
-StarterMachopText: db "MACHOP    @", 0
-StarterMachokeText: db "MACHOKE   @", 0
-StarterMachampText: db "MACHAMP   @", 0
-StarterBellsproutText: db "BELLSPROUT@", 0
-StarterWeepinbellText: db "WEEPINBELL@", 0
-StarterVictreebelText: db "VICTREEBEL@", 0
-StarterTentacoolText: db "TENTACOOL @", 0
-StarterTentacruelText: db "TENTACRUEL@", 0
-StarterGeodudeText: db "GEODUDE   @", 0
-StarterGravelerText: db "GRAVELER  @", 0
-StarterGolemText: db "GOLEM     @", 0
-StarterPonytaText: db "PONYTA    @", 0
-StarterRapidashText: db "RAPIDASH  @", 0
-StarterSlowpokeText: db "SLOWPOKE  @", 0
-StarterSlowbroText: db "SLOWBRO   @", 0
-StarterMagnemiteText: db "MAGNEMITE @", 0
-StarterMagnetonText: db "MAGNETON  @", 0
-StarterFarfetchdText: db "FARFETCH'D@", 0
-StarterDoduoText: db "DODUO     @", 0
-StarterDodrioText: db "DODRIO    @", 0
-StarterSeelText: db "SEEL      @", 0
-StarterDewgongText: db "DEWGONG   @", 0
-StarterGrimerText: db "GRIMER    @", 0
-StarterMukText: db "MUK       @", 0
-StarterShellderText: db "SHELLDER  @", 0
-StarterCloysterText: db "CLOYSTER  @", 0
-StarterGastlyText: db "GASTLY    @", 0
-StarterHaunterText: db "HAUNTER   @", 0
-StarterGengarText: db "GENGAR    @", 0
-StarterOnixText: db "ONIX      @", 0
-StarterDrowzeeText: db "DROWZEE   @", 0
-StarterHypnoText: db "HYPNO     @", 0
-StarterKrabbyText: db "KRABBY    @", 0
-StarterKinglerText: db "KINGLER   @", 0
-StarterVoltorbText: db "VOLTORB   @", 0
-StarterElectrodeText: db "ELECTRODE @", 0
-StarterExeggcuteText: db "EXEGGCUTE @", 0
-StarterExeggutorText: db "EXEGGUTOR @", 0
-StarterCuboneText: db "CUBONE    @", 0
-StarterMarowakText: db "MAROWAK   @", 0
-StarterHitmonleeText: db "HITMONLEE @", 0
-StarterHitmonchanText: db "HITMONCHAN@", 0
-StarterLickitungText: db "LICKITUNG @", 0
-StarterKoffingText: db "KOFFING   @", 0
-StarterWeezingText: db "WEEZING   @", 0
-StarterRhyhornText: db "RHYHORN   @", 0
-StarterRhydonText: db "RHYDON    @", 0
-StarterChanseyText: db "CHANSEY   @", 0
-StarterTangelaText: db "TANGELA   @", 0
-StarterKangaskhanText: db "KANGASKHAN@", 0
-StarterHorseaText: db "HORSEA    @", 0
-StarterSeadraText: db "SEADRA    @", 0
-StarterGoldeenText: db "GOLDEEN   @", 0
-StarterSeakingText: db "SEAKING   @", 0
-StarterStaryuText: db "STARYU    @", 0
-StarterStarmieText: db "STARMIE   @", 0
-StarterMrMimeText: db "MR. MIME   @", 0
-StarterScytherText: db "SCYTHER   @", 0
-StarterJynxText: db "JYNX      @", 0
-StarterElectabuzzText: db "ELECTABUZZ@", 0
-StarterMagmarText: db "MAGMAR    @", 0
-StarterPinsirText: db "PINSIR    @", 0
-StarterTaurosText: db "TAUROS    @", 0
-StarterMagikarpText: db "MAGIKARP  @", 0
-StarterGyaradosText: db "GYARADOS  @", 0
-StarterLaprasText: db "LAPRAS    @", 0
-StarterDittoText: db "DITTO     @", 0
-StarterEeveeText: db "EEVEE     @", 0
-StarterVaporeonText: db "VAPOREON  @", 0
-StarterJolteonText: db "JOLTEON   @", 0
-StarterFlareonText: db "FLAREON   @", 0
-StarterPorygonText: db "PORYGON   @", 0
-StarterOmanyteText: db "OMANYTE   @", 0
-StarterOmastarText: db "OMASTAR   @", 0
-StarterKabutoText: db "KABUTO    @", 0
-StarterKabutopsText: db "KABUTOPS  @", 0
-StarterAerodactylText: db "AERODACTYL@", 0
-StarterSnorlaxText: db "SNORLAX   @", 0
-StarterArticunoText: db "ARTICUNO  @", 0
-StarterZapdosText: db "ZAPDOS    @", 0
-StarterMoltresText: db "MOLTRES   @", 0
-StarterDratiniText: db "DRATINI   @", 0
-StarterDragonairText: db "DRAGONAIR @", 0
-StarterDragoniteText: db "DRAGONITE @", 0
-StarterMewtwoText: db "MEWTWO    @", 0
-StarterMewText: db "MEW       @", 0
+	
+StarterBulbasaurText: 	db "BULBASAUR @", 0
+StarterIvysaurText: 	db "IVYSAUR   @", 0
+StarterVenusaurText: 	db "VENUSAUR  @", 0
+StarterCharmanderText: 	db "CHARMANDER@", 0
+StarterCharmeleonText:  db "CHARMELEON@", 0
+StarterCharizardText: 	db "CHARIZARD @", 0
+StarterSquirtleText:	db "SQUIRTLE  @", 0
+StarterWartortleText: 	db "WARTORTLE @", 0
+StarterBlastoiseText: 	db "BLASTOISE @", 0
+StarterCaterpieText:	db "CATERPIE  @", 0
+StarterMetapodText: 	db "METAPOD   @", 0
+StarterButterfreeText: 	db "BUTTERFREE@", 0
+StarterWeedleText: 		db "WEEDLE    @", 0
+StarterKakunaText: 		db "KAKUNA    @", 0
+StarterBeedrillText: 	db "BEEDRILL  @", 0
+StarterPidgeyText: 		db "PIDGEY    @", 0
+StarterPidgeottoText: 	db "PIDGEOTTO @", 0
+StarterPidgeotText: 	db "PIDGEOT   @", 0
+StarterRattataText: 	db "RATTATA   @", 0
+StarterRaticateText: 	db "RATICATE  @", 0
+StarterSpearowText: 	db "SPEAROW   @", 0
+StarterFearowText: 		db "FEAROW    @", 0
+StarterEkansText: 		db "EKANS     @", 0
+StarterArbokText: 		db "ARBOK     @", 0
+StarterPikachuText: 	db "PIKACHU   @", 0
+StarterRaichuText: 		db "RAICHU    @", 0
+StarterSandshrewText: 	db "SANDSHREW @", 0
+StarterSandslashText: 	db "SANDSLASH @", 0
+StarterNidoranFText: 	db "NIDORAN♀  @", 0
+StarterNidorinaText: 	db "NIDORINA  @", 0
+StarterNidoqueenText: 	db "NIDOQUEEN @", 0
+StarterNidoranMText: 	db "NIDORAN♂  @", 0
+StarterNidorinoText: 	db "NIDORINO  @", 0
+StarterNidokingText: 	db "NIDOKING  @", 0
+StarterClefairyText: 	db "CLEFAIRY  @", 0
+StarterClefableText: 	db "CLEFABLE  @", 0
+StarterVulpixText: 		db "VULPIX    @", 0
+StarterNinetalesText: 	db "NINETALES @", 0
+StarterJigglypuffText: 	db "JIGGLYPUFF@", 0
+StarterWigglytuffText: 	db "WIGGLYTUFF@", 0
+StarterZubatText: 		db "ZUBAT     @", 0
+StarterGolbatText: 		db "GOLBAT    @", 0
+StarterOddishText: 		db "ODDISH    @", 0
+StarterGloomText: 		db "GLOOM     @", 0
+StarterVileplumeText: 	db "VILEPLUME @", 0
+StarterParasText: 		db "PARAS     @", 0
+StarterParasectText: 	db "PARASECT  @", 0
+StarterVenonatText: 	db "VENONAT   @", 0
+StarterVenomothText: 	db "VENOMOTH  @", 0
+StarterDiglettText: 	db "DIGLETT   @", 0
+StarterDugtrioText: 	db "DUGTRIO   @", 0
+StarterMeowthText: 		db "MEOWTH    @", 0
+StarterPersianText: 	db "PERSIAN   @", 0
+StarterPsyduckText: 	db "PSYDUCK   @", 0
+StarterGolduckText: 	db "GOLDUCK   @", 0
+StarterMankeyText: 		db "MANKEY    @", 0
+StarterPrimeapeText: 	db "PRIMEAPE  @", 0
+StarterGrowlitheText: 	db "GROWLITHE @", 0
+StarterArcanineText: 	db "ARCANINE  @", 0
+StarterPoliwagText: 	db "POLIWAG   @", 0
+StarterPoliwhirlText: 	db "POLIWHIRL @", 0
+StarterPoliwrathText: 	db "POLIWRATH @", 0
+StarterAbraText: 		db "ABRA      @", 0
+StarterKadabraText: 	db "KADABRA   @", 0
+StarterAlakazamText: 	db "ALAKAZAM  @", 0
+StarterMachopText: 		db "MACHOP    @", 0
+StarterMachokeText: 	db "MACHOKE   @", 0
+StarterMachampText: 	db "MACHAMP   @", 0
+StarterBellsproutText: 	db "BELLSPROUT@", 0
+StarterWeepinbellText: 	db "WEEPINBELL@", 0
+StarterVictreebelText: 	db "VICTREEBEL@", 0
+StarterTentacoolText: 	db "TENTACOOL @", 0
+StarterTentacruelText: 	db "TENTACRUEL@", 0
+StarterGeodudeText: 	db "GEODUDE   @", 0
+StarterGravelerText: 	db "GRAVELER  @", 0
+StarterGolemText: 		db "GOLEM     @", 0
+StarterPonytaText: 		db "PONYTA    @", 0
+StarterRapidashText: 	db "RAPIDASH  @", 0
+StarterSlowpokeText: 	db "SLOWPOKE  @", 0
+StarterSlowbroText: 	db "SLOWBRO   @", 0
+StarterMagnemiteText: 	db "MAGNEMITE @", 0
+StarterMagnetonText: 	db "MAGNETON  @", 0
+StarterFarfetchdText: 	db "FARFETCH'D@", 0
+StarterDoduoText: 		db "DODUO     @", 0
+StarterDodrioText: 		db "DODRIO    @", 0
+StarterSeelText: 		db "SEEL      @", 0
+StarterDewgongText: 	db "DEWGONG   @", 0
+StarterGrimerText: 		db "GRIMER    @", 0
+StarterMukText: 		db "MUK       @", 0
+StarterShellderText: 	db "SHELLDER  @", 0
+StarterCloysterText: 	db "CLOYSTER  @", 0
+StarterGastlyText: 		db "GASTLY    @", 0
+StarterHaunterText: 	db "HAUNTER   @", 0
+StarterGengarText: 		db "GENGAR    @", 0
+StarterOnixText: 		db "ONIX      @", 0
+StarterDrowzeeText: 	db "DROWZEE   @", 0
+StarterHypnoText: 		db "HYPNO     @", 0
+StarterKrabbyText: 		db "KRABBY    @", 0
+StarterKinglerText: 	db "KINGLER   @", 0
+StarterVoltorbText: 	db "VOLTORB   @", 0
+StarterElectrodeText: 	db "ELECTRODE @", 0
+StarterExeggcuteText: 	db "EXEGGCUTE @", 0
+StarterExeggutorText: 	db "EXEGGUTOR @", 0
+StarterCuboneText: 		db "CUBONE    @", 0
+StarterMarowakText: 	db "MAROWAK   @", 0
+StarterHitmonleeText: 	db "HITMONLEE @", 0
+StarterHitmonchanText: 	db "HITMONCHAN@", 0
+StarterLickitungText: 	db "LICKITUNG @", 0
+StarterKoffingText: 	db "KOFFING   @", 0
+StarterWeezingText: 	db "WEEZING   @", 0
+StarterRhyhornText: 	db "RHYHORN   @", 0
+StarterRhydonText: 		db "RHYDON    @", 0
+StarterChanseyText: 	db "CHANSEY   @", 0
+StarterTangelaText: 	db "TANGELA   @", 0
+StarterKangaskhanText:  db "KANGASKHAN@", 0
+StarterHorseaText: 		db "HORSEA    @", 0
+StarterSeadraText: 		db "SEADRA    @", 0
+StarterGoldeenText: 	db "GOLDEEN   @", 0
+StarterSeakingText: 	db "SEAKING   @", 0
+StarterStaryuText: 		db "STARYU    @", 0
+StarterStarmieText: 	db "STARMIE   @", 0
+StarterMrMimeText: 		db "MR. MIME   @", 0
+StarterScytherText: 	db "SCYTHER   @", 0
+StarterJynxText: 		db "JYNX      @", 0
+StarterElectabuzzText: 	db "ELECTABUZZ@", 0
+StarterMagmarText: 		db "MAGMAR    @", 0
+StarterPinsirText: 		db "PINSIR    @", 0
+StarterTaurosText: 		db "TAUROS    @", 0
+StarterMagikarpText: 	db "MAGIKARP  @", 0
+StarterGyaradosText:	db "GYARADOS  @", 0
+StarterLaprasText: 		db "LAPRAS    @", 0
+StarterDittoText: 		db "DITTO     @", 0
+StarterEeveeText: 		db "EEVEE     @", 0
+StarterVaporeonText: 	db "VAPOREON  @", 0
+StarterJolteonText: 	db "JOLTEON   @", 0
+StarterFlareonText: 	db "FLAREON   @", 0
+StarterPorygonText: 	db "PORYGON   @", 0
+StarterOmanyteText: 	db "OMANYTE   @", 0
+StarterOmastarText:		db "OMASTAR   @", 0
+StarterKabutoText: 		db "KABUTO    @", 0
+StarterKabutopsText: 	db "KABUTOPS  @", 0
+StarterAerodactylText: 	db "AERODACTYL@", 0
+StarterSnorlaxText: 	db "SNORLAX   @", 0
+StarterArticunoText: 	db "ARTICUNO  @", 0
+StarterZapdosText:		db "ZAPDOS    @", 0
+StarterMoltresText: 	db "MOLTRES   @", 0
+StarterDratiniText: 	db "DRATINI   @", 0
+StarterDragonairText: 	db "DRAGONAIR @", 0
+StarterDragoniteText: 	db "DRAGONITE @", 0
+StarterMewtwoText: 		db "MEWTWO    @", 0
+StarterMewText: 		db "MEW       @", 0
 
 OptionsMenu_StarterChoice:
 	ld a, [wStarterPokemon]
