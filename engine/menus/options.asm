@@ -1,3 +1,5 @@
+; To add custom starters to the Starter Selection Option, add their pointer to the bottom of StarterOptionStringsPointerTable (for example: dw StarterChikoritaText), add their string at the bottom of the list of strings (for example: StarterChikoritaText: db "CHIKORITA @", 0) - make sure to pad out the name with spaces to make it 10 characters long. Finally, replace "MEW" in .pressedRight and .pressedLeft with the name of the last Pokémon in the index order (for example, if you backported the entire Chikorita line, replace MEW with MEGANIUM).
+
 DisplayOptionMenu_:
 	call InitOptionsMenu
 .optionMenuLoop
@@ -763,7 +765,7 @@ OptionsMenu_StarterChoice:
 .pressedRight
 	ld a, c
 	inc a
-	cp 151
+	cp MEW
 	jr c, .store
 	ld a, 0
 	jr .store
@@ -772,7 +774,7 @@ OptionsMenu_StarterChoice:
 	ld a, c
 	cp 0
 	jr nz, .dec
-	ld c, 151 - 1
+	ld c, MEW - 1
 	jr .store_from_c
 .dec
 	dec c
