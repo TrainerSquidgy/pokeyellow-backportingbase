@@ -167,8 +167,6 @@ MoveSoundTable:
 	db SFX_BATTLE_2C,          $d8, $04 ; SUBSTITUTE
 	db SFX_BATTLE_0C,          $f0, $04
 	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; MIRROR_COAT
-	db SFX_BATTLE_0B,          $00, $80 ; 
-	db SFX_BATTLE_0B,          $00, $80 ; 
 	db SFX_BATTLE_0C,          $f0, $04 ; SUNNY_DAY
 	db SFX_BATTLE_0C,          $f0, $04 ; RAIN_DANCE
 	db SFX_BATTLE_0C,          $f0, $04 ; ROLLOUT

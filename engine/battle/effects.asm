@@ -1589,13 +1589,6 @@ RainDanceEffect:
 	jp PrintText
 	ret
 	
-DownpourText:
-	text_far _DownpourText
-	text_end
-	
-SunGotBrightText:
-	text_far _SunGotBrightText
-	text_end
 
 RolloutEffect:
 	ld hl, wPlayerBattleStatus3
