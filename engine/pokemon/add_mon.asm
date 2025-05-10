@@ -113,16 +113,23 @@ _AddPartyMon::
 ; Not wild.
 	ld a, [wIsAStarter]
 	and a
-	jr nz, .starter
+	jr z, .notstarter
+
+.starter
+	ld a, [wStarterPerfectDVs]
+	and a
+	jr z, .notstarter
 	
+	ld a, 255
+	ld b, a
+	jr .next4
+
+.notstarter
 	call Random ; generate random IVs
 	ld b, a
 	call Random
 	jr .next4
 	
-.starter
-	ld a, 255
-	ld b, a
 .next4
 	push bc
 	ld bc, wPartyMon1DVs - wPartyMon1

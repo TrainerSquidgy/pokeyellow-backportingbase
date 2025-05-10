@@ -81,6 +81,7 @@ ROMX $C
 ROMX $D
 	"Pics 5"
 ROMX $E
+	"Battle Engine 5"
 	"Battle Engine 6"
 ROMX $F
 	"Battle Core"
@@ -239,7 +240,7 @@ WRAM0
 	"Main Data"
 	"Current Box Data"
 	"GBC Palette Data"
-	org $df15
+	org $df17
 	"Stack"
 VRAM $0
 	"VRAM"
