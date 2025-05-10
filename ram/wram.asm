@@ -74,8 +74,9 @@ wFrequencyModifier:: db
 wTempoModifier:: db
 
 wc0f3:: dw
+wStarterPokemon:: db
 
-	ds 11
+	ds 10
 
 
 SECTION "Sprite State Data", WRAM0
@@ -2061,14 +2062,15 @@ wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wd49b:: db
 wIsAStarter:: db
-wStarterPokemon:: db
+ds 1
 wStarterAtkDef:: db
 wStarterSpdSpc:: db
 wWeatherType:: db
 wWeatherTurnsRemaining:: db
 wPlayerRolloutCount:: db
 wEnemyRolloutCount:: db
-	ds 11
+wStarterIndex:: db
+	ds 10
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
