@@ -37,4 +37,5 @@ UsableItems_PartyMenu:
 	db ELIXER
 	db MAX_ELIXER
 	db SUN_STONE
+	db LINKING_CORD
 	db -1 ; end

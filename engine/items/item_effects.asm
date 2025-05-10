@@ -101,6 +101,7 @@ ItemUsePtrTable:
 	dw ItemUsePPRestore  ; ELIXER
 	dw ItemUsePPRestore  ; MAX_ELIXER
 	dw ItemUseEvoStone   ; SUN_STONE
+	dw ItemUseEvoStone   ; LINKING_CORD
 
 ItemUseBall:
 
@@ -198,7 +199,43 @@ ItemUseBall:
 .loop
 	call Random
 	ld b, a
-
+	
+	ld a, [wHMFriendHelp]
+	and a
+	jr z, .check_dex_help
+	
+	ld hl, wPokedexOwned
+	ld b, wPokedexOwnedEnd - wPokedexOwned
+	call CountSetBits
+	ld a, [wNumSetBits]
+	cp 11
+	jp c, .captured
+	
+	ld a, [wSpearowEncounters]
+	and a
+	jr z, .not_spearow
+	ld a, [wEnemyMonSpecies2]
+	cp SPEAROW
+	jp z, .captured
+.not_spearow
+	ld a, [wAbraEncounters]
+	and a
+	jr z, .not_abra
+	ld a, [wEnemyMonSpecies2]
+	cp ABRA
+	jp z, .captured
+.not_abra
+	ld a, [wParasEncounters]
+	and a
+	jr z, .check_dex_help
+	ld a, [wEnemyMonSpecies2]
+	cp PARAS
+	jp z, .captured
+.check_dex_help
+	ld a, [wDexCatchingHelp]
+	and a
+	jp z, .captured
+.check_master_ball
 ; Get the item ID.
 	ld hl, wCurItem
 	ld a, [hl]
