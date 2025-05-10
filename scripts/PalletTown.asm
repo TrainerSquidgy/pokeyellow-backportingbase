@@ -142,7 +142,12 @@ PalletTownPikachuBattleScript:
 	ld [wListScrollOffset], a
 	ld a, BATTLE_TYPE_PIKACHU
 	ld [wBattleType], a
+	
+	ld a, [wStarterPokemon]
+	and a
+	jr nz, .not_pikachu
 	ld a, STARTER_PIKACHU
+.not_pikachu
 	ld [wCurOpponent], a
 	ld a, 5
 	ld [wCurEnemyLevel], a
