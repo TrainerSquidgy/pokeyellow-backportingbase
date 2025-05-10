@@ -74,8 +74,16 @@ wFrequencyModifier:: db
 wTempoModifier:: db
 
 wc0f3:: dw
-
-	ds 11
+wStarterPokemon:: db
+wSpearowEncounters:: db
+wAbraEncounters:: db
+wParasEncounters:: db
+wHMFriendHelp:: db
+wStarterPerfectDVs:: db
+wEvolutionsDisabled:: db
+wDexCatchingHelp:: db
+wVermilionGymHelp:: db
+	ds 2
 
 
 SECTION "Sprite State Data", WRAM0
@@ -2060,8 +2068,16 @@ wUnknownSerialFlag_d499:: db
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wd49b:: db
-
-	ds 19
+wIsAStarter:: db
+ds 1
+wStarterAtkDef:: db
+wStarterSpdSpc:: db
+wWeatherType:: db
+wWeatherTurnsRemaining:: db
+wPlayerRolloutCount:: db
+wEnemyRolloutCount:: db
+wStarterIndex:: db
+	ds 10
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db
@@ -2499,7 +2515,7 @@ wBGPPalsBuffer:: ds NUM_ACTIVE_PALS * PALETTE_SIZE
 SECTION "Stack", WRAM0
 
 ; the stack grows downward
-	ds $eb - 1
+	ds $e0 - 1
 wStack:: db
 
 ENDSECTION
