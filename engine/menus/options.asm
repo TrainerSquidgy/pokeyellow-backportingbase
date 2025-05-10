@@ -767,7 +767,7 @@ OptionsMenu_StarterChoice:
 .pressedRight
 	ld a, c
 	inc a
-	cp 151
+	cp MAGCARGO
 	jr c, .store
 	ld a, 0
 	jr .store
@@ -776,7 +776,7 @@ OptionsMenu_StarterChoice:
 	ld a, c
 	cp 0
 	jr nz, .dec
-	ld c, 151 - 1
+	ld c, MAGCARGO - 1
 	jr .store_from_c
 .dec
 	dec c
