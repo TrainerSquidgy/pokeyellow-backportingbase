@@ -596,6 +596,8 @@ StarterOptionStringsPointerTable:
 	dw StarterDragoniteText
 	dw StarterMewtwoText
 	dw StarterMewText
+	dw StarterSlugmaText
+	dw StarterMagcargoText
 	
 StarterBulbasaurText: 	db "BULBASAUR @", 0
 StarterIvysaurText: 	db "IVYSAUR   @", 0
@@ -748,6 +750,8 @@ StarterDragonairText: 	db "DRAGONAIR @", 0
 StarterDragoniteText: 	db "DRAGONITE @", 0
 StarterMewtwoText: 		db "MEWTWO    @", 0
 StarterMewText: 		db "MEW       @", 0
+StarterSlugmaText: 		db "SLUGMA    @", 0
+StarterMagcargoText:    db "MAGCARGO  @", 0
 
 OptionsMenu_StarterChoice:
 	ld a, [wStarterPokemon]
