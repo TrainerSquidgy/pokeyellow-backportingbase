@@ -166,5 +166,8 @@ MoveNames::
 	li "SUBSTITUTE"
 	li "FAINT ATTACK"
 	li "SKETCH"
+	li "SUNNY DAY"
+	li "RAIN DANCE"
+	li "ROLLOUT"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

@@ -92,4 +92,7 @@
 	const SPLASH_EFFECT              ; $55
 	const DISABLE_EFFECT             ; $56
 	const SKETCH_EFFECT
+	const SUN_EFFECT
+	const RAIN_EFFECT
+	const ROLLOUT_EFFECT
 DEF NUM_MOVE_EFFECTS EQU const_value - 1

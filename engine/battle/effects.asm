@@ -77,6 +77,14 @@ SleepEffect:
 .didntAffect
 	jp PrintDidntAffectText
 
+DownpourText:
+	text_far _DownpourText
+	text_end
+	
+SunGotBrightText:
+	text_far _SunGotBrightText
+	text_end
+
 FellAsleepText:
 	text_far _FellAsleepText
 	text_end
@@ -516,6 +524,16 @@ UpdateStatDone:
 	call nz, Bankswitch
 	pop de
 .notMinimize
+	cp DEFENSE_CURL
+	jr nz, .notDefenseCurl
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .PlayerCurl
+	ld hl, wEnemyBattleStatus3
+.PlayerCurl
+	set CURLED, [hl]
+.notDefenseCurl
 	call PlayCurrentMoveAnimation
 	ld a, [de]
 	cp MINIMIZE
@@ -1678,3 +1696,34 @@ SketchEffect:
 SketchedText:
   text_far _SketchedText
   text_end
+
+SunnyDayEffect:
+	ld a, 5
+	ld [wWeatherTurnsRemaining], a
+	ld a, 1
+	ld [wWeatherType], a
+	ld hl, SunGotBrightText
+	jp PrintText
+	ret
+	
+RainDanceEffect:
+	ld a, 5
+	ld [wWeatherTurnsRemaining], a
+	ld a, 2
+	ld [wWeatherType], a
+	ld hl, DownpourText
+	jp PrintText
+	ret
+	
+RolloutEffect:
+	ld hl, wPlayerBattleStatus3
+	ldh a, [hWhoseTurn]
+	and a
+	jr z, .player
+	ld hl, wEnemyBattleStatus3
+.player
+	bit IN_ROLLOUT, [hl]
+	ret nz
+	set IN_ROLLOUT, [hl] ; mon is now in "rage" mode
+	ret
+
