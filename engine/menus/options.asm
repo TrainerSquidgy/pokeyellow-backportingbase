@@ -596,6 +596,9 @@ StarterOptionStringsPointerTable:
 	dw StarterDragoniteText
 	dw StarterMewtwoText
 	dw StarterMewText
+	dw StarterMareepText
+	dw StarterFlaaffyText
+	dw StarterAmpharosText
 
 StarterBulbasaurText: db "BULBASAUR @", 0
 StarterIvysaurText: db "IVYSAUR   @", 0
@@ -748,6 +751,9 @@ StarterDragonairText: db "DRAGONAIR @", 0
 StarterDragoniteText: db "DRAGONITE @", 0
 StarterMewtwoText: db "MEWTWO    @", 0
 StarterMewText: db "MEW       @", 0
+StarterMareepText: db "MAREEP    @", 0
+StarterFlaaffyText: db "FLAAFFY   @", 0
+StarterAmpharosText: db "AMPHAROS  @", 0
 
 OptionsMenu_StarterChoice:
 	ld a, [wStarterPokemon]
@@ -763,7 +769,7 @@ OptionsMenu_StarterChoice:
 .pressedRight
 	ld a, c
 	inc a
-	cp 151
+	cp 154
 	jr c, .store
 	ld a, 0
 	jr .store
@@ -772,7 +778,7 @@ OptionsMenu_StarterChoice:
 	ld a, c
 	cp 0
 	jr nz, .dec
-	ld c, 151 - 1
+	ld c, 154 - 1
 	jr .store_from_c
 .dec
 	dec c
