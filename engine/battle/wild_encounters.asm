@@ -20,7 +20,7 @@ TryDoWildEncounter:
 	and a
 	jr z, .next
 	dec a
-	jr z, .lastRepelStep
+	jp z, .lastRepelStep
 	ld [wRepelRemainingSteps], a
 .next
 ; determine if wild pokemon can appear in the half-block we're standing in
@@ -41,17 +41,17 @@ TryDoWildEncounter:
 ; ...as long as it's not Viridian Forest or Safari Zone.
 	ld a, [wCurMap]
 	cp FIRST_INDOOR_MAP ; is this an indoor map?
-	jr c, .CantEncounter2
+	jp c, .CantEncounter2
 	ld a, [wCurMapTileset]
 	cp FOREST ; Viridian Forest/Safari Zone
-	jr z, .CantEncounter2
+	jp z, .CantEncounter2
 	ld a, [wGrassRate]
 .CanEncounter
 ; compare encounter chance with a random number to determine if there will be an encounter
 	ld b, a
 	ldh a, [hRandomAdd]
 	cp b
-	jr nc, .CantEncounter2
+	jp nc, .CantEncounter2
 	ldh a, [hRandomSub]
 	ld b, a
 	ld hl, WildMonEncounterSlotChances
@@ -77,6 +77,64 @@ TryDoWildEncounter:
 	ld a, [hl]
 	ld [wCurPartySpecies], a
 	ld [wEnemyMonSpecies2], a
+	
+	ld a, [wHMFriendHelp]
+	and a
+	jr z, .skip_force_encounter
+	
+	ld a, [wParasEncounters] 
+	and a 
+	jr nz, .skip_paras
+	ld a, [wCurMap] 
+	cp MT_MOON_1F 
+	jr nz, .skip_paras 
+	ld a, 1
+	ld [wParasEncounters], a 
+	ld a, 8
+	ld [wCurEnemyLevel], a
+	ld a, PARAS
+	ld [wCurPartySpecies], a
+	ld [wEnemyMonSpecies2], a
+	jr .skip_force_encounter
+.skip_paras
+	ld a, [wSpearowEncounters] 
+	and a 
+	jr nz, .skip_spearow
+	ld a, [wCurMap] 
+	cp ROUTE_3 
+	jr nz, .skip_spearow 
+	ld a, 1
+	ld [wSpearowEncounters], a 
+	ld a, 8
+	ld [wCurEnemyLevel], a
+	ld a, SPEAROW
+	ld [wCurPartySpecies], a
+	ld [wEnemyMonSpecies2], a
+	jr .skip_force_encounter
+.skip_spearow
+		ld a, [wAbraEncounters] 
+	and a 
+	jr nz, .skip_force_encounter
+	ld a, [wCurMap] 
+	cp ROUTE_5 
+	jr z, .force_abra
+	cp ROUTE_6
+	jr z, .force_abra
+	cp ROUTE_7
+	jr z, .force_abra
+	cp ROUTE_8
+	jr nz, .skip_force_encounter
+.force_abra
+	ld a, 1
+	ld [wAbraEncounters], a 
+	ld a, 8
+	ld [wCurEnemyLevel], a
+	ld a, SPEAROW
+	ld [wCurPartySpecies], a
+	ld [wEnemyMonSpecies2], a
+	jr .skip_force_encounter
+
+.skip_force_encounter
 	ld a, [wRepelRemainingSteps]
 	and a
 	jr z, .willEncounter
