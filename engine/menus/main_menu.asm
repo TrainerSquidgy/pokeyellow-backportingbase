@@ -129,6 +129,8 @@ InitOptions:
 	ld [wOptions], a
 	ld a, 64 ; audio?
 	ld [wPrinterSettings], a
+	ld a, 25
+	ld [wStarterPokemon], a
 	ret
 
 Func_5cc1:
