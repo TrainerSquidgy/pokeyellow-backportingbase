@@ -171,6 +171,9 @@
 	const SLASH        ; a3
 	const SUBSTITUTE   ; a4
 	const FAINT_ATTACK
+	const SUNNY_DAY
+	const RAIN_DANCE
+	const ROLLOUT
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

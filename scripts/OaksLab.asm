@@ -445,6 +445,9 @@ OaksLabPlayerWatchRivalExitScript:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
+	ld a, [wStarterPokemon]
+	and a
+	ret nz
 	ld a, SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL
 	ld [wOaksLabCurScript], a
 	ret

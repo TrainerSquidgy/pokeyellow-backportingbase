@@ -28,6 +28,9 @@ VermilionGym_Script:
 	db "LT.SURGE@"
 
 VermilionGymSetDoorTile:
+	ld a, [wVermilionGymHelp]
+	and a
+	jr nz, .doorsOpen
 	CheckEvent EVENT_2ND_LOCK_OPENED
 	jr nz, .doorsOpen
 	ld a, $24 ; double door tile ID
