@@ -84,6 +84,10 @@ ItemNames::
 	li "ELIXER"
 	li "MAX ELIXER"
 	li "LINKING CORD"
+	li "SCYTHE"
+	li "AIR BALLOON"
+	li "BURLY MAN"
+	li "LANTERN"
 	assert_list_length NUM_ITEMS
 	li "B2F"
 	li "B1F"

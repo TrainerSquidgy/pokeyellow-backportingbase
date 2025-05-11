@@ -101,6 +101,10 @@ ItemUsePtrTable:
 	dw ItemUsePPRestore  ; ELIXER
 	dw ItemUsePPRestore  ; MAX_ELIXER
 	dw ItemUseEvoStone   ; LINKING_CORD
+	dw ItemUseScythe     ; SCYTHE
+	dw ItemUseAirBalloon ; AIR_BALLOON
+	dw ItemUseBurlyMan   ; BURLY_MAN
+	dw ItemUseLantern    ; LANTERN
 
 ItemUseBall:
 
@@ -3215,3 +3219,9 @@ CheckMapForMon:
 	jr nz, .loop
 	dec hl
 	ret
+
+ItemUseScythe:
+ItemUseAirBalloon:
+ItemUseBurlyMan:
+ItemUseLantern:
+ret
