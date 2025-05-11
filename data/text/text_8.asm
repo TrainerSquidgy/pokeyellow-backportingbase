@@ -37,6 +37,11 @@ _FlashLightsAreaText::
 	line "lights the area!"
 	prompt
 
+_LanternLightsAreaText::
+	text "A blinding FLASH"
+	line "lights the area!"
+	prompt
+
 _WarpToLastPokemonCenterText::
 	text "Warp to the last"
 	line "#MON CENTER."
@@ -126,3 +131,13 @@ _BoxIsFullText::
 	para "Change the BOX at"
 	line "a #MON CENTER!"
 	done
+
+_UsedStrengthTextBurly::
+	text "You called for a"
+	line "BURLY MAN.@"
+	prompt
+
+_CanMoveBouldersTextBurly::
+	text "The BURLY MAN can"
+	line "move boulders."
+	prompt

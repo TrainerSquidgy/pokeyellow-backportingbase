@@ -3221,7 +3221,47 @@ CheckMapForMon:
 	ret
 
 ItemUseScythe:
+	farcall UsedCut
+	ret
+
+	
+	
+
 ItemUseAirBalloon:
+	call ChooseFlyDestination
+	ld a, [wStatusFlags6]
+	bit BIT_FLY_WARP, a
+	ret nz
+	call LoadFontTilePatterns
+	ld hl, wStatusFlags4
+	set BIT_UNKNOWN_4_1, [hl]
+	ret 
+	
 ItemUseBurlyMan:
+	ld hl, wStatusFlags1
+	set BIT_STRENGTH_ACTIVE, [hl]
+	ld hl, UsedStrengthTextBurly
+	call PrintText
+	ld hl, CanMoveBouldersTextBurly
+	jp PrintText
+	ret
+
+UsedStrengthTextBurly:
+	text_far _UsedStrengthTextBurly
+	text_end
+	
+CanMoveBouldersTextBurly:
+	text_far _CanMoveBouldersTextBurly
+	text_end
+	
 ItemUseLantern:
-ret
+	xor a
+	ld [wMapPalOffset], a
+	ld hl, LanternLightsAreaText
+	call PrintText
+	call GBPalWhiteOutWithDelay3
+	ret
+	
+LanternLightsAreaText:
+	text_far _LanternLightsAreaText
+	text_end
