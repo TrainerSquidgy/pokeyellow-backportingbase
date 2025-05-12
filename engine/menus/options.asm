@@ -767,7 +767,7 @@ OptionsMenu_StarterChoice:
 .pressedRight
 	ld a, c
 	inc a
-	cp Sunflora
+	cp SUNFLORA
 	jr c, .store
 	ld a, 0
 	jr .store
@@ -776,7 +776,7 @@ OptionsMenu_StarterChoice:
 	ld a, c
 	cp 0
 	jr nz, .dec
-	ld c, Sunflora - 1
+	ld c, SUNFLORA - 1
 	jr .store_from_c
 .dec
 	dec c
