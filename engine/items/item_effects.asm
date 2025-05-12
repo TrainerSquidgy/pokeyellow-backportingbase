@@ -109,19 +109,14 @@ ItemUsePtrTable:
 ItemUseBall:
 	
 ; Balls can't be used out of battle.
-	jp ItemUseNotTime
-
-; Balls can't catch trainers' Pokémon.
-	dec a
-	jp nz, ThrowBallAtTrainerMon
-
-; If this is for the old man battle, skip checking if the party & box are full.
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_OLD_MAN
 	jr z, .canUseBall
 	cp BATTLE_TYPE_PIKACHU
 	jr z, .canUseBall
-
+	
+	jp ItemUseNotTime
+	
 	ld a, [wPartyCount] ; is party full?
 	cp PARTY_LENGTH
 	jr nz, .canUseBall

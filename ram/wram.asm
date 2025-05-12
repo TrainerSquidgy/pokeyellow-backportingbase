@@ -2078,7 +2078,10 @@ wPlayerRolloutCount:: db
 wEnemyRolloutCount:: db
 wStarterIndex:: db
 wPokemonInWaiting:: db
-	ds 9
+wLevelCap:: db
+wNumberOfFaints:: db
+wIsModdedGame:: db
+	ds 6
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

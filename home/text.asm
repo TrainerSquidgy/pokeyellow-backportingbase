@@ -83,7 +83,6 @@ PlaceNextChar::
 .NotLine
 
 ; Check against a dictionary
-	dict "<NULL>",    NullChar
 	dict "<SCROLL>",  _ContTextNoPause
 	dict "<_CONT>",   _ContText
 	dict "<PARA>",    Paragraph
@@ -111,17 +110,6 @@ NextChar::
 	inc de
 	jp PlaceNextChar
 
-NullChar:: ; unused
-	ld b, h
-	ld c, l
-	pop hl
-	; A "<NULL>" character in a printed string
-	; displays an error message with the current value
-	; of hTextID in decimal format.
-	; This is a debugging leftover.
-	ld de, TextIDErrorText
-	dec de
-	ret
 
 TextIDErrorText:: ; "[hTextID] ERROR."
 	text_far _TextIDErrorText

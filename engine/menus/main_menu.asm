@@ -129,8 +129,10 @@ InitOptions:
 	ld [wOptions], a
 	ld a, 64 ; audio?
 	ld [wPrinterSettings], a
-	ld a, 25
+	ld a, PIKACHU
 	ld [wStarterPokemon], a
+	xor a
+	ld [wNumberOfFaints], a
 .reroll
 	call Random
 	cp NUM_POKEMON

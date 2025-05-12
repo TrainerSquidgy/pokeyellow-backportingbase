@@ -1,6 +1,3 @@
-UnknownText_2812:: ; unreferenced
-	text_far _PokemonText
-	text_end
 
 ; this function is used to display sign messages, sprite dialog, etc.
 ; INPUT: [hSpriteIndex] = sprite ID or [hTextID] = text ID
@@ -181,6 +178,14 @@ DisplaySafariGameOverText::
 	jp AfterDisplayingTextID
 
 DisplayPokemonFaintedText::
+	push af
+	ld a, [wNumberOfFaints]
+	cp 255
+	jr z, .maxedout
+	inc a
+	ld [wNumberOfFaints], a
+.maxedout
+	pop af
 	ld hl, PokemonFaintedText
 	call PrintText
 	jp AfterDisplayingTextID
