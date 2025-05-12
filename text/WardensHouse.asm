@@ -45,9 +45,9 @@ _WardensHouseWardenThanksText::
 
 _WardensHouseWardenReceivedHM04Text::
 	text "<PLAYER> received"
-	line "@"
-	text_ram wStringBuffer
-	text "!@"
+	line "HM04 STRENGTH and"
+	cont "a BURLY MAN's"
+	cont "phone number!"
 	text_end
 
 _WardensHouseWardenHM04ExplanationText::
@@ -58,6 +58,10 @@ _WardensHouseWardenHM04ExplanationText::
 	line "move boulders"
 	cont "when you're out-"
 	cont "side of battle."
+
+	para "The BURLY MAN"
+	line "can also help"
+	cont "move boulders!"
 
 	para "Oh yes, did you"
 	line "find SECRET HOUSE"

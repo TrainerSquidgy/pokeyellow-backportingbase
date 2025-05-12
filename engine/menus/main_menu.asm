@@ -131,6 +131,11 @@ InitOptions:
 	ld [wPrinterSettings], a
 	ld a, 25
 	ld [wStarterPokemon], a
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
 	ret
 
 Func_5cc1:

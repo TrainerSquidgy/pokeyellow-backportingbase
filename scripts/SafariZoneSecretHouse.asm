@@ -14,6 +14,9 @@ SafariZoneSecretHouseFishingGuruText:
 	lb bc, HM_SURF, 1
 	call GiveItem
 	jr nc, .bag_full
+	lb bc, SURFBOARD, 1
+	call GiveItem
+	jr nc, .bag_full
 	ld hl, .ReceivedHM03Text
 	call PrintText
 	SetEvent EVENT_GOT_HM03

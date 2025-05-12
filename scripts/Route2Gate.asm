@@ -15,10 +15,13 @@ Route2GateOaksAideText:
 	jr z, .no_item
 	ld hl, BoulderBadgeGotText
 	call PrintText
-	ld bc, HM_FLASH
+	lb bc, HM_FLASH, 1
 	call GiveItem
-	SetEvent EVENT_GOT_HM05
 	jr nc, .bag_full
+	lb bc, LANTERN, 1
+	call GiveItem
+	jr nc, .bag_full
+	SetEvent EVENT_GOT_HM05
 .got_item
 	ld hl, .FlashExplanationText
 	call PrintText

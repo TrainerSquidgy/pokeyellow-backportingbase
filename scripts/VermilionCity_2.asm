@@ -1,7 +1,7 @@
 VermilionCityPrintOfficerJennyText::
 	ld hl, OfficerJennyText5
 	call PrintText
-	ret
+	jp TextScriptEnd
 
 OfficerJennyText1:
 	text_far _OfficerJennyText1

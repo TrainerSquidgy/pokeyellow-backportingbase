@@ -445,7 +445,7 @@ OaksLabPlayerWatchRivalExitScript:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
-	ld a, [wStarterPokemon]
+	ld a, [wNextRNGGiftMon]
 	and a
 	ret nz
 	ld a, SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL
@@ -1019,7 +1019,7 @@ OaksLabRivalTakesText5:
 
 OaksLabPlayerReceivedMonText:
 	text_asm
-	ld a, [wStarterPokemon]
+	ld a, [wNextRNGGiftMon]
 	and a
 	jr nz, .NotPikachu
 	ld a, STARTER_PIKACHU
@@ -1039,7 +1039,7 @@ OaksLabPlayerReceivedMonText:
 	ld [wCurEnemyLevel], a
 	ld a, 1
 	ld [wIsAStarter], a
-	ld a, [wStarterPokemon]
+	ld a, [wNextRNGGiftMon]
 	and a
 	jr nz, .NotPikachu2
 	ld a, STARTER_PIKACHU
@@ -1049,7 +1049,12 @@ OaksLabPlayerReceivedMonText:
 	call AddPartyMon
 	xor a
 	ld [wIsAStarter], a
-	ld [wStarterPokemon], a
+	ld [wNextRNGGiftMon], a
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr c, .reroll
+	ld [wNextRNGGiftMon], a
 	ld a, LIGHT_BALL_GSC
 	ld [wPartyMon1CatchRate], a
 	call DisablePikachuOverworldSpriteDrawing

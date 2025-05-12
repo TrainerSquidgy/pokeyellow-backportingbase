@@ -1,5 +1,6 @@
 _Route2GateOaksAideFlashExplanationText::
 	text "The HM FLASH"
+	line "or the LANTERN"
 	line "lights even the"
 	cont "darkest dungeons."
 	done

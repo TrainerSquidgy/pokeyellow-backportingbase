@@ -76,9 +76,33 @@ PewterGymScriptReceiveTM34:
 
 	ResetEvents EVENT_1ST_ROUTE22_RIVAL_BATTLE, EVENT_ROUTE22_RIVAL_WANTS_BATTLE
 
-	; deactivate gym trainers
+; deactivate gym trainers
 	SetEvent EVENT_BEAT_PEWTER_GYM_TRAINER_0
-
+.gymleadergiftscript
+	ld hl, BrockGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_BROCK
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, BrockGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, BrockPartyIsFullText
+	call PrintText
 	jp PewterGymResetScripts
 
 PewterGym_TextPointers:
@@ -100,6 +124,8 @@ PewterGymBrockText:
 	text_asm
 	CheckEvent EVENT_BEAT_BROCK
 	jr z, .beforeBeat
+	CheckEvent EVENT_GOT_MON_FROM_BROCK
+	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM34
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
@@ -131,6 +157,33 @@ PewterGymBrockText:
 	ld [wCurMapScript], a
 .done
 	jp TextScriptEnd
+.gymleadergiftscript
+	ld hl, BrockGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_BROCK
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, BrockGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, BrockPartyIsFullText
+	call PrintText
+	jp TextScriptEnd
+
 
 .PreBattleText:
 	text_far _PewterGymBrockPreBattleText
@@ -234,4 +287,20 @@ PewterGymGuidePostBattleText:
 
 PewterGymText_5c41c:
 	text_far _PewterGymGuyText
+	text_end
+
+BrockGetNextPokemonText:
+	text_far _GetNextPokemonText
+	text_end
+
+BrockGoodLuckWithYourNextBadgeText:
+	text_far _GoodLuckWithYourNextBadgeText
+	text_end
+	
+BrockPokemonInWaitingText:
+	text_far _PokemonInWaitingText
+	text_end
+	
+BrockPartyIsFullText:
+	text_far _PartyIsFullText
 	text_end

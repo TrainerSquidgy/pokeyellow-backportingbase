@@ -2069,7 +2069,7 @@ wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
 wd49b:: db
 wIsAStarter:: db
-ds 1
+wNextRNGGiftMon:: db
 wStarterAtkDef:: db
 wStarterSpdSpc:: db
 wWeatherType:: db
@@ -2077,7 +2077,8 @@ wWeatherTurnsRemaining:: db
 wPlayerRolloutCount:: db
 wEnemyRolloutCount:: db
 wStarterIndex:: db
-	ds 10
+wPokemonInWaiting:: db
+	ds 9
 
 ; number of signs in the current map (up to 16)
 wNumSigns:: db

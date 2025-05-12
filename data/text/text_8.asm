@@ -141,3 +141,38 @@ _CanMoveBouldersTextBurly::
 	text "The BURLY MAN can"
 	line "move boulders."
 	prompt
+	
+_GetNextPokemonText::
+	text "And now that you"
+	line "have defeated me,"
+	cont "it's time for you"
+	cont "to obtain your"
+	cont "next #MON!"
+	
+	para "Let's see what"
+	line "you get!"
+	prompt
+	
+_GoodLuckWithYourNextBadgeText::
+	text "Good luck with"
+	line "your next GYM"
+	cont "LEADER battle!"
+	prompt
+	
+_PartyIsFullText::
+	text "Your party's full"
+	line "you cannot face"
+	cont "the next GYM"
+	cont "until receiving"
+	cont "your #MON."
+	prompt
+	
+_PokemonInWaitingText::
+	text "You still have a"
+	line "#MON waiting"
+	cont "for you."
+	
+	para "Receive it then"
+	cont "you may face"
+	cont "me in battle."
+	prompt

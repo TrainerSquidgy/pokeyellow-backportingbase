@@ -15,8 +15,11 @@ Route16FlyHouseBrunetteGirlText:
 	call PrintText
 	lb bc, HM_FLY, 1
 	call GiveItem
-	jr nc, .bag_full
 	SetEvent EVENT_GOT_HM02
+	lb bc, AIR_BALLOON, 1
+	call GiveItem
+	SetEvent EVENT_GOT_HM02
+	jr nc, .bag_full
 	ld hl, .ReceivedHM02Text
 	jr .got_item
 .bag_full

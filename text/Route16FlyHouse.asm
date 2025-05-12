@@ -10,7 +10,8 @@ _Route16FlyHouseBrunetteGirlText::
 
 _Route16FlyHouseBrunetteGirlReceivedHM02Text::
 	text "<PLAYER> received"
-	line "HM02!@"
+	line "HM02 and an AIR"
+	cont "BALLOON!@"
 	text_end
 
 _Route16FlyHouseBrunetteGirlHM02ExplanationText::
@@ -18,7 +19,10 @@ _Route16FlyHouseBrunetteGirlHM02ExplanationText::
 	line "It will take you"
 	cont "back to any town."
 
-	para "Put it to good"
+	text "The AIR BALLOON"
+	line "does the same!"
+
+	para "Put them to good"
 	line "use!"
 	done
 

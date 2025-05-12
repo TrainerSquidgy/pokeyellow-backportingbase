@@ -56,7 +56,7 @@ FightingDojoDefaultScript:
 FightingDojoKarateMasterPostBattleScript:
 	ld hl, IWillGiveYouAPokemonText
 	call PrintText
-	ret
+	jp TextScriptEnd
 
 FightingDojo_TextPointers:
 	def_text_pointers

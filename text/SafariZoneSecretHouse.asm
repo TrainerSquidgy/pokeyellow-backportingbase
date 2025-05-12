@@ -16,9 +16,8 @@ _SafariZoneSecretHouseFishingGuruYouHaveWonText::
 
 _SafariZoneSecretHouseFishingGuruReceivedHM03Text::
 	text "<PLAYER> received"
-	line "@"
-	text_ram wStringBuffer
-	text "!@"
+	line "HM03 SURF and"
+	cont "a SURFBOARD!"
 	text_end
 
 _SafariZoneSecretHouseFishingGuruHM03ExplanationText::
@@ -33,9 +32,14 @@ _SafariZoneSecretHouseFishingGuruHM03ExplanationText::
 	cont "can use it over"
 	cont "and over!"
 
+	para "The SURFBOARD"
+	line "does the same but"
+	cont "without needing"
+	cont "a #MON!"
+	
 	para "You're super lucky"
-	line "for winning this"
-	cont "fabulous prize!"
+	line "for winning the"
+	cont "fabulous prizes!"
 	done
 
 _SafariZoneSecretHouseFishingGuruHM03NoRoomText::

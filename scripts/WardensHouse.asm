@@ -41,6 +41,8 @@ WardensHouseWardenText:
 	call PrintText
 	lb bc, HM_STRENGTH, 1
 	call GiveItem
+	lb bc, BURLY_MAN, 1
+	call GiveItem
 	jr nc, .bag_full
 	ld hl, .ReceivedHM04Text
 	call PrintText
