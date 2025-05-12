@@ -445,9 +445,6 @@ OaksLabPlayerWatchRivalExitScript:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	call PlayDefaultMusic
-	ld a, [wStarterPokemon]
-	and a
-	ret nz
 	ld a, SCRIPT_OAKSLAB_PIKACHU_ESCAPES_POKEBALL
 	ld [wOaksLabCurScript], a
 	ret
@@ -1022,7 +1019,7 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wStarterPokemon]
 	and a
 	jr nz, .NotPikachu
-	ld a, TOTODILE
+	ld a, STARTER_PIKACHU
 .NotPikachu
 	ld [wPlayerStarter], a
 	ld [wNamedObjectIndex], a
@@ -1042,7 +1039,7 @@ OaksLabPlayerReceivedMonText:
 	ld a, [wStarterPokemon]
 	and a
 	jr nz, .NotPikachu2
-	ld a, TOTODILE
+	ld a, STARTER_PIKACHU
 .NotPikachu2
 	ld [wPokedexNum], a
 	ld [wCurPartySpecies], a
