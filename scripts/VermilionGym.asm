@@ -90,7 +90,31 @@ VermilionGymLTSurgeReceiveTM24Script:
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_VERMILION_GYM_TRAINER_0, EVENT_BEAT_VERMILION_GYM_TRAINER_2
-
+.gymleadergiftscript
+	ld hl, SurgeGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_SURGE
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, SurgeGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, SurgePartyIsFullText
+	call PrintText
 	jp VermilionGymResetScripts
 
 VermilionGym_TextPointers:
@@ -118,6 +142,8 @@ VermilionGymLTSurgeText:
 	text_asm
 	CheckEvent EVENT_BEAT_LT_SURGE
 	jr z, .before_beat
+	CheckEvent EVENT_GOT_MON_FROM_SURGE
+	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM24
 	jr nz, .got_tm24_already
 	call z, VermilionGymLTSurgeReceiveTM24Script
@@ -128,6 +154,13 @@ VermilionGymLTSurgeText:
 	call PrintText
 	jr .text_script_end
 .before_beat
+	ld a, [wPokemonInWaiting]
+	and a
+	jr z, .noPokemonInWaiting
+	ld hl, SurgePokemonInWaitingText
+	call PrintText
+	jp TextScriptEnd
+.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -149,7 +182,33 @@ VermilionGymLTSurgeText:
 	ld [wCurMapScript], a
 .text_script_end
 	jp TextScriptEnd
-
+.gymleadergiftscript
+	ld hl, SurgeGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_SURGE
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, SurgeGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, SurgePartyIsFullText
+	call PrintText
+	jp TextScriptEnd
+	
 .PreBattleText:
 	text_far _VermilionGymLTSurgePreBattleText
 	text_end
@@ -250,4 +309,19 @@ VermilionGymGymGuideText:
 
 .BeatLTSurgeText:
 	text_far _VermilionGymGymGuideBeatLTSurgeText
+	text_end
+SurgeGetNextPokemonText:
+	text_far _GetNextPokemonText
+	text_end
+
+SurgeGoodLuckWithYourNextBadgeText:
+	text_far _GoodLuckWithYourNextBadgeText
+	text_end
+	
+SurgePokemonInWaitingText:
+	text_far _PokemonInWaitingText
+	text_end
+	
+SurgePartyIsFullText:
+	text_far _PartyIsFullText
 	text_end

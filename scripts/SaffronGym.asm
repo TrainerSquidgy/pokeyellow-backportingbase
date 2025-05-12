@@ -68,7 +68,31 @@ SaffronGymSabrinaReceiveTM46Script:
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_SAFFRON_GYM_TRAINER_0, EVENT_BEAT_SAFFRON_GYM_TRAINER_6
-
+.gymleadergiftscript
+	ld hl, SabrinaGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_SABRINA
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, SabrinaGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, SabrinaPartyIsFullText
+	call PrintText
 	jp SaffronGymResetScripts
 
 SaffronGym_TextPointers:
@@ -108,6 +132,8 @@ SaffronGymSabrinaText:
 	text_asm
 	CheckEvent EVENT_BEAT_SABRINA
 	jr z, .beforeBeat
+	CheckEvent EVENT_GOT_MON_FROM_SABRINA
+	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM46
 	jr nz, .afterBeat
 	call z, SaffronGymSabrinaReceiveTM46Script
@@ -118,6 +144,13 @@ SaffronGymSabrinaText:
 	call PrintText
 	jr .done
 .beforeBeat
+	ld a, [wPokemonInWaiting]
+	and a
+	jr z, .noPokemonInWaiting
+	ld hl, SabrinaPokemonInWaitingText
+	call PrintText
+	jp TextScriptEnd
+.noPokemonInWaiting
 	ld hl, .Text
 	call PrintText
 	ld hl, wStatusFlags3
@@ -135,6 +168,32 @@ SaffronGymSabrinaText:
 	ld a, SCRIPT_SAFFRONGYM_SABRINA_POST_BATTLE
 	ld [wSaffronGymCurScript], a
 .done
+	jp TextScriptEnd
+.gymleadergiftscript
+	ld hl, SabrinaGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_SABRINA
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, SabrinaGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, SabrinaPartyIsFullText
+	call PrintText
 	jp TextScriptEnd
 
 .Text:
@@ -310,4 +369,20 @@ SaffronGymYoungster4EndBattleText:
 
 SaffronGymYoungster4AfterBattleText:
 	text_far _SaffronGymYoungster4AfterBattleText
+	text_end
+
+SabrinaGetNextPokemonText:
+	text_far _GetNextPokemonText
+	text_end
+
+SabrinaGoodLuckWithYourNextBadgeText:
+	text_far _GoodLuckWithYourNextBadgeText
+	text_end
+	
+SabrinaPokemonInWaitingText:
+	text_far _PokemonInWaitingText
+	text_end
+	
+SabrinaPartyIsFullText:
+	text_far _PartyIsFullText
 	text_end

@@ -68,7 +68,31 @@ CeruleanGymReceiveTM11:
 
 	; deactivate gym trainers
 	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
-
+.gymleadergiftscript
+	ld hl, MistyGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_MISTY
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, MistyGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, MistyPartyIsFullText
+	call PrintText
 	jp CeruleanGymResetScripts
 
 CeruleanGym_TextPointers:
@@ -93,6 +117,8 @@ CeruleanGymMistyText:
 	text_asm
 	CheckEvent EVENT_BEAT_MISTY
 	jr z, .beforeBeat
+	CheckEvent EVENT_GOT_MON_FROM_MISTY
+	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM11
 	jr nz, .afterBeat
 	call z, CeruleanGymReceiveTM11
@@ -103,6 +129,13 @@ CeruleanGymMistyText:
 	call PrintText
 	jr .done
 .beforeBeat
+	ld a, [wPokemonInWaiting]
+	and a
+	jr z, .noPokemonInWaiting
+	ld hl, MistyPokemonInWaitingText
+	call PrintText
+	jp TextScriptEnd
+.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -123,6 +156,34 @@ CeruleanGymMistyText:
 	ld [wCeruleanGymCurScript], a
 .done
 	jp TextScriptEnd
+.gymleadergiftscript
+	ld hl, MistyGetNextPokemonText
+	call PrintText
+	ld a, 1
+	ld [wPokemonInWaiting], a
+	ld a, [wNextRNGGiftMon]
+	ld b, a
+	ld a, 25 ; level
+	ld c, a
+	call GivePokemon
+	jr nc, .party_full
+	SetEvent EVENT_GOT_MON_FROM_MISTY
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	xor a
+	ld [wPokemonInWaiting], a
+	ld hl, MistyGoodLuckWithYourNextBadgeText
+	call PrintText
+	jp TextScriptEnd
+.party_full
+	ld hl, MistyPartyIsFullText
+	call PrintText
+	jp TextScriptEnd
+
+
 
 .PreBattleText:
 	text_far _CeruleanGymMistyPreBattleText
@@ -204,4 +265,21 @@ CeruleanGymGymGuideText:
 
 .BeatMistyText:
 	text_far _CeruleanGymGymGuideBeatMistyText
+	text_end
+
+
+MistyGetNextPokemonText:
+	text_far _GetNextPokemonText
+	text_end
+
+MistyGoodLuckWithYourNextBadgeText:
+	text_far _GoodLuckWithYourNextBadgeText
+	text_end
+	
+MistyPokemonInWaitingText:
+	text_far _PokemonInWaitingText
+	text_end
+	
+MistyPartyIsFullText:
+	text_far _PartyIsFullText
 	text_end

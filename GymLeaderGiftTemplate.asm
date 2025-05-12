@@ -1,5 +1,5 @@
 .gymleadergiftscript
-	ld hl, BrockGetNextPokemonText
+	ld hl, KogaGetNextPokemonText
 	call PrintText
 	ld a, 1
 	ld [wPokemonInWaiting], a
@@ -9,7 +9,7 @@
 	ld c, a
 	call GivePokemon
 	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_BROCK
+	SetEvent EVENT_GOT_MON_FROM_KOGA
 .reroll
 	call Random
 	cp NUM_POKEMON
@@ -17,27 +17,34 @@
 	ld [wNextRNGGiftMon], a
 	xor a
 	ld [wPokemonInWaiting], a
-	ld hl, BrockGoodLuckWithYourNextBadgeText
+	ld hl, KogaGoodLuckWithYourNextBadgeText
 	call PrintText
 	jp TextScriptEnd
 .party_full
-	ld hl, BrockPartyIsFullText
+	ld hl, KogaPartyIsFullText
 	call PrintText
 	jp TextScriptEnd
 	
-	
-BrockGetNextPokemonText:
+	ld a, [wPokemonInWaiting]
+	and a
+	jr z, .noPokemonInWaiting
+	ld hl, KogaPokemonInWaitingText
+	call PrintText
+	jp TextScriptEnd
+.noPokemonInWaiting
+
+KogaGetNextPokemonText:
 	text_far _GetNextPokemonText
 	text_end
 
-BrockGoodLuckWithYourNextBadgeText:
+KogaGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-BrockPokemonInWaitingText:
+KogaPokemonInWaitingText:
 	text_far _PokemonInWaitingText
 	text_end
 	
-BrockPartyIsFullText:
+KogaPartyIsFullText:
 	text_far _PartyIsFullText
 	text_end
