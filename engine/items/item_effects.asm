@@ -196,19 +196,9 @@ ItemUseBall:
 ; Loop until an acceptable number is found.
 
 .loop
-	call Random
-	ld b, a
-	
 	ld a, [wHMFriendHelp]
 	and a
 	jr z, .check_dex_help
-	
-	ld hl, wPokedexOwned
-	ld b, wPokedexOwnedEnd - wPokedexOwned
-	call CountSetBits
-	ld a, [wNumSetBits]
-	cp 11
-	jp c, .captured
 	
 	ld a, [wSpearowEncounters]
 	and a
@@ -231,10 +221,18 @@ ItemUseBall:
 	cp PARAS
 	jp z, .captured
 .check_dex_help
+	ld hl, wPokedexOwned
+	ld b, wPokedexOwnedEnd - wPokedexOwned
+	call CountSetBits
+	ld a, [wNumSetBits]
+	cp 11
+	jp c, .captured
+	
 	ld a, [wDexCatchingHelp]
 	and a
 	jp z, .captured
 .check_master_ball
+
 ; Get the item ID.
 	ld hl, wCurItem
 	ld a, [hl]
