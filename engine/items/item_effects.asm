@@ -107,11 +107,9 @@ ItemUsePtrTable:
 	dw ItemUseLantern    ; LANTERN
 
 ItemUseBall:
-
+	
 ; Balls can't be used out of battle.
-	ld a, [wIsInBattle]
-	and a
-	jp z, ItemUseNotTime
+	jp ItemUseNotTime
 
 ; Balls can't catch trainers' Pokémon.
 	dec a

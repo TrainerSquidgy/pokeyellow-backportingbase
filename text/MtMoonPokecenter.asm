@@ -22,13 +22,14 @@ _MtMoonPokecenterClipboardText::
 
 _MtMoonPokecenterMagikarpSalesmanIGotADealText::
 	text "MAN: Hello, there!"
-	line "Have I got a deal"
-	cont "just for you!"
-
-	para "I'll let you have"
-	line "a swell MAGIKARP"
-	cont "for just ¥500!"
+	line "I'm sorry, I've"
+	cont "just sold my last"
+	cont "MAGIKARP!"
+	
+	para "You know what"
+	line "they say, you"
 	cont "What do you say?"
+	cont "snooze, you lose!"
 	done
 
 _MtMoonPokecenterMagikarpSalesmanNoText::

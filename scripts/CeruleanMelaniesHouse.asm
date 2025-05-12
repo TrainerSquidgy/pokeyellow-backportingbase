@@ -14,7 +14,7 @@ CeruleanMelanieHouseMelanieText:
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	CheckEvent EVENT_GOT_BULBASAUR_IN_CERULEAN
-	jr nz, .asm_1cfbf
+	jr .asm_1cfbf
 	ld hl, CeruleanHouse1Text_1cfc8
 	call PrintText
 	ld a, [wPikachuHappiness]

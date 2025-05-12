@@ -12,12 +12,6 @@ CeladonMansionRoofHouseHikerText:
 	text_end
 
 CeladonMansionRoofHouseEeveePokeballText:
-	text_asm
-	lb bc, EEVEE, 25
-	call GivePokemon
-	jr nc, .party_full
-	ld a, HS_CELADON_MANSION_EEVEE_GIFT
-	ld [wMissableObjectIndex], a
-	predef HideObject
-.party_full
-	jp TextScriptEnd
+	text_far _CeladonMansionRoofHouseEeveeText
+	text_end
+

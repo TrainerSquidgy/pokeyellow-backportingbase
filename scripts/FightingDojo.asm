@@ -54,30 +54,8 @@ FightingDojoDefaultScript:
 	ret
 
 FightingDojoKarateMasterPostBattleScript:
-	ld a, [wIsInBattle]
-	cp $ff
-	jp z, FightingDojoResetScripts
-	ld a, [wSavedCoordIndex]
-	and a ; nz if the player was at (4, 3), left of the Karate Master
-	jr z, .already_facing
-	ld a, PLAYER_DIR_RIGHT
-	ld [wPlayerMovingDirection], a
-	ld a, FIGHTINGDOJO_KARATE_MASTER
-	ldh [hSpriteIndex], a
-	ld a, SPRITE_FACING_LEFT
-	ldh [hSpriteFacingDirection], a
-	call SetSpriteFacingDirectionAndDelay
-.already_facing
-	ld a, D_RIGHT | D_LEFT | D_UP | D_DOWN
-	ld [wJoyIgnore], a
-	SetEventRange EVENT_BEAT_KARATE_MASTER, EVENT_BEAT_FIGHTING_DOJO_TRAINER_3
-	ld a, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
-	ldh [hTextID], a
-	call DisplayTextID
-	xor a ; SCRIPT_FIGHTINGDOJO_DEFAULT
-	ld [wJoyIgnore], a
-	ld [wFightingDojoCurScript], a
-	ld [wCurMapScript], a
+	ld hl, IWillGiveYouAPokemonText
+	call PrintText
 	ret
 
 FightingDojo_TextPointers:
@@ -89,8 +67,7 @@ FightingDojo_TextPointers:
 	dw_const FightingDojoBlackbelt4Text,                            TEXT_FIGHTINGDOJO_BLACKBELT4
 	dw_const FightingDojoHitmonleePokeBallText,                     TEXT_FIGHTINGDOJO_HITMONLEE_POKE_BALL
 	dw_const FightingDojoHitmonchanPokeBallText,                    TEXT_FIGHTINGDOJO_HITMONCHAN_POKE_BALL
-	dw_const FightingDojoKarateMasterText.IWillGiveYouAPokemonText, TEXT_FIGHTINGDOJO_KARATE_MASTER_I_WILL_GIVE_YOU_A_POKEMON
-
+	
 FightingDojoTrainerHeaders:
 	def_trainers 2
 FightingDojoTrainerHeader0:
@@ -130,7 +107,7 @@ FightingDojoKarateMasterText:
 	call PrintText
 	jr .end
 .defeated_master
-	ld hl, .IWillGiveYouAPokemonText
+	ld hl, IWillGiveYouAPokemonText
 	call PrintText
 .end
 	jp TextScriptEnd
@@ -143,9 +120,7 @@ FightingDojoKarateMasterText:
 	text_far _FightingDojoKarateMasterDefeatedText
 	text_end
 
-.IWillGiveYouAPokemonText:
-	text_far _FightingDojoKarateMasterIWillGiveYouAPokemonText
-	text_end
+
 
 .StayAndTrainWithUsText:
 	text_far _FightingDojoKarateMasterStayAndTrainWithUsText
@@ -293,4 +268,7 @@ FightingDojoHitmonchanPokeBallText:
 
 FightingDojoBetterNotGetGreedyText:
 	text_far _FightingDojoBetterNotGetGreedyText
+	text_end
+IWillGiveYouAPokemonText:
+	text_far _FightingDojoKarateMasterIWillGiveYouAPokemonText
 	text_end

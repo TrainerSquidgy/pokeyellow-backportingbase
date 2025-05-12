@@ -162,13 +162,18 @@ _Route24DamianText1::
 	line "raising #MON."
 
 	para "I should release"
-	line "my CHARMANDER"
-	cont "because I haven't"
-	cont "raised it well..."
-
-	para "If you promise me"
-	line "you'll care for"
-	cont "it, it's yours."
+	line "my CHARMANDER."
+	
+	para "What did you say?"
+	line "All I need is a"
+	cont "bit more time?"
+	
+	para "You're right!"
+	line "I can do this!"
+	
+	para "Thank you, kind"
+	line "trainer! I will"
+	cont "never forget you!"
 	done
 
 _Route24DamianText2::

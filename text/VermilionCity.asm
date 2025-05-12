@@ -125,8 +125,19 @@ _OfficerJennyText4::
 	done
 
 _OfficerJennyText5::
-	text "How is SQUIRTLE"
-	line "doing?"
+	text "SQUIRTLE have"
+	line "been running"
+	cont "rampant across"
+	cont "VERMILION CITY"
+	cont "since the SS."
+	cont "ANNE docked."
+	
+	para "Keep an eye"
+	line "out for them!"
+	
+	para "They'll start a"
+	line "fight in an"
+	cont "empty room!"
 	done
 
 _VermilionCitySignText::

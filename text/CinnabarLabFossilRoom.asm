@@ -7,8 +7,18 @@ _CinnabarLabFossilRoomScientist1Text::
 	para "I study here rare"
 	line "#MON fossils!"
 
-	para "You! Have you a"
-	line "fossil for me?"
+	para "Our machine is"
+	line "completely kaput."
+	
+	para "Broken it is!"
+	line "Very bad times."
+	
+	para "Repair guy says"
+	line "3-5 working years."
+	
+	para "I'm so angry, I"
+	line "could erupt like"
+	cont "a volcano!"
 	prompt
 
 _CinnabarLabFossilRoomScientist1NoFossilsText::

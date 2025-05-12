@@ -8,3 +8,15 @@ _CeladonMansionRoofHouseHikerText::
 	line "your friends and"
 	cont "trade #MON!"
 	done
+
+_CeladonMansionRoofHouseEeveeText::
+	text "EEVEE can evolve"
+	line "into 3 different"
+	cont "#MON!"
+	
+	para "I've heard that"
+	line "over the border"
+	cont "in JOHTO, they"
+	cont "have discovered"
+	cont "2 more species!"
+	done

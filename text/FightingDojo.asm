@@ -21,17 +21,14 @@ _FightingDojoKarateMasterIWillGiveYouAPokemonText::
 	text "Indeed, I have"
 	line "lost!"
 
-	para "But, I beseech"
-	line "you, do not take"
-	cont "our emblem as"
-	cont "your trophy!"
-
-	para "In return, I will"
-	line "give you a prized"
+	para "FIGHTING-type"
+	line "#MON are"
+	cont "still the best."
+	
+	para "I hope a GYM"
+	line "LEADER gives you"
+	cont "a very special"
 	cont "fighting #MON!"
-
-	para "Choose whichever"
-	line "one you like!"
 	done
 
 _FightingDojoKarateMasterStayAndTrainWithUsText::

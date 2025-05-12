@@ -10,31 +10,44 @@ Route2GateOaksAideText:
 	text_asm
 	CheckEvent EVENT_GOT_HM05
 	jr nz, .got_item
-	ld a, 10
-	ldh [hOaksAideRequirement], a
-	ld a, HM_FLASH
-	ldh [hOaksAideRewardItem], a
-	ld [wNamedObjectIndex], a
-	call GetItemName
-	ld hl, wNameBuffer
-	ld de, wOaksAideRewardItemName
-	ld bc, ITEM_NAME_LENGTH
-	call CopyData
-	predef OaksAideScript
-	ldh a, [hOaksAideResult]
-	cp OAKS_AIDE_GOT_ITEM
-	jr nz, .no_item
+	ld a, [wObtainedBadges]
+	bit BIT_BOULDERBADGE, a
+	jr z, .no_item
+	ld hl, BoulderBadgeGotText
+	call PrintText
+	ld bc, HM_FLASH
+	call GiveItem
 	SetEvent EVENT_GOT_HM05
+	jr nc, .bag_full
 .got_item
 	ld hl, .FlashExplanationText
 	call PrintText
-.no_item
 	jp TextScriptEnd
-
+.no_item
+	ld hl, BoulderBadgeNeededText
+	call PrintText
+	jp TextScriptEnd
+.bag_full
+	ld hl, BoulderBadgeBagFullText
+	call PrintText
+	jp TextScriptEnd
+	
 .FlashExplanationText:
 	text_far _Route2GateOaksAideFlashExplanationText
 	text_end
 
 Route2GateYoungsterText:
 	text_far _Route2GateYoungsterText
+	text_end
+
+BoulderBadgeNeededText:
+	text_far _BoulderBadgeNeededText
+	text_end
+	
+BoulderBadgeGotText:
+	text_far _BoulderBadgeGotText
+	text_end
+	
+BoulderBadgeBagFullText:
+	text_far _BoulderBadgeBagFullText
 	text_end

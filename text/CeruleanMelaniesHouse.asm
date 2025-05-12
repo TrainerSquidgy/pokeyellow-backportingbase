@@ -1,14 +1,10 @@
 MelanieText1::
-	text "I take care of"
-	line "injured #MON."
+	text "I love BULBASAUR!"
+	line "Isn't it cute?"
 
-	para "I nursed this"
-	line "BULBASAUR back to"
-	cont "health."
-
-	para "It needs a good"
-	line "trainer to take"
-	cont "care of it now.@"
+	para "I hope you get"
+	line "one from a"
+	cont "GYM LEADER!@"
 	text_end
 
 MelanieText2::
