@@ -105,6 +105,7 @@ ItemUsePtrTable:
 	dw ItemUseAirBalloon ; AIR_BALLOON
 	dw ItemUseBurlyMan   ; BURLY_MAN
 	dw ItemUseLantern    ; LANTERN
+	dw ItemUseVitamin
 
 ItemUseBall:
 	
