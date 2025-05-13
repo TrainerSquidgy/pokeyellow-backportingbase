@@ -97,6 +97,7 @@ DEF SAFARI_ROCK EQU CASCADEBADGE ; overload
 	const AIR_BALLOON
 	const BURLY_MAN
 	const LANTERN
+	const CANDY_JAR
 DEF NUM_ITEMS EQU const_value - 1
 
 ; elevator floors use item IDs

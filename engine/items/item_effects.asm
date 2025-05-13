@@ -1427,6 +1427,8 @@ ItemUseMedicine:
 	ld a, [wCurItem]
 	cp RARE_CANDY
 	jp z, .useRareCandy
+	cp CANDY_JAR
+	jp z, .useRareCandy
 	push hl
 	sub HP_UP
 	add a
@@ -1585,6 +1587,9 @@ ItemUseMedicine:
 	ld [wCurItem], a
 	pop af
 	ld [wWhichPokemon], a
+	ld a, [wCurItem]
+	cp CANDY_JAR
+	ret z
 	jp RemoveUsedItem
 
 VitaminStatRoseText:

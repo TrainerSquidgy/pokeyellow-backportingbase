@@ -88,6 +88,7 @@ ItemNames::
 	li "AIR BALLOON"
 	li "BURLY MAN"
 	li "LANTERN"
+	li "CANDY JAR"
 	assert_list_length NUM_ITEMS
 	li "B2F"
 	li "B1F"

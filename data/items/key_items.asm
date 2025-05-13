@@ -88,4 +88,5 @@ KeyItemFlags:
 	dbit TRUE  ; AIR_BALLOON
 	dbit TRUE  ; BURLY_MAN
 	dbit TRUE  ; LANTERN
+	dbit TRUE  ; LANTERN
 	end_bit_array NUM_ITEMS
