@@ -26,6 +26,9 @@ SSAnneCaptainsRoomCaptainText:
 	lb bc, HM_CUT, 1
 	call GiveItem
 	jr nc, .bag_full
+	lb bc, SCYTHE, 1
+	call GiveItem
+	jr nc, .bag_full
 	ld hl, SSAnneCaptainsRoomCaptainReceivedHM01Text
 	call PrintText
 	SetEvent EVENT_GOT_HM01

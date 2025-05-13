@@ -28,7 +28,12 @@ _SSAnneCaptainsRoomCaptainIFeelMuchBetterText::
 	para "Teach it to your"
 	line "#MON and you"
 	cont "can see it CUT"
-	cont "anytime!"
+	cont "any time!"
+	
+	para "Just in case"
+	line "you can't use"
+	cont "CUT, take the"
+	cont "SCYTHE, too!"
 	prompt
 
 _SSAnneCaptainsRoomCaptainReceivedHM01Text::

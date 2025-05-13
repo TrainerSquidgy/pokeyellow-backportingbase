@@ -85,7 +85,7 @@ PewterGymScriptReceiveTM34:
 	ld [wPokemonInWaiting], a
 	ld a, [wNextRNGGiftMon]
 	ld b, a
-	ld a, 25 ; level
+	ld a, 12 ; level
 	ld c, a
 	call GivePokemon
 	jr nc, .party_full
