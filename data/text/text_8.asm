@@ -154,7 +154,10 @@ _GetNextPokemonText::
 	prompt
 	
 _GoodLuckWithYourNextBadgeText::
-	text "Good luck with"
+	text "You have received"
+	line "a #MON!"
+	
+	para "Good luck with"
 	line "your next GYM"
 	cont "LEADER battle!"
 	prompt

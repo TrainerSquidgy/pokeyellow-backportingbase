@@ -65,34 +65,33 @@ CeladonGymReceiveTM21:
 	set BIT_RAINBOWBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_RAINBOWBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
+	
 .gymleadergiftscript
-	ld hl, ErikaGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
+	ld a, TEXT_ERIKA_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 32
+	ld [wCurEnemyLevel], a
 	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 32 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_ERIKA
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
 .reroll
 	call Random
 	cp NUM_POKEMON
 	jr nc, .reroll
 	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, ErikaGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, ErikaPartyIsFullText
-	call PrintText
+	ld a, TEXT_ERIKA_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+
+
+	; deactivate gym trainers
+	SetEventRange EVENT_BEAT_CELADON_GYM_TRAINER_0, EVENT_BEAT_CELADON_GYM_TRAINER_6
+
 	jp CeladonGymResetScripts
 
 CeladonGym_TextPointers:
@@ -108,6 +107,9 @@ CeladonGym_TextPointers:
 	dw_const CeladonGymRainbowBadgeInfoText, TEXT_CELADONGYM_RAINBOWBADGE_INFO
 	dw_const CeladonGymReceivedTM21Text,     TEXT_CELADONGYM_RECEIVED_TM21
 	dw_const CeladonGymTM21NoRoomText,       TEXT_CELADONGYM_TM21_NO_ROOM
+	dw_const ErikaGetNextPokemonText,        TEXT_ERIKA_NEXT_POKEMON
+	dw_const ErikaGoodLuckWithYourNextBadgeText, TEXT_ERIKA_NEXT_BADGE
+
 
 CeladonGymTrainerHeaders:
 	def_trainers 2
@@ -131,8 +133,6 @@ CeladonGymErikaText:
 	text_asm
 	CheckEvent EVENT_BEAT_ERIKA
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_BROCK
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM21
 	jr nz, .afterBeat
 	call z, CeladonGymReceiveTM21
@@ -143,13 +143,6 @@ CeladonGymErikaText:
 	call PrintText
 	jr .done
 .beforeBeat
-	ld a, [wPokemonInWaiting]
-	and a
-	jr z, .noPokemonInWaiting
-	ld hl, ErikaPokemonInWaitingText
-	call PrintText
-	jp TextScriptEnd
-.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -169,34 +162,6 @@ CeladonGymErikaText:
 	ld [wCurMapScript], a
 .done
 	jp TextScriptEnd
-.gymleadergiftscript
-	ld hl, ErikaGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_ERIKA
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, ErikaGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, ErikaPartyIsFullText
-	call PrintText
-	jp TextScriptEnd
-
-
 
 .PreBattleText:
 	text_far _CeladonGymErikaPreBattleText
@@ -358,10 +323,3 @@ ErikaGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-ErikaPokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-ErikaPartyIsFullText:
-	text_far _PartyIsFullText
-	text_end

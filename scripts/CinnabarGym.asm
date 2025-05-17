@@ -225,37 +225,36 @@ CinnabarGymReceiveTM38:
 	set BIT_VOLCANOBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_VOLCANOBADGE, [hl]
+	
+.gymleadergiftscript
+	ld a, TEXT_BLAINE_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 54
+	ld [wCurEnemyLevel], a
+	ld a, [wNextRNGGiftMon]
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	ld a, TEXT_BLAINE_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+
 
 	; deactivate gym trainers
 	SetEventRange EVENT_BEAT_CINNABAR_GYM_TRAINER_0, EVENT_BEAT_CINNABAR_GYM_TRAINER_6
 
 	ld hl, wCurrentMapScriptFlags
 	set BIT_CUR_MAP_LOADED_1, [hl]
-.gymleadergiftscript
-	ld hl, BlaineGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 54 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_BLAINE
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, BlaineGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, BlainePartyIsFullText
-	call PrintText
+
 	jp CinnabarGymResetScripts
 
 CinnabarGym_TextPointers:
@@ -272,6 +271,9 @@ CinnabarGym_TextPointers:
 	dw_const CinnabarGymBlaineVolcanoBadgeInfoText, TEXT_CINNABARGYM_BLAINE_VOLCANO_BADGE_INFO
 	dw_const CinnabarGymBlaineReceivedTM38Text,     TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38
 	dw_const CinnabarGymBlaineTM38NoRoomText,       TEXT_CINNABARGYM_BLAINE_TM38_NO_ROOM
+	dw_const BlaineGetNextPokemonText,        TEXT_BLAINE_NEXT_POKEMON
+	dw_const BlaineGoodLuckWithYourNextBadgeText, TEXT_BLAINE_NEXT_BADGE
+
 
 CinnabarGymStartBattleScript:
 	ldh a, [hSpriteIndex]
@@ -297,8 +299,6 @@ CinnabarGymBlaineText:
 	text_asm
 	CheckEvent EVENT_BEAT_BLAINE
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_BLAINE
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM38
 	jr nz, .afterBeat
 	call z, CinnabarGymReceiveTM38
@@ -309,13 +309,6 @@ CinnabarGymBlaineText:
 	call PrintText
 	jp TextScriptEnd
 .beforeBeat
-	ld a, [wPokemonInWaiting]
-	and a
-	jr z, .noPokemonInWaiting
-	ld hl, BlainePokemonInWaitingText
-	call PrintText
-	jp TextScriptEnd
-.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, .ReceivedVolcanoBadgeText
@@ -324,32 +317,6 @@ CinnabarGymBlaineText:
 	ld a, $7
 	ld [wGymLeaderNo], a
 	jp CinnabarGymStartBattleScript
-.gymleadergiftscript
-	ld hl, BlaineGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_BLAINE
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, BlaineGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, BlainePartyIsFullText
-	call PrintText
-	jp TextScriptEnd
 
 .PreBattleText:
 	text_far _CinnabarGymBlainePreBattleText
@@ -628,13 +595,5 @@ BlaineGetNextPokemonText:
 
 BlaineGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
-	text_end
-	
-BlainePokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-BlainePartyIsFullText:
-	text_far _PartyIsFullText
 	text_end
 	

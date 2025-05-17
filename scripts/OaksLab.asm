@@ -1050,7 +1050,7 @@ OaksLabPlayerReceivedMonText:
 .reroll
 	call Random
 	cp NUM_POKEMON
-	jr c, .reroll
+	jr nc, .reroll
 	ld [wNextRNGGiftMon], a
 	ld a, LIGHT_BALL_GSC
 	ld [wPartyMon1CatchRate], a

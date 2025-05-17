@@ -67,34 +67,33 @@ FuchsiaGymReceiveTM06:
 	set BIT_SOULBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_SOULBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
+	
 .gymleadergiftscript
-	ld hl, KogaGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
+	ld a, TEXT_KOGA_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 50
+	ld [wCurEnemyLevel], a
 	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 50 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_KOGA
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
 .reroll
 	call Random
 	cp NUM_POKEMON
 	jr nc, .reroll
 	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, KogaGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, KogaPartyIsFullText
-	call PrintText
+	ld a, TEXT_KOGA_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+
+
+	; deactivate gym trainers
+	SetEventRange EVENT_BEAT_FUCHSIA_GYM_TRAINER_0, EVENT_BEAT_FUCHSIA_GYM_TRAINER_5
+
 	jp FuchsiaGymResetScripts
 
 FuchsiaGym_TextPointers:
@@ -110,6 +109,9 @@ FuchsiaGym_TextPointers:
 	dw_const FuchsiaGymKogaSoulBadgeInfoText, TEXT_FUCHSIAGYM_KOGA_SOUL_BADGE_INFO
 	dw_const FuchsiaGymKogaReceivedTM06Text,  TEXT_FUCHSIAGYM_KOGA_RECEIVED_TM06
 	dw_const FuchsiaGymKogaTM06NoRoomText,    TEXT_FUCHSIAGYM_KOGA_TM06_NO_ROOM
+	dw_const KogaGetNextPokemonText,        TEXT_KOGA_NEXT_POKEMON
+	dw_const KogaGoodLuckWithYourNextBadgeText, TEXT_KOGA_NEXT_BADGE
+
 
 FuchsiaGymTrainerHeaders:
 	def_trainers 2
@@ -131,8 +133,6 @@ FuchsiaGymKogaText:
 	text_asm
 	CheckEvent EVENT_BEAT_KOGA
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_KOGA
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM06
 	jr nz, .afterBeat
 	call z, FuchsiaGymReceiveTM06
@@ -143,13 +143,6 @@ FuchsiaGymKogaText:
 	call PrintText
 	jr .done
 .beforeBeat
-	ld a, [wPokemonInWaiting]
-	and a
-	jr z, .noPokemonInWaiting
-	ld hl, KogaPokemonInWaitingText
-	call PrintText
-	jp TextScriptEnd
-.noPokemonInWaiting
 	ld hl, .BeforeBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -170,33 +163,6 @@ FuchsiaGymKogaText:
 	ld [wFuchsiaGymCurScript], a
 .done
 	jp TextScriptEnd
-.gymleadergiftscript
-	ld hl, KogaGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_KOGA
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, KogaGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, KogaPartyIsFullText
-	call PrintText
-	jp TextScriptEnd
-
 
 .BeforeBattleText:
 	text_far _FuchsiaGymKogaBeforeBattleText
@@ -349,7 +315,6 @@ FuchsiaGymGymGuideText:
 .BeatKogaText:
 	text_far _FuchsiaGymGymGuideBeatKogaText
 	text_end
-
 KogaGetNextPokemonText:
 	text_far _GetNextPokemonText
 	text_end
@@ -358,10 +323,3 @@ KogaGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-KogaPokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-KogaPartyIsFullText:
-	text_far _PartyIsFullText
-	text_end

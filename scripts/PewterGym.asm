@@ -66,7 +66,29 @@ PewterGymScriptReceiveTM34:
 	set BIT_BOULDERBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_BOULDERBADGE, [hl]
-
+	
+.gymleadergiftscript
+	ld a, TEXT_BROCK_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 12
+	ld [wCurEnemyLevel], a
+	ld a, [wNextRNGGiftMon]
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
+.reroll
+	call Random
+	cp NUM_POKEMON
+	jr nc, .reroll
+	ld [wNextRNGGiftMon], a
+	ld a, TEXT_BROCK_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+	
 	ld a, HS_GYM_GUY
 	ld [wMissableObjectIndex], a
 	predef HideObject
@@ -78,31 +100,6 @@ PewterGymScriptReceiveTM34:
 
 ; deactivate gym trainers
 	SetEvent EVENT_BEAT_PEWTER_GYM_TRAINER_0
-.gymleadergiftscript
-	ld hl, BrockGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 12 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_BROCK
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, BrockGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, BrockPartyIsFullText
-	call PrintText
 	jp PewterGymResetScripts
 
 PewterGym_TextPointers:
@@ -113,7 +110,9 @@ PewterGym_TextPointers:
 	dw_const PewterGymBrockWaitTakeThisText, TEXT_PEWTERGYM_BROCK_WAIT_TAKE_THIS
 	dw_const PewterGymReceivedTM34Text,      TEXT_PEWTERGYM_RECEIVED_TM34
 	dw_const PewterGymTM34NoRoomText,        TEXT_PEWTERGYM_TM34_NO_ROOM
-
+	dw_const BrockGetNextPokemonText,        TEXT_BROCK_NEXT_POKEMON
+	dw_const BrockGoodLuckWithYourNextBadgeText, TEXT_BROCK_NEXT_BADGE
+	
 PewterGymTrainerHeaders:
 	def_trainers 2
 PewterGymTrainerHeader0:
@@ -124,8 +123,6 @@ PewterGymBrockText:
 	text_asm
 	CheckEvent EVENT_BEAT_BROCK
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_BROCK
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM34
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
@@ -156,32 +153,6 @@ PewterGymBrockText:
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a
 .done
-	jp TextScriptEnd
-.gymleadergiftscript
-	ld hl, BrockGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_BROCK
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, BrockGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, BrockPartyIsFullText
-	call PrintText
 	jp TextScriptEnd
 
 
@@ -297,10 +268,3 @@ BrockGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-BrockPokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-BrockPartyIsFullText:
-	text_far _PartyIsFullText
-	text_end

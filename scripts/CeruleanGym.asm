@@ -65,34 +65,33 @@ CeruleanGymReceiveTM11:
 	set BIT_CASCADEBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_CASCADEBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
-.gymleadergiftscript
-	ld hl, MistyGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
+	
+	.gymleadergiftscript
+	ld a, TEXT_MISTY_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 21
+	ld [wCurEnemyLevel], a
 	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 21 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_MISTY
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
 .reroll
 	call Random
 	cp NUM_POKEMON
 	jr nc, .reroll
 	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, MistyGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, MistyPartyIsFullText
-	call PrintText
+	ld a, TEXT_MISTY_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+
+	
+	; deactivate gym trainers
+	SetEvents EVENT_BEAT_CERULEAN_GYM_TRAINER_0, EVENT_BEAT_CERULEAN_GYM_TRAINER_1
+
 	jp CeruleanGymResetScripts
 
 CeruleanGym_TextPointers:
@@ -104,6 +103,9 @@ CeruleanGym_TextPointers:
 	dw_const CeruleanGymMistyCascadeBadgeInfoText, TEXT_CERULEANGYM_MISTY_CASCADE_BADGE_INFO
 	dw_const CeruleanGymMistyReceivedTM11Text,     TEXT_CERULEANGYM_MISTY_RECEIVED_TM11
 	dw_const CeruleanGymMistyTM11NoRoomText,       TEXT_CERULEANGYM_MISTY_TM11_NO_ROOM
+	dw_const MistyGetNextPokemonText,        TEXT_MISTY_NEXT_POKEMON
+	dw_const MistyGoodLuckWithYourNextBadgeText, TEXT_MISTY_NEXT_BADGE
+
 
 CeruleanGymTrainerHeaders:
 	def_trainers 2
@@ -117,8 +119,6 @@ CeruleanGymMistyText:
 	text_asm
 	CheckEvent EVENT_BEAT_MISTY
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_MISTY
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM11
 	jr nz, .afterBeat
 	call z, CeruleanGymReceiveTM11
@@ -129,13 +129,6 @@ CeruleanGymMistyText:
 	call PrintText
 	jr .done
 .beforeBeat
-	ld a, [wPokemonInWaiting]
-	and a
-	jr z, .noPokemonInWaiting
-	ld hl, MistyPokemonInWaitingText
-	call PrintText
-	jp TextScriptEnd
-.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -156,34 +149,6 @@ CeruleanGymMistyText:
 	ld [wCeruleanGymCurScript], a
 .done
 	jp TextScriptEnd
-.gymleadergiftscript
-	ld hl, MistyGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_MISTY
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, MistyGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, MistyPartyIsFullText
-	call PrintText
-	jp TextScriptEnd
-
-
 
 .PreBattleText:
 	text_far _CeruleanGymMistyPreBattleText
@@ -267,7 +232,6 @@ CeruleanGymGymGuideText:
 	text_far _CeruleanGymGymGuideBeatMistyText
 	text_end
 
-
 MistyGetNextPokemonText:
 	text_far _GetNextPokemonText
 	text_end
@@ -276,10 +240,3 @@ MistyGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-MistyPokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-MistyPartyIsFullText:
-	text_far _PartyIsFullText
-	text_end

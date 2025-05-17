@@ -157,34 +157,32 @@ ViridianGymReceiveTM27:
 	set BIT_EARTHBADGE, [hl]
 	ld hl, wBeatGymFlags
 	set BIT_EARTHBADGE, [hl]
-
-	; deactivate gym trainers
-	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
+	
 .gymleadergiftscript
-	ld hl, GiovanniGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
+	ld a, TEXT_GIOVANNI_NEXT_POKEMON
+	ldh [hTextID], a
+	call DisplayTextID
+	xor a
+	ld [wMonDataLocation], a
+	ld a, 55
+	ld [wCurEnemyLevel], a
 	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 55 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_GIOVANNI
+	ld [wPokedexNum], a
+	ld [wCurPartySpecies], a
+	call AddPartyMon
 .reroll
 	call Random
 	cp NUM_POKEMON
 	jr nc, .reroll
 	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, GiovanniGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, GiovanniPartyIsFullText
-	call PrintText
+	ld a, TEXT_GIOVANNI_NEXT_BADGE
+	ldh [hTextID], a
+	call DisplayTextID
+.gymleadergiftscriptend
+
+
+	; deactivate gym trainers
+	SetEventRange EVENT_BEAT_VIRIDIAN_GYM_TRAINER_0, EVENT_BEAT_VIRIDIAN_GYM_TRAINER_7
 
 	ld a, HS_ROUTE_22_RIVAL_2
 	ld [wMissableObjectIndex], a
@@ -208,6 +206,9 @@ ViridianGym_TextPointers:
 	dw_const ViridianGymGiovanniEarthBadgeInfoText, TEXT_VIRIDIANGYM_GIOVANNI_EARTH_BADGE_INFO
 	dw_const ViridianGymGiovanniReceivedTM27Text,   TEXT_VIRIDIANGYM_GIOVANNI_RECEIVED_TM27
 	dw_const ViridianGymGiovanniTM27NoRoomText,     TEXT_VIRIDIANGYM_GIOVANNI_TM27_NO_ROOM
+	dw_const GiovanniGetNextPokemonText,        TEXT_GIOVANNI_NEXT_POKEMON
+	dw_const GiovanniGoodLuckWithYourNextBadgeText, TEXT_GIOVANNI_NEXT_BADGE
+
 
 ViridianGymTrainerHeaders:
 	def_trainers 2
@@ -233,8 +234,6 @@ ViridianGymGiovanniText:
 	text_asm
 	CheckEvent EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
 	jr z, .beforeBeat
-	CheckEvent EVENT_GOT_MON_FROM_GIOVANNI
-	jr z, .gymleadergiftscript
 	CheckEventReuseA EVENT_GOT_TM27
 	jr nz, .afterBeat
 	call z, ViridianGymReceiveTM27
@@ -254,13 +253,6 @@ ViridianGymGiovanniText:
 	call GBFadeInFromBlack
 	jr .text_script_end
 .beforeBeat
-	ld a, [wPokemonInWaiting]
-	and a
-	jr z, .noPokemonInWaiting
-	ld hl, GiovanniPokemonInWaitingText
-	call PrintText
-	jp TextScriptEnd
-.noPokemonInWaiting
 	ld hl, .PreBattleText
 	call PrintText
 	ld hl, wStatusFlags3
@@ -278,32 +270,6 @@ ViridianGymGiovanniText:
 	ld a, SCRIPT_VIRIDIANGYM_GIOVANNI_POST_BATTLE
 	ld [wViridianGymCurScript], a
 .text_script_end
-	jp TextScriptEnd
-.gymleadergiftscript
-	ld hl, GiovanniGetNextPokemonText
-	call PrintText
-	ld a, 1
-	ld [wPokemonInWaiting], a
-	ld a, [wNextRNGGiftMon]
-	ld b, a
-	ld a, 25 ; level
-	ld c, a
-	call GivePokemon
-	jr nc, .party_full
-	SetEvent EVENT_GOT_MON_FROM_GIOVANNI
-.reroll
-	call Random
-	cp NUM_POKEMON
-	jr nc, .reroll
-	ld [wNextRNGGiftMon], a
-	xor a
-	ld [wPokemonInWaiting], a
-	ld hl, GiovanniGoodLuckWithYourNextBadgeText
-	call PrintText
-	jp TextScriptEnd
-.party_full
-	ld hl, GiovanniPartyIsFullText
-	call PrintText
 	jp TextScriptEnd
 
 .PreBattleText:
@@ -500,6 +466,7 @@ ViridianGymGuidePreBattleText:
 ViridianGymGuidePostBattleText:
 	text_far _ViridianGymGuidePostBattleText
 	text_end
+
 GiovanniGetNextPokemonText:
 	text_far _GetNextPokemonText
 	text_end
@@ -508,10 +475,3 @@ GiovanniGoodLuckWithYourNextBadgeText:
 	text_far _GoodLuckWithYourNextBadgeText
 	text_end
 	
-GiovanniPokemonInWaitingText:
-	text_far _PokemonInWaitingText
-	text_end
-	
-GiovanniPartyIsFullText:
-	text_far _PartyIsFullText
-	text_end
