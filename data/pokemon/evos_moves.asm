@@ -161,7 +161,7 @@ EvosMovesPointerTable:
 	dw DragoniteEvosMoves
 	dw MewtwoEvosMoves
 	dw MewEvosMoves
-	dw MissingNo1FEvosMoves
+	dw CrobatEvosMoves
 	dw MissingNo20EvosMoves
 	dw MissingNo32EvosMoves
 	dw MissingNo34EvosMoves
@@ -2171,4 +2171,14 @@ VictreebelEvosMoves:
 	db 13, WRAP
 	db 15, POISONPOWDER
 	db 18, SLEEP_POWDER
+	db 0
+
+CrobatEvosMoves:
+	db 0
+	db 6, SUPERSONIC
+	db 12, BITE
+	db 19, CONFUSE_RAY
+	db 30, WING_ATTACK
+  ; db 42, MEAN_LOOK
+	db 55, HAZE
 	db 0

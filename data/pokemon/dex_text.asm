@@ -1506,3 +1506,13 @@ _MewDexEntry::
 	next "fine, delicate"
 	next "hair can be seen"
 	dex
+
+_CrobatDexEntry::
+	text "As a result of its"
+	next "pursuit of faster,"
+	next "yet more silent"
+
+	page "flight, a new set"
+	next "of wings grew on"
+	next "its hind legs.@"
+	dex
